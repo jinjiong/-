@@ -1,4 +1,7 @@
 /*-------首页部分样式--------*/
+.cap-goods-list{
+    padding-bottom: 0.933333rem;
+}
 .modal {
     width: 7.5rem;
     height: 100%;

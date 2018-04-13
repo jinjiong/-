@@ -79,17 +79,18 @@ $(function(){
 					"pageIndex":"1"
 				},
 				dateType:'JSON',
-				
+				beforeSend:function(){
+			    	layer.open({type: 2,content: '加载中...'});
+			    },
 				success:function(data){
-				
+					console.log(data);
 					var ShopList=JSON.stringify(data.shopList);
 					var jsonObj = JSON.parse(ShopList);//转换为json对象
 					var listStr="";
 					for(var i=0;i<jsonObj.length;i++){
 
-						listStr+="<li class='clearfix'><div class='label fl'><label><input type='checkbox' checked=='checked' spid='";
-						listStr+=jsonObj[i].ID;
-						listStr+="'/><img src='./img/c_checkbox_on.png'/></label></div><div class='img fl'><img src='";
+						listStr+="<li class='clearfix'><div class='label fl'><label><input type='checkbox' checked=='checked' spid="+jsonObj[i].ID+" spHyj="+jsonObj[i].spHyj;
+						listStr+=" /><img src='./img/c_checkbox_on.png'/></label></div><div class='img fl'><img src='";
 						listStr+=jsonObj[i].spImgUrl;
 						listStr+="'/></div><div class='text fl'><p class='overflow'>";
 						listStr+=jsonObj[i].spName;
@@ -101,6 +102,7 @@ $(function(){
 					total();
 					$(".btn2").on("click",add);
 					$(".btn1").on("click",jian);
+					layer.closeAll(2);
 				}
 				});
 			}else{
@@ -209,18 +211,61 @@ $('ul').on('change',"input[type='checkbox']",function(){
 		})
 /*结算*/
 $('.sett').click(function(){
-	alert("你应付"+$(this).prev("span").html()+"元钱");
+	setOrder();
+	// alert("你应付"+$(this).prev("span").html()+"元钱");
 });
+
+function setOrder(){
+	var username=localStorage.getItem("username");
+	$.each($('li'), function() {
+		if ($(this).find("input[type=checkbox]").attr("checked")=="checked") {
+			var spid= $(this).find("input[type=checkbox]").attr("spid");
+			var spHyj = $(this).find("input[type=checkbox]").attr("spHyj");
+			console.log(spHyj);
+			var nub =  $(this).find('.number').text();
+			var spZJinE = parseInt($(this).find('.red').html().replace("￥",""))*parseInt(nub);
+			$.ajax({
+				type:'POST',
+				url:getAPIURL() + 'GoodsOrderAdd',
+				data:{
+					"perjmcode":"",
+					"username":username,
+					"spID":spid,
+					"spCount":nub,
+					"spZJinE":spZJinE,
+					"spZJiFen":spHyj
+				},
+				dateType:'JSON',
+				success:function(data){
+					console.log(data);
+					if(data.ResultData==0){
+						layer.open({
+							content:data.Data,
+							btn: '确定'
+						  });
+					}else if(data.ResultData==1){
+						layer.open({
+							title:"温馨提示",
+							content:data.Data,
+							btn: '确定'
+						  });
+					}
+				}
+			});
+		}
+	})
+}
 /*结算*/
+
+
+
+
 /*删除*/
 $('.delete').click(function(){
 	$.each($('li'), function() {
 		if ($(this).find("input[type=checkbox]").attr("checked")=="checked") {
 			var spid= $(this).find("input[type=checkbox]").attr("spid");
-			
 			var username=localStorage.getItem("username");
-			console.log(spid+username);
-			console.log(getAPIURL() + 'cancelGwcShopByID');
 			$.ajax({
 				type:'POST',
 				url:getAPIURL() + 'cancelGwcShopByID',

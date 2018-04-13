@@ -41,9 +41,12 @@
 			url:getAPIURL() + 'mainPageInfo',
 			data:{},
 			dateType:'JSON',
-			
+			beforeSend:function(){
+		    	layer.open({type: 2,content: '加载中...'});
+		    },
 			success:function(data){
 				//成功之后的操作
+				
 				var reg = new RegExp('"',"g");
 				var arr={};
 				var shopStr="<ul class='cap-goods-list__container cap-goods-list__container--small cap-goods-list__container--540 cap-goods-list__container--card'>";
@@ -89,10 +92,12 @@
 				};
 				shopStr+="</ul>";
 				document.getElementById("goods_list").innerHTML = shopStr;
+				layer.closeAll(2);
 				
 			
 			},
 			error:function(){
+				layer.closeAll(2);
 				//失败之后的操作
 			}
 		});
