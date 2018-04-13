@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>我的团队</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
+  <meta name="format-detection" content="telephone=no, email=no" />
   <link rel="stylesheet" type="text/css" href="css/team.css">
   <link rel="stylesheet" href="./css/common.css" />
     <link rel="stylesheet" type="text/css" href="./css/index.css"/>
@@ -11,6 +13,7 @@
 	 <script src="./js/layer.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+
 <div class="registerguide_title" style="display:none;">
     <a href="javascript:history.go(-1)">
         <i class="icon"></i>
@@ -107,7 +110,13 @@
             }else{
                 var li_html ='<ul>';
                 for(var i in data){
-                    li_html = li_html+'<li data-code='+data[i].UserCode+'>'+data[i].UserName+'</li>'
+                    if (data[i].UserPhone==null) {
+                        li_html = li_html+'<li data-code='+data[i].UserCode+'><span>'+data[i].UserName+'</span><br>'+'<span class="mb">手机号无空</span>'+'</li>'
+                    }else{
+                        li_html = li_html+'<li data-code='+data[i].UserCode+'><span>'+data[i].UserName+'</span><br>'+'<span class="mb">'+data[i].UserPhone+'</span>'+'</li>'
+                    }
+
+                    
                 }
                 li_html= li_html+'</ul>';
                 if (frist==0) {
