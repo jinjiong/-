@@ -10,18 +10,21 @@ function total(){
 	        var n1=0;
 			
 	    	$.each($(this).prev('ul').find(".number"), function(i) {
-				
-		if($ul_total.eq(i).attr("checked")=="checked"){
-			
-			s=s+parseInt($(this).html())*parseInt($(this).parent().prev().html().replace("￥",""));
-			n1=n1+parseInt($(this).html());
-		}
-	});
-	$(this).children("span").html("￥"+s.toFixed(1));
-	$(this).children("number").html(n1);
-	S=S+s;
+				if($ul_total.eq(i).attr("checked")=="checked"){
+					if ($(this).parent().prev().html().replace("￥","")=='') {
+						n1=n1+parseInt($(this).html());
+					}else{
+						s=s+parseInt($(this).html())*parseInt($(this).parent().prev().html().replace("￥",""));
+						n1=n1+parseInt($(this).html());
+					}
+					
+				}
+			});
+			$(this).children("span").html("￥"+s.toFixed(1));
+			$(this).children("number").html(n1);
+			S=S+s;
 	    });
-	$(".bottom span").html(S.toFixed(1));
+		$(".bottom span").html(S.toFixed(1));
 	},100)
 }
 /*计算总钱数*/
@@ -83,6 +86,7 @@ $(function(){
 					var jsonObj = JSON.parse(ShopList);//转换为json对象
 					var listStr="";
 					for(var i=0;i<jsonObj.length;i++){
+
 						listStr+="<li class='clearfix'><div class='label fl'><label><input type='checkbox' checked=='checked' spid='";
 						listStr+=jsonObj[i].ID;
 						listStr+="'/><img src='./img/c_checkbox_on.png'/></label></div><div class='img fl'><img src='";
@@ -146,7 +150,8 @@ $('.list input').change(function(){
 		sum();
 })
 /*子项全选*/
-$("ul input[type='checkbox']").change(function(){
+$('ul').on('change',"input[type='checkbox']",function(){
+	console.log('addd');
 	checkbox($(this));
 	var $ul_input=$(this).parents('ul').prev('.list').find('input');
 	if($(this).parents('ul').find("input[checked='checked']").length==$(this).parents("ul").children('li').length){	
@@ -157,7 +162,7 @@ $("ul input[type='checkbox']").change(function(){
 		$ul_input.next('img').attr("src","img/c_checkbox_off.png");
 	} 
 	sum();
-})
+});
 /*点击加一*/
 		function add(){
 			
@@ -214,18 +219,19 @@ $('.delete').click(function(){
 			var spid= $(this).find("input[type=checkbox]").attr("spid");
 			
 			var username=localStorage.getItem("username");
+			console.log(spid+username);
+			console.log(getAPIURL() + 'cancelGwcShopByID');
 			$.ajax({
 				type:'POST',
-				url:getAPIURL() + 'cancelScShopByID',
+				url:getAPIURL() + 'cancelGwcShopByID',
 				data:{
 					"perjmcode":"",
 					"username":username,
 					"spID":spid
 				},
 				dateType:'JSON',
-				
 				success:function(data){
-				
+					console.log(data);
 					if(data.ResultData==0){
 						layer.open({
 							content:data.Data,
@@ -239,7 +245,7 @@ $('.delete').click(function(){
 						  });
 					}
 				}
-				});
+			});
 			
 			$(this).remove();
 		}

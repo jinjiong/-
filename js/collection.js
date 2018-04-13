@@ -117,7 +117,7 @@ $('.list input').change(function(){
 		sum();
 })
 /*子项全选*/
-$("ul input[type='checkbox']").change(function(){
+$("ul").on('change',"input[type='checkbox']",function(){
 	checkbox($(this));
 	var $ul_input=$(this).parents('ul').prev('.list').find('input');
 	if($(this).parents('ul').find("input[checked='checked']").length==$(this).parents("ul").children('li').length){	
