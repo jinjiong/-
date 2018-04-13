@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="./css/invest.css">
+    <link rel="stylesheet" href="./css/dropload.css">
+	     
+	
+    <title>商城列表</title>
+    <script type="text/javascript" src="./js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="./js/wapframwork.js"></script>
+    <script type="text/javascript" src="./js/invest.js"></script>
+	            <style>
+				.cap-goods-list,.cap-goods-list__wrapper{
+					width:100%;
+					height:118px;
+				}
+				.cap-goods-a{
+					display:block;
+					min-height:118px;
+					margin:15px;
+					color:#333;
+					background:#fff;
+					box-sizing:border-box;
+				}
+				.cap-goods-list__photo{
+					width:118px;
+					height:118px;
+					margin-right:10px;
+					float:left;
+				}
+				.cap-goods-list__img{
+					width:100%;
+					height:auto;
+				}
+				.has-title{
+					float:left;
+					width:65%;
+					
+					height:100%;
+				}
+				.title{
+					font-size:14px;
+					line-height:18px;
+					font-weight:400;
+					vertical-align:baseline;
+					padding-left:5px;
+				}
+				.has-title .price{
+					font-size:16px;
+					color:#f44;
+					margin-top:25px;
+					float:left;
+				}
+				.has-title .goods_buy{
+					float:right;
+					margin-right:5px;
+					margin-top:20px;
+					width:24px;
+					height:24px;
+				}
+				.goods_buy img{
+					width:100%;
+					height:100%;
+				}
+				
+			</style>
+</head>
+<body style="overflow: hidden">
+<div class="wrap">
+    <!-- 头部 -->
+    <section id="sp_header">
+        <ul class="sp_header_navbar" id="sp_header_navbar">
+           
+            <li id="intelligence" class="navbar_active">销量最高</li>
+            <li id="regular_invest">价格最高</li>
+            <li id="transfer_place" style="border: 0;">价格最低</li>
+        </ul>
+    </section>
+    <!-- 中部 -->
+    <section style="width: 100%;height: 100%;overflow: hidden;margin-top: 0.96rem">
+        <section id="sp_wrap">
+
+        </section>
+    </section>
+    <!-- 底部 -->
+    <section id="sp_footer">
+        <ul class="footer">
+            <li class="footer-item">
+                <a href="index.html" class="">
+                    <i class="icon icon_index active"></i>
+                    <p class="icon_title" style="color: #f23029">首页</p>
+                </a>
+            </li>
+            
+            <li class="footer-item">
+                <a href="./list.html?fenlei=all&pxType=1" class="" id="index_shop">
+                    <i class="icon icon_activity"></i>
+                    <p class="icon_title">商城</p>
+                </a>
+            </li>
+			<li class="footer-item">
+                <a  class="" id="index_order">
+                    <i class="icon icon_invest"></i>
+                    <p class="icon_title">订单</p>
+                </a>
+            </li>
+            <li class="footer-item">
+                <a  class="" id="index_my">
+                    <i class="icon icon_my"></i>
+                    <p class="icon_title">我的</p>
+                </a>
+            </li>
+        </ul>
+    </section>
+</div>
+</body>
+
+<script type="text/javascript" src="./js/circleProgress.js"></script>
+<script type="text/javascript" src="./js/dropload.js"></script>
+
+</html>

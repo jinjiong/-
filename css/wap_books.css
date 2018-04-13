@@ -1,0 +1,80 @@
+.wp_top_index{height:45px; background:#ff6600; overflow:hidden}
+.wp_logo{ width:40%; height:45px; float:left; font-size:16px;background:url(../images/logo.png) no-repeat 10px center;background-size:35px; }
+.wp_logo p{ line-height:45px; color:#fff; margin-left:52px}
+.wp_login{ overflow:hidden; width:60%; height:45px; line-height:45px; float:right;}
+.wp_fl{ float:left!important}
+.wp_login .w_in1{ width:60px; margin:10px 10px 0}
+
+.wp_l_user{  float:left; width:58%; text-align:right; font-size:13px; color:#fff; background:url(../images/r_01.png) no-repeat right 23px;background-size:8px;}
+.wp_l_user a{ margin:10px 10px 0!important; color:#fff; width:100%!important; text-align:right!important; border:0 none!important}
+
+.wp_top_index a{ display:inline-block; width:18%; height:25px; line-height:27px; border:1px solid #fff; text-align:center; font-size:13px; color:#fff; border-radius:3px; float:right; margin:10px 1.5% 0}
+.w_in_nav{ overflow:hidden;background:#fff; width:93%; margin:0 auto; padding-bottom:10px;}
+.w_in_nav li{ width:20%; height:55px; float:left; padding:10px 0; font-size:14px; }
+.w_in_nav li a{color:#666;}
+.w_in_nav li img{ width:40px; margin:0 auto; display:block; margin-bottom:3px;}
+.w_in_nav li span{ display:block; text-align:center}
+.w_in_nav li:hover{ background:#f0f0f0}
+
+.wp_s_bg{ overflow:hidden; background:#f4f4f4; height:45px;padding:10px 20px;}
+.wp_t_s_con{ height:25px; line-height:29px; width:90%; margin:9px auto 0 auto; background:#fff; border-radius:4px; overflow:hidden; position:relative; }
+
+.wp_m_title{ height:40px; border-bottom:1px solid #e7e7e7; font-size:14px; line-height:40px;  color:#000; overflow:hidden; background:#fff}
+.wp_m_title span{ float:left; border-left:3px solid #fe6700;padding-left:5px; margin-left:6%; color:#666; height:20px; line-height:20px; margin-top:10px;}
+.wp_m_title a{ float:right; font-size:14px; padding:0 12px; height:18px;line-height:18px; margin-top:11px; color:#666}
+.wp_m_title a:hover{ color:#333;}
+.wp_m_title a:last-child{ border-right:1px solid #d8d8d8}
+
+.wp_top_index .s1{color: #fff;display: inline-block;font-size: 14px;height: 45px;line-height: 47px;text-align: center;width: 56%;}
+
+.w_in1{ display:inline-block;float:right; background:#0FC; width: 19%; height:25px; background:#ff6600; border:1px solid #fff; border-radius:5px; color:#fff; font-size:13px; margin:10px 1.5% 0;}
+.w_in1 a {color:#fff;}
+.w_in1 a:hover{ color:#fff;}
+.w_in2{ border:0 none; display:block; float:left; height:24px;line-height:24px; font-size:14px; color:#888; padding:0 3%; width:77.6%;border-radius:5px;}
+.w_in3{ text-indent:-200em; width:40px; border:0 none; height:20px; margin-top:2px;display:block; float:right; background: url(../images/search.png) no-repeat center #fff; background-size:20px; cursor:pointer}
+.w_in4{ background:#0FC; width: 150px; height:40px; background:#ff6600; border:1px solid #fff; border-radius:5px; color:#fff; font-size:16px; margin: auto;text-align:center}
+
+.wp_b_con_head{ height:60px;width:90%;position:absolute; z-index:999; top:0; padding:5px 5% 0; overflow:hidden}
+.wp_b_con_head h1{ font-size:23px; color:#666; margin-bottom:2px;}
+.wp_b_con_head .s1{ font-size:12px; float:left}
+.wp_b_con_head .s2{ float:right}
+.wp_b_con_head .s2 a{ width:25px; height:19px; display:inline-block; margin-left:3px;}
+.wp_b_con_head .a1{ background:url(../images/mode1.png) no-repeat; background-size:25px 19px;}
+.wp_b_con_head .a2{background:url(../images/mode2.png) no-repeat; background-size:25px 19px;}
+.wp_b_con_head .a3{background:url(../images/mode3.png) no-repeat; background-size:25px 19px;}
+.wp_b_con{ font-size:17px;padding:0 5% 0 5%; color:#666;}
+.wp_b_con p{ text-indent:26px;}
+.wp_book_p{ position:relative; padding-top:60px; margin-bottom:10px;}
+.wp_b_con_foot{height:40px; width:95%; background:#fff;   z-index:999; bottom:0; padding:5%;}
+.wp_b_con_foot a{ height:35px; background:#ff6600; color:#fff; font-size:14px; font-weight:bold; border-radius:5px; display:inline-block; line-height:35px; width:45%; margin-right:5%; text-align:center}
+.wp_b_con_foot a.wp_cur{ background:#dfdfdf;}
+
+.wp_hotitle{ height:38px; line-height:38px; color:#ff6600; font-size:16px; padding-left:5%; border-bottom:1px solid #e7e7e7}
+.wp_in_list ul li{ height:30px; line-height:30px;border-bottom:1px solid #e7e7e7; width:90%; margin:0 auto}
+.wp_in_list ul li:hover{ background:#f1f1f1}
+.wp_in_list li a span{ margin-right:10px;}
+.wp_in_list li a .s1{ color:#ff6600}
+.wp_in_list li a .s2{ color:#24b75c}
+.wp_in_list li a .s3{ color:#5097ff}
+.wp_in_list li a{ color:#666; font-size:14px;}
+.wp_in_list li i{ display:inline-table; width:25px; height:9px; background:url(../images/hot.png) no-repeat; background-size:25px 9px; margin-left:10px;}
+.wp_in_list p{ height:40px; line-height:40px; text-align:center; font-size:14px; color:#999}
+.wp_in_list p a{ color:#999}
+
+
+.wp_tag{ background:#f3f3f3}
+.wp_tag p span{ padding-left:5px;border-left:3px solid #ff6600;}
+.wp_tag p{ width:86%; margin:0 auto; font-size:14px; color:#666;  height:20px; padding-top:10px;overflow:hidden}
+.wp_tag p a{ margin-right:10px; color:#5097ff}
+
+.wp_foot{ height:40px; background:#1b212d; padding:15px 20px; position:relative}
+.wp_foot p a{ color:#fff}
+.wp_foot p span{ font-size:12px; color:#888}
+.wp_foot i{ width:40px; height:40px; background:url(../images/b_top.png); background-size:40px; display:block; position:absolute; right:20px; top:15px;}
+.wp_foot i a{ display:block; width:40px; height:40px;}
+
+
+.reads
+{
+    font-size:25px;padding:0 5% 0 5%; color:#666;
+} 

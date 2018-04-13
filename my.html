@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="" lang="zh-cmn-Hans"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no">            
+	<meta http-equiv="cleartype" content="on">
+    <meta name="referrer" content="always">
+    <title>个人中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	
+   
+   <link rel="stylesheet" href="./css/common.css"/>
+    <link rel="stylesheet" href="./css/base_1cbfdc6a3dba5c7a9314faf417520084.css" >    
+	<link rel="stylesheet" href="./css/showcase_with_components_e72dc25490fa24beee9a2cfea9793d13.css" >
+    <link rel="stylesheet" type="text/css" href="./css/layer.css"/>
+	<script src="./js/jquery-2.1.4.js"></script>
+	<script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="./css/weui.min.css">
+    <link rel="stylesheet" href="./css/jquery-weui.css">
+    <link rel="stylesheet" href="./css/resets.css">
+    <link rel="stylesheet" href="./css/box-flex.css">
+    <link rel="stylesheet" href="./css/styles.css">
+	<script>
+	$(function(){
+			var username=localStorage.getItem("username");
+			
+			$.ajax({
+			  type: "POST",
+			  url: getAPIURL() + "readMemInfoByCode",
+			  dataType: "json",
+			  data:{
+				  "perjmcode":"",
+				  "phone":username
+			  },
+			  success: function (data) {
+				
+				var memInfo=JSON.stringify(data.memInfo);
+				var jesonObj=JSON.parse(memInfo);
+				var dt="";
+				var yhm="";
+				var bx="";
+				var dj="";
+				var jf="";
+				$.each(jesonObj, function(i) {
+						bx=jesonObj["benxiSS"];
+					    dt=jesonObj["dongtaiSS"];
+					    yhm=jesonObj["UserName"];
+					    dj=jesonObj["UserZG"];
+						jf=jesonObj["UserJiFen"];
+					});
+				$("#jf").html(jf);
+				$("#dj").html(dj);
+				$("#yhm").html(yhm);
+				$("#dt").html(dt);
+				$("#bx").html(bx);
+			  }
+			});
+			
+			//var username=localStorage.getItem("username");
+		
+		//点击订单菜单
+		$("#index_order").click(function () {
+			
+			if(username!=""){
+				location.href="./order.html?uname="+username;
+			}else{
+				 layer.open({
+                    content:"请您先登录！",
+                    btn: '确定'
+                  });
+				location.href="./login.html";
+			}
+			
+		  });
+		//点击我的菜单
+		$("#index_my").click(function () {
+			if(username!=""){
+				location.href="./my.html?uname="+username;
+			}else{
+				 layer.open({
+                    content:"请您先登录！",
+                    btn: '确定'
+                  });
+				location.href="./login.html";
+			}
+		  });
+		  //点击商城
+		 $("#index_shop").click(function () {
+			var url="./list.html?fenlei=all&pxType=1";
+				url=encodeURI(url); 
+				url=encodeURI(url);
+				location.href=url;
+		  }); 
+		
+		});
+		
+		
+		
+		
+		
+	</script>
+	</head>
+<body class=" " ontouchstart="">
+        
+    
+   <div class="container " style="min-height: 463px;">
+   <div class="laymain">
+ <!--top-->
+<div class="wp_top_index" style="height:30px;text-align:center;line-height:30px;font-size:16px;">
+	<a href="" class="wp_fl" style="float:left;font-size:14px;padding-left:5px;">分享</a>
+    <span class="s1" style="color:#000;">个人中心</span>
+        <a href="./personal.html" style="float:right;font-size:14px;padding-right:5px;">编辑</a>
+    
+</div>
+	
+    
+    
+</div>
+   <ul class="wallet-control flex flex-pack-justify flex-pack-center" style="height:120px;background:url(./img/my_bg.jpg);background-position:top center;">
+           <li class="flex flex-v flex-align-center">
+                
+           </li>
+            <li class="flex flex-v flex-align-center">
+			<br/>
+                <img src="./img/user/head-2.jpg"  style="width:30px,height:30px;border:1px solid #fff;border-radius:15px;" alt="">
+               <br/> <p id="yhm">admin</p>
+                 <br/><em id="jf">800</em>
+           </li>
+            <li class="flex flex-v flex-align-center">
+                
+
+           </li>
+       </ul>
+
+    
+    <div class="weui-msg wallet-main clearfix">
+      
+       <!-- 腾迅服务 -->
+       
+          <div class="weui-grids">
+            <a href="./withdraw.html" class="weui-grid js_grid">
+              <div class="weui-grid__icon xyk">
+                <img src="./img/xjqb.png" alt="">
+              </div>
+              <p class="weui-grid__label">
+                现金钱包
+              </p>
+            </a>
+            
+             <a href="./integral.html" class="weui-grid js_grid">
+              <div class="weui-grid__icon sh">
+                <img src="./img/jf.png" alt="">
+              </div>
+              <p class="weui-grid__label">
+               我的积分
+              </p>
+            </a>
+             <a href="./trading.html" class="weui-grid js_grid">
+              <div class="weui-grid__icon qb">
+                <img src="./img/cxb.png" alt="">
+              </div>
+              <p class="weui-grid__label">
+                重消币
+              </p>
+            </a>
+             
+             <a href="./team.html" class="weui-grid js_grid">
+              <div class="weui-grid__icon gy">
+                <img src="./img/team.png" alt="">
+              </div>
+              <p class="weui-grid__label">
+                我的团队
+              </p>
+            </a>
+             <a href="./collection.html" class="weui-grid js_grid">
+              <div class="weui-grid__icon gy">
+                <img src="./img/wallet_icon_gy.png" alt="">
+              </div>
+              <p class="weui-grid__label">
+                我的收藏
+              </p>
+            </a> <a href="./order.html" class="weui-grid js_grid">
+              <div class="weui-grid__icon gy">
+                <img src="./img/wddd.png" alt="">
+              </div>
+              <p class="weui-grid__label">
+                我的订单
+              </p>
+            </a> <a href="setup.html" class="weui-grid js_grid">
+              <div class="weui-grid__icon gy">
+                <img src="./img/me_set.png" alt="">
+              </div>
+              <p class="weui-grid__label">
+                设置
+              </p>
+            </a>
+          </div>
+        <!-- 腾迅服务 -->
+        
+          
+    </div>
+
+  
+ </div>
+
+   <ul class="footer" style="height:3.5rem;">
+            <li class="footer-item">
+                <a href="index.html" class="">
+                    <i class="icon icon_index active" style="width:1.5rem;height:1.5rem;"></i>
+                    <p class="icon_title" style="margin-top:0.2rem;">首页</p>
+                </a>
+            </li>
+            
+            <li class="footer-item">
+                <a href="./list.html?fenlei=all&pxType=1" class="" id="index_shop">
+                    <i class="icon icon_activity"  style="width:1.5rem;height:1.5rem;"></i>
+                    <p class="icon_title" style="margin-top:0.2rem;">商城</p>
+                </a>
+            </li>
+			<li class="footer-item">
+                <a  class="" id="index_order">
+                    <i class="icon icon_invest"  style="width:1.5rem;height:1.5rem;"></i>
+                    <p class="icon_title" style="margin-top:0.2rem;">订单</p>
+                </a>
+            </li>
+            <li class="footer-item">
+                <a  class="" id="index_my">
+                    <i class="icon icon_my"  style="width:1.5rem;height:1.5rem;"></i>
+                    <p class="icon_title" style="color: #f23029;margin-top:0.2rem;">我的</p>
+                </a>
+            </li>
+        </ul>
+    
+	  
+	  </body></html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="./css/invest.css">
+    <!--<link rel="stylesheet" href="../lib/css/pullToRefresh.css">-->
+    <link rel="stylesheet" href="./css/dropload.css" />
+    <title>交易记录</title>
+    <style>
+        .ci_img {
+            width: 0.4rem;
+            height: 0.4rem;
+            vertical-align: middle;
+            margin-left: 0.1rem;
+        }
+        #ci_wrap {
+            height: 100%;
+            width: 100%;
+            background: #ffffff;
+        }
+        #ci_wrap .ci_title {
+            height: 0.8rem;
+            width: 100%;
+            text-align: center;
+            line-height: 0.8rem;
+            background: #ffffff;
+            font-size: 0.30rem;
+        }
+        #ci_wrap .ci_title >span {
+            color: #00a0e9;
+        }
+        #ci_wrap .ci_title2 {
+            background: #f3f3f3;
+            height: 0.8rem;
+            width: 100%;
+            border-top: 1px solid #cccccc;
+            border-bottom: 1px solid #cccccc;
+            color: black;
+        }
+        #ci_wrap .ci_title2 >li {
+            width: 33%;
+            float: left;
+            text-align: center;
+            line-height: 0.78rem;
+            font-size: 0.32rem;
+        }
+        .bottom_border {
+            border-bottom: 1px solid #cccccc;
+        }
+        #ci_wrap .bg {
+            background: #ffffff;
+        }
+        #ci_wrap .list_wrap {
+            width: 100%;
+            height: 70%;
+            background: #ffffff;
+        }
+       
+        .list_wrap .list_box ul {
+            width: 100%;
+            /*padding-bottom: 2.0rem;*/
+        }
+        .list_wrap .list_box ul >li {
+            height: 1.0rem;
+            width: 100%;
+            overflow: hidden;
+            border-bottom: 1px solid #cccccc;
+        }
+        .list_wrap .list_box ul >li >div {
+            width: 33%;
+            height: 100%;
+            text-align: center;
+            line-height: 1.0rem;
+            float: left;
+            font-size: 0.26rem;
+        }
+        .list_wrap .list_box ul >li >div span {
+            color: #fa6557;
+        }
+        .phone_type{
+            width: 0.26rem;
+            vertical-align: middle;
+            margin-left: 0.2rem;
+        }
+
+    </style>
+    <script src="./js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body style="overflow: hidden">
+<!--  公共头部 -->
+<section id="sp_common_header" class="sp_common_title" style="display:none;">
+    <a href="javascript:history.go(-1)">
+        <i class="icon"></i>
+    </a>
+    <span>交易记录</span>
+</section>
+<!--   内容   -->
+<section id="ci_wrap">
+    
+    <ul class="ci_title2">
+        <li>交易类型</li>
+        <li>交易金额(元)</li>
+        <li>交易时间</li>
+    </ul>
+    <div class="list_wrap">
+        <div class="list_box" id="wrapper">
+            <ul id="dtjl_list">
+                
+               
+            </ul>
+        </div>
+    </div>
+
+</section>
+<!-- 底部 -->
+<!--<section id="sp_footer">-->
+<!--</section>-->
+</body>
+
+<script type="text/javascript" src="./js/wapframwork.js"></script>
+<script type="text/javascript" src="./js/jquery.base64.js"></script>
+<script src="./js/dropload.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+    (function(){
+        var pageRows = 10,pageNumber = 1;
+        var username=localStorage.getItem("username");
+       if(username==""){
+			location.href="./login.html";
+	   }else{
+            $.ajax({
+                type: "POST",
+                url: getAPIURL() +"readJtqbListAll",
+                dataType: "json",
+                data:{
+					"perjmcode":"",
+					"username":username,
+					"pageIndex":"1"				},
+                success: function (data) {
+				
+                    var jtqbShortList=JSON.stringify(data.jtqbShortList);
+					var dtqbObj=JSON.parse(jtqbShortList);
+					var dtqbStr="";
+					var bjimg="";
+					if(dtqbObj.length>0){
+					for(var i=0;i<dtqbObj.length;i++){
+						if(dtqbObj[i].InOrOut=="1"){
+							 bjimg="./img/sr.png";
+						}else{
+							bjimg="./img/zc.png";
+						}
+						dtqbStr+="<li><div class='bottom_border'><img class='phone_type' src='"+bjimg+"' alt='' /></div><div class='bottom_border'><span>"+dtqbObj[i].JinE+"</span></div><div class='bottom_border'>"+dtqbObj[i].JETime+"</div></li>";
+					}
+					document.getElementById("dtjl_list").innerHTML =dtqbStr;
+					}else{
+						document.getElementById("wrapper").innerHTML ="没有更多数据记录了哦！";
+					}
+					
+					}
+                          
+            });
+        };
+//        
+    })();
+</script>
+<!--头部-->
+<script src="./js/RainbowBridge.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    setTitle(".sp_common_title", {'title':'交易记录'});
+</script>
+</html>

@@ -1,0 +1,165 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="./css/invest.css">
+    <title>产品介绍</title>
+    <style>
+        body {
+            background: white;
+        }
+        #pi_wrap table {
+            width: 95%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        #pi_wrap table tr td:nth-child(1):after {
+            content:'';
+            position: absolute;
+            height: 60%;
+            width: 0.01rem;
+            border-left:1px solid #ececec;
+            top:20%;
+            left: 1.8rem;
+            font-size: 0.28rem;
+        }
+        #pi_wrap table tr td:nth-child(1) {
+            font-size: 0.28rem;
+        }
+        #pi_wrap table tr td:nth-child(2) {
+            color: #333333;
+            font-size: 0.28rem;
+        }
+        .pi_title_th {
+            width: 1.45rem;
+        }
+        .pi_name {
+            font-size: 0.28rem;
+            color: #818181;
+        }
+        .pi_title {
+            font-size: 0.28rem;
+            color: #333333;
+        }
+        .pi_tr {
+            position: relative;
+            /*font-size: 0.26rem;*/
+            color: #a6a6a6;
+            border-bottom: 1px solid #ececec;
+        }
+        .pi_tr p {
+            font-size: 0.26rem;
+            line-height: 0.4rem;
+        }
+    </style>
+    <script src="./js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		$(function(){
+			var flName="";
+			var username=localStorage.getItem("username");
+			function getQueryVariable(variable)
+				{
+					   var query = decodeURI(window.location.search.substring(1));
+					  
+					   var vars = query.split("&");
+					   for (var i=0;i<vars.length;i++) {
+							   var pair = vars[i].split("=");
+							   if(pair[0] == variable){return pair[1];}
+					   }
+					   return(false);
+				}
+				flName=getQueryVariable("jeid");
+				
+			$.ajax({
+				type:"POST",
+				url:getAPIURL()+"readJybInfoByID",
+				dataType: "json",
+				data:{
+					"perjmcode":"",
+					"username":username,
+					"JEID":flName
+				},
+				success: function (data) {
+				  var jybAllList=JSON.stringify(data.jybAllList);
+				  var jsonObj = JSON.parse(jybAllList);
+				  var proname,jyje,xxms,jysj;
+				  for(var i=0;i<jsonObj.length;i++){
+					  proname=jsonObj[i].JEType;
+					  jyje=jsonObj[i].JinE;
+					  
+					  jysj=jsonObj[i].JETime;
+					  xxms=jsonObj[i].SourceF;
+				  }
+				   
+				  
+				  document.getElementById("proname").innerHTML = proname;
+				  document.getElementById("jyje").innerHTML = jyje;
+				  document.getElementById("jysj").innerHTML = jysj;
+				  document.getElementById("xxms").innerHTML = xxms;
+				}
+			  });
+				
+		});
+	</script>
+</head>
+<body>
+
+<!--  公共头部 -->
+<section id="sp_common_header" class="sp_common_title" style="display:none;">
+    <a href="javascript:history.go(-1)">
+        <i class="icon"></i>
+    </a>
+    <span>账单信息</span>
+</section>
+<!--  内容  -->
+<section id="pi_wrap">
+    <div class="pi_content">
+        <table cellspacing="1" cellpadding="10" id="intro_con">
+            <tr>
+                <td class="pi_title_th pi_tr pi_name">交易类型</td>
+                <td class="pi_tr pi_title" id="proname"></td>
+            </tr>
+            <tr>
+                <td class="pi_tr">交易金额</td>
+                <td class="pi_tr" id="jyje">
+                     
+                </td>
+                <!--<img src="../img1/line2.png" alt="">-->
+            </tr>
+            <tr>
+                <td class="pi_tr">操作方式</td>
+                <td class="pi_tr" id="jx_type"></td>
+                <!--<img src="../img1/line2.png" alt="">-->
+            </tr>
+            <tr>
+                <td class="pi_tr">交易时间</td>
+                <td class="pi_tr" id="jysj">
+                    
+                </td>
+            </tr>
+            <tr>
+                <td class="pi_tr">详细描述</td>
+                <td class="pi_tr" id="xxms">
+                    
+                </td>
+            </tr>
+           
+            
+        </table>
+    </div>
+</section>
+<section id="pi_footer">
+</section>
+</body>
+
+<!--头部-->
+<script src="./js/RainbowBridge.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    setTitle("#sp_common_header", {'title':'产品介绍'});
+</script>
+</html>

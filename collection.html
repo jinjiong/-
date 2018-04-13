@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+		<title>我的收藏</title>
+		<link rel="stylesheet" type="text/css" href="./css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="./css/cart.css"/>
+		
+		<link rel="stylesheet" type="text/css" href="./css/layer.css"/>
+		<script src="./js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+	 <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
+	 <script src="./js/layer.js" type="text/javascript" charset="utf-8"></script>
+		
+	</head>
+	<body>
+		<!--头部-->
+	    <header>
+	    	我的收藏<span class="fr">编辑</span>
+	    </header>
+	    <!--头部-->
+	    <!--主题-->
+	    <div class="no">
+	    	<p>暂无数据，快去逛逛吧！</p>
+	    </div>
+	    <div class="con">	
+	    <div class="content">
+	    	<div class="list">
+	    		<div class="fl">
+	    			<label>
+		    			<input type="checkbox" checked="checked"/>
+		    			<img src="./img/c_checkbox_on.png"/>
+		    		</label>
+	    		</div>
+	    		<p>寒溪文化</p>
+	    	</div>
+		    <ul ind="0" id="goods_list">
+		    	
+		    	
+		    	
+		    </ul>
+		    
+	    </div>
+	   </div>
+	    <!--主题-->
+	   
+	     
+	     <!--删除-->
+	    <div class="bottom fixed" style="display: none;">
+    		<div class="fr">
+    			<button class="delete">取消收藏</button>
+    		</div>
+	    </div>
+	     <!--删除-->
+	     <!--弹框-->
+	    <div class="text1 fixed">
+	    	<form>
+	    		<input type="number" oninput="checkNum(this.value)" id="input"/>
+	    		<input type="button"  value="确定"/>
+	    	</form>
+<script>
+	function checkNum(val) {
+		document.getElementById('input').value = val >= 0 ? val : 0
+	}
+</script>
+	    </div>
+	     <!--弹框-->
+	    <!--弹框2-->
+	    <div class="alert fixed"></div>
+	     <!--弹框2-->
+	
+		<script src="./js/web.js"></script>
+		<script src="./js/zepto.js"></script>
+		<script src="./js/collection.js"></script>
+	</body>
+</html>

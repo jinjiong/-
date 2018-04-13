@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" type="text/css" href="./css/swiper-3.4.2.min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/layer.css"/>
+    <title>静态钱包</title>
+    <script src="./js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/jquery.base64.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/layer.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div class="withdraw_title" style="display:none;">
+    <a href="javascript:location.href='my.html'">
+        <i class="icon"></i>
+    </a>
+    <span>静态钱包</span>
+    <a href="withdraw_record.html" class="record_link">交易记录</a>
+</div>
+<!--页面主体部分-->
+<div class="withdraw_content">
+	<div style="width:100%;"><img src="./img/rmb@2x.png" style="width:60%;height:auto;margin:20px 20%;"></div>
+    <p class="sum_avai">账户余额：<span class="sp_color balance_avai" id="zhye"></span>元</p>
+   
+    <p class="txed">
+        <span class="txed_title">转出金额</span>
+        <input type="text" id="txje" placeholder="输入转出金额" onkeyup="value = value.replace(/[^\d{2}\.]/g, '').replace(/(\.\d{2}).*/g, '$1')" />
+       
+    </p>
+    <p class="txed">
+        <span class="txed_title">转入账号</span>
+        <input type="text" id="zrzh" placeholder="输入转入账号"  />
+       
+    </p>
+	<p class="txed">
+        <span class="txed_title">交易密码</span>
+        <input type="password" id="jymm" placeholder="交易密码"  />
+       
+    </p>
+	
+    
+   
+   
+    <p class="prompt">*初始交易密码为登录密码</p>
+    <button class="withdraw_btn">转出</button>
+    <p class="prompt_day">本次转账预计到账时间为1~3个工作日</p>
+</div>
+
+
+</body>
+
+<script src="./js/cash.js" type="text/javascript" charset="utf-8"></script>
+<!--头部-->
+<script src="./js/RainbowBridge.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    setTitle(".withdraw_title", {'title':'静态钱包',"theme":"1"});
+</script>
+</html>

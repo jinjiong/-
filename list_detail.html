@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>商品详情页</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" href="./css/css.css">  
+    <link rel="stylesheet" type="text/css" href="./css/layer.css">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="./css/base_1cbfdc6a3dba5c7a9314faf417520084.css" >    
+	<link rel="stylesheet" href="./css/showcase_with_components_e72dc25490fa24beee9a2cfea9793d13.css" >        
+	 <link rel="stylesheet" href="./css/goods_cd755dcc5acd1e96b02c1018eae6c02c.css" >   
+	 <script src="./js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/wapframwork.js"></script>
+    <script src="./js/layer.js"></script>
+	 
+	 <style>
+		.addWrap{ position:relative; width:100%;background:#fff;margin:0; padding:0;}
+		.addWrap .swipe{overflow: hidden;visibility: hidden;position:relative;}
+		.addWrap .swipe-wrap{overflow:hidden;position:relative;}
+		.addWrap .swipe-wrap > div {float: left;width: 100%;position:relative;}
+		.items_li img{width:100%;height:auto;}
+		#position{ position:absolute; bottom:0; right:0; padding-right:8px; margin:0; background:#000; opacity: 0.4; width:100%; filter: alpha(opacity=50);text-align:right;}
+		#position li{width:10px;height:10px;margin:0 2px;display:inline-block;-webkit-border-radius:5px;border-radius:5px;background-color:#AFAFAF;}
+		#position li.cur{background-color:#FF0000;}
+		.img-responsive { display: block; max-width:100%;height: auto;}
+	</style>
+
+<script src="./js/hhSwipe.js" type="text/javascript"></script>
+	
+		<script>
+		function getQueryVariable(variable)
+		{
+			   var query = decodeURI(window.location.search.substring(1));
+			  
+			   var vars = query.split("&");
+			   for (var i=0;i<vars.length;i++) {
+					   var pair = vars[i].split("=");
+					   if(pair[0] == variable){return pair[1];}
+			   }
+			   return(false);
+		}
+	$(function(){
+        var canshu = getQueryVariable('spID');
+
+		$.ajax({
+			type:'POST',
+			url:getAPIURL() +'readShopByID',
+			data:{
+				"perjmcode":"",
+				"username":"",
+				"spID":canshu
+				},
+			dateType:'JSON',
+			success:function(data){
+				//成功之后的操作
+				var reg = new RegExp('"',"g");
+				var arr={};
+				var arr1={};
+				var ShopList=JSON.stringify(data.shopList);
+				var detail="";
+				var video_str="";
+				var items=document.getElementsByClassName("items_li");//获取li集合
+				
+				var jsonObj = JSON.parse(ShopList);//转换为json对象
+				for(var i=0;i<jsonObj.length;i++){
+				   var title=jsonObj[i].spName;
+				   var price=jsonObj[i].spScj;
+				   var video=jsonObj[i].videoUrl;
+				   if(video!=""){
+						video_str+="<video src='"+video+"' controls='controls' width=100% height=auto></video>";
+				   }
+				   detail+=jsonObj[i].spMessage;
+				  
+				   for(var j=0;j<items.length;j++){
+						if(j===0 ){
+							var curr=items[0];
+							curr.innerHTML="<a href='#'><img src='"+jsonObj[i].spImgUrl+"'></a>";	
+						}
+						if(j===1){
+							var curr1=items[1];
+							curr1.innerHTML="<a href='#'><img src='"+jsonObj[i].spImgUrl2+"'></a>";
+						}
+						if(j===2){
+							var curr2=items[2];
+							curr2.innerHTML="<a href='#'><img src='"+jsonObj[i].spImgUrl3+"'></a>";
+						}
+					}
+				};
+				document.getElementById("goods_title").innerHTML = title;
+				document.getElementById("goods_price").innerHTML = price;
+				document.getElementById("goods_video").innerHTML = video_str;
+				document.getElementById("goods_detail").innerHTML = detail;
+			},
+			error:function(){
+				//失败之后的操作
+			}
+})
+		//幻灯片设置
+		var bullets = document.getElementById('position').getElementsByTagName('li');
+
+		var banner = Swipe(document.getElementById('mySwipe'), {
+			auto: 4000,
+			continuous: true,
+			disableScroll:false,
+			callback: function(pos) {
+				var i = bullets.length;
+				while (i--) {
+					bullets[i].className = ' ';
+				}
+				bullets[pos].className = 'cur';
+			}
+		})
+	});
+	function buy(){
+		var goodsID=getQueryVariable("spID");
+		location.href="./write_order.html?goodsID="+goodsID;
+	}
+	//加入购物车
+	function spsc(){
+	var username=localStorage.getItem("username");
+      var goodsID=getQueryVariable("spID");
+      if(username!=""){
+		  
+			$.ajax({
+				type:"POST",
+				url:getAPIURL()+"gwcShopByID",
+				dataType: "json",
+				data:{
+					"perjmcode":"",
+					"username":username,
+					"spID":goodsID
+					
+				},
+				success: function (data) {
+				
+				  if(data.ResultData==0){
+					  layer.open({
+						content:data.Data,
+						btn: '确定'
+					  });
+				  }else if(data.ResultData==1){
+					  layer.open({
+						content:data.Data,
+						btn: '确定'
+					  });
+				  }
+				}
+			  });	
+				
+			}else{
+				 layer.open({
+                    content:"请您先登录！",
+                    btn: '确定'
+                  });
+				location.href="./login.html";
+			}
+      
+    }
+	//加入收藏
+	
+	function jrsc(){
+	var username=localStorage.getItem("username");
+      var goodsID=getQueryVariable("spID");
+      if(username!=""){
+		  
+			$.ajax({
+				type:"POST",
+				url:getAPIURL()+"scShopByID",
+				dataType: "json",
+				data:{
+					"perjmcode":"",
+					"username":username,
+					"spID":goodsID
+					
+				},
+				success: function (data) {
+				
+				  if(data.ResultData==0){
+					  layer.open({
+						content:data.Data,
+						btn: '确定'
+					  });
+				  }else if(data.ResultData==1){
+					  layer.open({
+						content:data.Data,
+						btn: '确定'
+					  });
+				  }
+				}
+			  });	
+				
+			}else{
+				 layer.open({
+                    content:"请您先登录！",
+                    btn: '确定'
+                  });
+				location.href="./login.html";
+			}
+      
+    }
+	</script>
+</head>
+<body class=" body-fixed-bottom default-theme" >
+    <div class="container wap-goods internal-purchase" style="min-height: 686px;">
+        <div class="header goods-headerbar "></div>
+        <div class="js-mp-info share-mp-info ">
+			<a class="page-mp-info" href="./index.html">
+				<img class="mp-image" width="24" height="24" src="./img/sy.png">
+				<i class="mp-nickname">海岛民生</i>
+			</a>
+            <div class="links">
+                <span class="js-search mp-search search-icon"></span>
+                <a class="mp-homepage" href="./order.html">我的订单</a>
+            </div>
+		</div>        
+	
+		<div class="content-body">
+			<div class="custom-image-swiper custom-goods-swiper js-swp swp"  style="position: relative">
+				<div class="addWrap">
+				<div class="swipe" id="mySwipe">
+					<div class="swipe-wrap">
+						<div class="items_li"></div>
+						<div class="items_li"></div>
+						<div class="items_li"></div>
+					</div>
+				</div>
+				
+				<ul id="position">
+					<li class="cur"></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+			</div>
+		
+			<div class="goods-header">
+				<h2 class="title" id="goods_title"></h2>
+				<span class="hide js-add-wish js-wish-animate wish-add  font-size-12 tag tag-redf30 pull-right">喜欢</span>
+				<div class="goods-price ">
+					<div class="current-price">
+							<span>¥</span><i class="js-goods-price price" id="goods_price"></i>
+					</div>
+					   
+					<div class="original-price">
+					</div>
+				</div>
+				<hr class="with-margin-l">
+				<div class="stock-detail">
+					<dl>
+						<dt>运费:</dt>
+						<dd class="js-postage-desc" >免运费 </dd>
+					</dl>
+					<dl>
+						<dt>剩余:</dt>
+						<dd>44</dd>
+					</dl>
+					<dl>
+						<dt>销量:</dt>
+						<dd>6</dd>
+					</dl>
+				</div>
+			</div>
+			
+			<div class="js-store-info">
+				<div class="block block-list goods-store">
+					<div class="renzheng block-item">
+						<span class="js-rz-item-alert rz-item">
+							<span class="rz-name font-size-12 c-gray-darker">企业认证</span>
+						</span>
+						<span class="js-rz-item-alert rz-item">
+							<span class="rz-name font-size-12 c-gray-darker">担保交易</span>
+						</span>
+					</div>
+				</div>
+			</div>
+		
+			<a class="js-package-buy-block hide"></a>
+			<div class="js-detail-container" style="margin-top: 10px;">
+				<div class="js-tabber-container goods-detail">
+					<div class="js-tabber tabber tabber-n2 clearfix orange">
+						<button  class="active">商品详情 </button>			
+					</div>
+					<div class="js-tabber-content">
+						<div class="js-part js-goods-detail goods-tabber-c">
+							<div class="js-components-container components-container">
+				<!--商品详情 start-->	        
+								<div class="custom-richtext js-lazy-container js-view-image-list" style="min-height: 0px;">
+									<p id="goods_video"></p>
+									<p id="goods_detail">
+									
+									</p>
+									<p><br></p>
+								</div>
+				<!--商品详情 end-->	
+								<div id="js-body-width" style="width: 100%;"></div>
+					
+							</div>
+						</div>            
+					</div>
+				</div>	
+			</div>
+
+	<!--购买页面底部固定 start -->			
+				
+		<div class="js-bottom-opts js-footer-auto-ele bottom-fix">
+			<div class="responsive-wrapper">
+				<div class="mini-btn-2-1">
+					<a  class="js-im-icon new-btn service" id="sp_sc" onclick='jrsc();'>
+						<i class="van-icon van-icon-chat"><img src="./img/icon/icon-sc.png" style="width:20px;height:20px;"></i>
+						<span class="desc">收藏</span>
+					</a>
+					<a id="global-cart" href="./buy_car.html" class="new-btn buy-cart">
+						<i class="van-icon van-icon-cart"></i>
+						<span class="desc">购物车</span>
+					</a>
+				</div>
+				<div class="big-btn-2-1">       
+					<a  class="js-add-cart big-btn orange-btn vice-btn" id="jr_gwc" onclick='spsc()';>加入购物车</a>
+					<a  class="js-buy-it big-btn red-btn main-btn" onclick="buy();">立即购买</a>
+				</div>
+			</div>
+		</div>
+	<!--购买页面底部固定 end -->	
+	 </div>
+	</div>   
+</body></html>

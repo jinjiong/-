@@ -1,0 +1,79 @@
+/*
+*  author: AUI
+*  icon.css
+*  http://azenui.com/
+*  http://www.a-ui.cn/
+*/
+.aui-icon {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 20px;
+}
+
+.aui-icon-large {
+	width: 40px;
+	height: 40px;
+	display: inline-block;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 40px;
+}
+
+.aui-footer-active .aui-footer-item-text {
+	color: #da4644;
+}
+.aui-header-bg{
+	background:#0197ff;
+}
+
+
+.aui-header-bg:after {
+	border-bottom: none;
+}
+
+.aui-header-bg .aui-header-title {
+	color: #fff;
+}
+
+/* color:#707070 */
+.skin-box-bd .menu-list {
+	background: none repeat scroll 0 0 #30b3c7;
+}
+
+.skin-box-bd .menu-list .link {
+	background: none repeat scroll 0 0 #30b3c7;
+}
+
+.all-cats .link {
+	background: none repeat scroll 0 0 #30b3c7;
+}
+
+.aui-icon-large-sm {
+	width: 34px;
+	height: 34px;
+	background-size: 34px;
+}
+
+
+
+.aui-f-p-icon {
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	display: block;
+	margin: 0 auto;
+	background-color: #fff;
+	margin-top: 10px;
+	margin-bottom: 4px;
+	position: relative;
+}
+
+.aui-f-p-icon img {
+	width: 100%;
+	height: 100%;
+	display: block;
+	border: none;
+}

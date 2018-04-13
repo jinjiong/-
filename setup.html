@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>设置</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <link rel="stylesheet" href="./css/layer.css" type="text/css">
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css"/>
+    <script src="./js/jquery-2.1.4.js"></script>
+    <script src="./js/jquery.base64.js"></script>
+    <script src="./js/layer.js"></script>
+    <script src="./js/wapframwork.js"></script>
+</head>
+<body>
+<div class="setting_title" style="display: none;">
+    <a href="my.html">
+        <i class="icon"></i>
+    </a>
+    <span>设置</span>
+</div>
+<div class="setting_content">
+    
+    <ul class="setting_menu">
+        <li class="setting_menu_item">
+            <a href="forgetPwd.html">
+                <div>
+							<span class="icon_wrap">
+								<i class="icon icon_aqsz"></i>
+							</span>
+                    <span class="item_title">修改登录密码</span>
+                    <i class="icon_zhankai"></i>
+                </div>
+            </a>
+        </li>
+        <li class="setting_menu_item">
+            <a href="modify_password.html">
+                <div>
+							<span class="icon_wrap">
+								<i class="icon icon_aqsz"></i>
+							</span>
+                    <span class="item_title">修改交易密码</span>
+                    <i class="icon_zhankai"></i>
+                </div>
+            </a>
+        </li>
+		<li class="setting_menu_item">
+            <a href="contact_us.html">
+                <div>
+							<span class="icon_wrap">
+								<i class="icon icon_aqsz"></i>
+							</span>
+                    <span class="item_title">联系我们</span>
+                    <i class="icon_zhankai"></i>
+                </div>
+            </a>
+        </li>
+		<li class="setting_menu_item">
+            <a id="jcgx">
+                <div>
+							<span class="icon_wrap">
+								<i class="icon icon_cjwt"></i>
+							</span>
+                    <span class="item_title">检查更新</span>
+                    <i class="icon_zhankai"></i>
+                </div>
+            </a>
+        </li>
+		
+        
+    </ul>
+</div>
+<a href="javascript:;" class="setting_logout" onclick="Logout()">
+    安全退出
+</a>
+</body>
+<script src="./js/setting.js" type="text/javascript" charset="utf-8"></script>
+<!--头部-->
+<script src="./js/RainbowBridge.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    setTitle(".setting_title", {'title':'设置',"theme":"1"});
+</script>
+</html>

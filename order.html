@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="admin responsive-320" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no">            
+	<meta http-equiv="cleartype" content="on">
+    <meta name="referrer" content="always">
+    <title>我的订单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script src="./js/jquery-2.1.4.js"></script>
+	<link rel="stylesheet" href="./css/common.css" />
+    
+    <link rel="stylesheet" href="./css/base_3358e3f8b478b6d2a993e218780dceb8.css" >    
+	<link rel="stylesheet" href="./css/showcase_admin_with_components_494c9f79d21f5289558c52d5334c535c.css" >   
+	<link rel="stylesheet" href="./css/order_list_5799dfb4567e0d208dea04bff7f3714c.css" >
+	<script src="./js/layer.js" type="text/javascript" charset="utf-8"></script>
+	 <link rel="stylesheet" type="text/css" href="./css/layer.css"/>
+	<script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		$(function(){
+		var username=localStorage.getItem("username");
+		if(username==""){
+			layer.open({
+                    content:"请您先登录！",
+                    btn: '确定'
+                  });
+				location.href="./login.html";
+		}else{
+			//获取url参数
+		function getQueryVariable(variable)
+		{
+			   var query = window.location.search.substring(1);
+			   var vars = query.split("&");
+			   for (var i=0;i<vars.length;i++) {
+					   var pair = vars[i].split("=");
+					   if(pair[0] == variable){return pair[1];}
+			   }
+			   return(false);
+		}
+		var uname=getQueryVariable("uname");
+		var orderType=3;
+		if(uname==""){
+			layer.open({
+                    content:"请您先登录！",
+                    btn: '确定'
+                  });
+				location.href="./login.html";
+		}else{
+		
+		orderTab(uname,3);//初始加载所有订单
+		
+		
+		//点击所有订单菜单
+		$("#all_order").click(function () {
+			orderTab(uname,3);
+			
+		  });
+		//点击待收货菜单
+		$("#dsh_order").click(function () {
+			orderTab(uname,0);
+		  });
+		//点击待发货菜单
+		$("#dfh_order").click(function () {
+			orderTab(uname,1);
+		  });
+		  //点击已完成菜单
+		$("#ywc_order").click(function () {
+			orderTab(uname,2);
+		  });
+		
+		function orderTab(uname,orderType){
+			$.ajax({
+				type:'POST',
+				url:getAPIURL() + 'readSpOrderListAll',
+				data:{
+					"perjmcode":"",
+					"username ":uname,
+					"pageIndex":"1",
+					"orderType":orderType
+				},
+				dateType:'JSON',
+				
+				success:function(data){
+					
+					var spList_str="<div class='js-list b-list'>";
+					var spList=JSON.stringify(data.spList);
+					var jsonObj = JSON.parse(spList);
+					for(var i=0;i<jsonObj.length;i++){
+						spList_str+="<li class='js-block-order block block-order animated'><div class='header'><div><a href=''><span class='font-size-14'>店铺：寒溪文化</span></a><a class='order-state-str pull-right font-size-14' href='javascript:;'>";
+						if(jsonObj[i].sta==0){
+							spList_str+="待收货";
+						}else if(jsonObj[i].sta==1){
+							spList_str+="待发货";
+						}else if(jsonObj[i].sta==2){
+							spList_str+="已完成";
+						}else{
+							spList_str+="全部订单";
+						}
+						
+						spList_str+="</a></div><div class='order-no font-size-12'>订单编号："
+						spList_str+=jsonObj[i].goodsCode;
+						spList_str+="</div></div><a class='name-card name-card-3col clearfix' href='./order_detail.html?goodsCode=";
+						spList_str+=jsonObj[i].goodsCode;
+						spList_str+="'><div class='thumb'><img src='";
+						spList_str+=jsonObj[i].spImgUrl;
+						spList_str+="></div><div class='detail'><h3 class='font-size-14 l2-ellipsis'>";
+						spList_str+=jsonObj[i].spName;
+						spList_str+="</h3><p class='order-types'></p></div><div class='right-col'><div class='price c-black'>¥<span>";
+						spList_str+=jsonObj[i].zje;
+						spList_str+="</span></div><div class='num c-gray-darker'>×<span class='num-txt c-gray-darker'>";
+						spList_str+=jsonObj[i].spCount;
+						spList_str+="</span></div></div></a><div class='bottom-price  has-bottom-btns'><div class='pull-right'>积分：<span class='c-orange'>";
+						spList_str+=jsonObj[i].JiFen;
+						spList_str+="</span></div></div><div class='bottom'><div class='opt-btn pull-right'><a class='btn btn-default btn-in-order-list' >";
+						spList_str+=jsonObj[i].kdName;
+						spList_str+="</a><a class='btn btn-default btn-in-order-list' href=''>";
+						spList_str+=jsonObj[i].kdCode;
+						spList_str+="</a><a class='js-buy-again btn btn-default btn-in-order-list' href='javascript:;' >";
+						spList_str+=jsonObj[i].xdTime;
+						spList_str+="</a></div></div></li>";
+					};
+					spList_str+="</div>";
+					document.getElementById("order-list-container").innerHTML = spList_str;
+					
+					
+				},
+				error:function(){
+					//失败之后的操作
+				}
+			});
+		
+		}
+		}
+		}
+				
+	});
+	</script>
+	<style>
+		.registerguide_title {
+			height: 2.88rem;
+			line-height: 2.88rem;
+			text-align: center;
+			color: #fff;
+			font-size: 1.38rem;
+			background: #f46054;
+			font-family:"微软雅黑";
+		}
+		
+}
+
+	</style>
+	
+	
+	
+</head>
+<body class="default-theme body-fixed-bottom" >
+    <div class="container " style="min-height: 609px;">
+	<div class="registerguide_title" style="display:none;">
+    <a href="javascript:history.go(-1)">
+        <i class="icon"></i>
+    </a>
+    <span>我的订单</span>
+</div>
+        <div class="content ">
+			<div class="content-body">		
+						<!-- 等级/积分 -->
+				
+									
+				<div class="order-related">
+					<ul class="uc-order list-horizon clearfix">
+						
+						<li>
+							<a class="link clearfix relative link-totuan" id="all_order" >
+												<p class="title-info c-black font-size-12">全部订单</p>
+							</a>
+						</li>
+						<li>
+							<a class="link clearfix relative link-tosend" id="dsh_order" >
+												<p class="title-info c-black font-size-12">待收货</p>
+							</a>
+						</li>
+						<li>
+							<a class="link clearfix relative link-send" id="dfh_order">
+												<p class="title-info c-black font-size-12">待发货</p>
+							</a>
+						</li>
+						<li>
+							<a class="link clearfix relative link-sign" id="ywc_order">
+								<p class="title-info c-black font-size-12">已完成</p>
+							</a>
+						</li>
+					</ul>
+					<div class="block block-list list-vertical">
+						
+						 <div id="order-list-container">
+							<div class="js-list b-list">
+								
+								
+								
+
+							</div>
+							
+				
+						</div>
+						<div class="list-finished">( ⊙ o ⊙ )啊哦，没有更多订单啦</div>
+					</div>
+				</div>
+			</div>       
+			
+		</div> 
+ <ul class="footer">
+            <li class="footer-item">
+                <a href="index.html" class="">
+                    <i class="icon icon_index active"></i>
+                    <p class="icon_title" style="color: #f23029">首页</p>
+                </a>
+            </li>
+            
+            <li class="footer-item">
+                <a href="./list.html?fenlei=all&pxType=1" class="" id="index_shop">
+                    <i class="icon icon_activity"></i>
+                    <p class="icon_title">商城</p>
+                </a>
+            </li>
+			<li class="footer-item">
+                <a  class="" id="index_order">
+                    <i class="icon icon_invest"></i>
+                    <p class="icon_title">订单</p>
+                </a>
+            </li>
+            <li class="footer-item">
+                <a  class="" id="index_my">
+                    <i class="icon icon_my"></i>
+                    <p class="icon_title">我的</p>
+                </a>
+            </li>
+        </ul>		
+	</div>
+	 <script src="./js/RainbowBridge.js" type="text/javascript" ></script>
+<script type="text/javascript">
+    setTitle(".registerguide_title", {'title':'消息中心',"theme":"1"});
+</script> 
+</body>
+
+</html>

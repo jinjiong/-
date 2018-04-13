@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>我的团队</title>
+  <link rel="stylesheet" type="text/css" href="css/team.css">
+  <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/layer.css"/>
+	 <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
+	 <script src="./js/layer.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div class="registerguide_title" style="display:none;">
+    <a href="javascript:history.go(-1)">
+        <i class="icon"></i>
+    </a>
+    <span>我的团队</span>
+</div>
+    <div class="block">
+        <div class="myTeam-box">
+            
+            <div class="info">
+                <span>团队业绩<em></em></span>　　<span>新增业绩<em></em></span><br/>
+                <span>团队人数<em></em></span>　　<span>直招人数<em></em></span>
+            </div>
+            <div class="team-box">
+                <h4 class="all_team"> <img src="./img/icon/tdz.png">我的团队</h4>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+        var URL ='http://47.52.99.82:9901/api/HXData/';
+        // 我的团队信息
+        getInfo('','admin');
+        function getInfo( perjmcode,username){
+            $.ajax({
+                type:'POST',
+                url:URL+'myTeamYj',
+                data:{
+                    "perjmcode":"",
+                    "username":username
+                },
+                dateType:'JSON',
+                success:function(data){
+                    setInfo(data.Data);
+                },
+                error:function(){
+                    //失败之后的操作
+                    alert("操作失误");
+                }
+            });
+        }
+        function setInfo(data){
+            var arr_info = data.split('-');
+            for(var i in arr_info){
+              $('.myTeam-box .info span').eq(i).find('em').html(arr_info[i]);
+            }
+        }
+
+
+        // 我的团队
+        getTeam('','admin');
+        var frist = 0;
+        var _li='';
+        $('.team-box').on('click','li',function(event){
+             _li=$(this);
+            if (_li.find('ul').index() ==-1) {
+                var userCode = $(this).data('code');
+                console.log(userCode);
+                getTeam('',userCode);
+            }else{
+                if (_li.find('>ul').is(':hidden')) {
+                    _li.find('>ul').show();
+                }else{
+                    _li.find('ul').hide();
+                }
+               
+            }
+             event.stopPropagation();
+        });
+        function getTeam( perjmcode,username){
+            $.ajax({
+                type:'POST',
+                url:URL+'myTeamCXMem',
+                data:{
+                    "perjmcode":"",
+                    "username":username
+                },
+                dateType:'JSON',
+                success:function(data){
+                   setItem(data.tmMemList);
+                },
+                error:function(){
+                    //失败之后的操作
+                    alert("操作失误");
+                }
+            });
+        }
+        function setItem(data){
+            if (data.length==0) {
+                layer.open({
+                    content:"该成员暂无下级团队！",
+                    btn: '确定'
+                  });
+            }else{
+                var li_html ='<ul>';
+                for(var i in data){
+                    li_html = li_html+'<li data-code='+data[i].UserCode+'>'+data[i].UserName+'</li>'
+                }
+                li_html= li_html+'</ul>';
+                if (frist==0) {
+                     $('.team-box').append(li_html);
+                     frist =1;
+                }else{
+                    $(_li).append(li_html);
+                }
+                var li_html= '';
+            }
+            
+        }
+
+    </script> 
+</body>
+</html>
+<script src="./js/RainbowBridge.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    setTitle(".registerguide_title", {'title':'我的团队',"theme":"1"});
+</script>
