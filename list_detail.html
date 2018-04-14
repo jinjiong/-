@@ -14,7 +14,8 @@
 	 <script src="./js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
     <script src="./js/wapframwork.js"></script>
     <script src="./js/layer.js"></script>
-	 
+	   
+
 	 <style>
 		.addWrap{ position:relative; width:100%;background:#fff;margin:0; padding:0;}
 		.addWrap .swipe{overflow: hidden;visibility: hidden;position:relative;}
@@ -119,9 +120,24 @@
 		})
 	});
 	function buy(){
-		var goodsID=getQueryVariable("spID");
-		location.href="./write_order.html?goodsID="+goodsID;
+		setOrder();
 	}
+
+	function setOrder(){
+		var username=localStorage.getItem("username");
+		var Cart =[];
+		var spid= $(this).find("input[type=checkbox]").attr("spid");
+		var nub =  $(this).find('.number').text();
+		var product={};
+		product.spID=getQueryVariable("spID");
+		product.spCount='1';
+		Cart.push(product);
+		localStorage.setItem('local_cart', JSON.stringify(Cart));
+		location.replace('write_order.html');
+	}
+
+
+
 	//加入购物车
 	function spsc(){
 	var username=localStorage.getItem("username");

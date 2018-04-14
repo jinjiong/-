@@ -1,14 +1,12 @@
 
 /*计算总钱数*/
 function total(){
-	
 	setTimeout(function(){
 		var S=0;
 	    $.each($('.total'), function() {
 	    	var $ul_total=$(this).prev('ul').find("input[type='checkbox']");
 	    	var s=0;
 	        var n1=0;
-			
 	    	$.each($(this).prev('ul').find(".number"), function(i) {
 				if($ul_total.eq(i).attr("checked")=="checked"){
 					if ($(this).parent().prev().html().replace("￥","")=='') {
@@ -84,12 +82,15 @@ $(function(){
 			    },
 				success:function(data){
 					console.log(data);
+					if (data.shopList.length!=0) {
+						hide();
+					}
 					var ShopList=JSON.stringify(data.shopList);
 					var jsonObj = JSON.parse(ShopList);//转换为json对象
 					var listStr="";
 					for(var i=0;i<jsonObj.length;i++){
 
-						listStr+="<li class='clearfix'><div class='label fl'><label><input type='checkbox' checked=='checked' spid="+jsonObj[i].ID+" spHyj="+jsonObj[i].spHyj;
+						listStr+="<li class='clearfix'><div class='label fl'><label><input type='checkbox' checked=='checked' spid="+jsonObj[i].ID;
 						listStr+=" /><img src='./img/c_checkbox_on.png'/></label></div><div class='img fl'><img src='";
 						listStr+=jsonObj[i].spImgUrl;
 						listStr+="'/></div><div class='text fl'><p class='overflow'>";
@@ -112,7 +113,7 @@ $(function(){
                   });
 				location.href="./login.html";
 			}
-	hide();
+	
 	total();
 /*编辑*/
 $("header span").click(function(){
@@ -216,69 +217,22 @@ $('.sett').click(function(){
 });
 
 function setOrder(){
-	var username=localStorage.getItem("username");
-	var UserAddress = getSite(username);
+	// var username=localStorage.getItem("username");
+	var Cart =[];
 	$.each($('li'), function() {
 		if ($(this).find("input[type=checkbox]").attr("checked")=="checked") {
 			var spid= $(this).find("input[type=checkbox]").attr("spid");
-			var spHyj = $(this).find("input[type=checkbox]").attr("spHyj");
 			var nub =  $(this).find('.number').text();
-			var spZJinE = parseInt($(this).find('.red').html().replace("￥",""))*parseInt(nub);
-			$.ajax({
-				type:'POST',
-				url:getAPIURL() + 'GoodsOrderAdd',
-
-				data:{
-					"perjmcode":"",
-					"username":username,
-					"spID":spid,
-					"spCount":nub,
-					"spZJinE":spZJinE,
-					"spZJiFen":spHyj,
-					"postAddress":UserAddress
-				},
-				dateType:'JSON',
-				success:function(data){
-					console.log(data);
-					if(data.ResultData==0){
-						location.replace('write_order.html');
-						// layer.open({
-						// 	content:data.Data,
-						// 	btn: '确定'
-						//   });
-					}else if(data.ResultData==1){
-						layer.open({
-							title:"温馨提示",
-							content:data.Data,
-							btn: '确定'
-						  });
-					}
-				}
-			});
+			var product={};
+			product.spID=spid;
+			product.spCount=nub;
+			Cart.push(product);
 		}
 	})
-}
-
-function getSite(username){
-	var UserAddress = '';
-	$.ajax({
-		type:'POST',
-		url:getAPIURL() + 'readMemInfoByCode',
-		async:false,
-		data:{
-			"perjmcode":"",
-			"username":username,
-		},
-		dateType:'JSON',
-		success:function(data){
-			console.log(data.memInfo.UserAddress);
-			UserAddress = data.memInfo.UserAddress;
-		}
-	});
-	return UserAddress;
+	localStorage.setItem('local_cart', JSON.stringify(Cart));
+	location.replace('write_order.html');
 }
 /*结算*/
-
 
 
 

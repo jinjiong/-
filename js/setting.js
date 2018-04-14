@@ -12,6 +12,7 @@
 	// window.location.href = "mobile/index.html";
 	uname="2";
 	}
+    
   $.ajax({
     type:"POST",
     url:getAPIURL()+ "appVersionGet",

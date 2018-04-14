@@ -6,56 +6,94 @@ $(function(){
 	var sp_title="";
 	var sp_price="";
 	var sp_jifen="";
-	var sp_count=1;
-	 
-	function getQueryVariable(variable)
-		{
-			   var query = decodeURI(window.location.search.substring(1));
-			  
-			   var vars = query.split("&");
-			   for (var i=0;i<vars.length;i++) {
-					   var pair = vars[i].split("=");
-					   if(pair[0] == variable){return pair[1];}
-			   }
-			   return(false);
-		}
-	goodsID=getQueryVariable("goodsID");
-	//alert(goodsID);
+	function getQueryVariable(variable){
+		   var query = decodeURI(window.location.search.substring(1));
+		   var vars = query.split("&");
+		   for (var i=0;i<vars.length;i++) {
+				   var pair = vars[i].split("=");
+				   if(pair[0] == variable){return pair[1];}
+		   }
+		   return(false);
+	}
+
 	//加载商品信息
-	$.ajax({
+	setPro();
+	function setPro(){
+		local_cart = $.parseJSON(localStorage.getItem('local_cart'));
+		console.log(local_cart);
+		var all_jifen=0;
+		var all_monery=0;
+		$.each(local_cart,function(index,el){
+			$.ajax({
 				type:'POST',
 				url:getAPIURL() + 'readShopByID',
+				// async:false, 
 				data:{
 					"perjmcode":"",
 					"username":username,
-					"spID":goodsID
-					
+					"spID":this.spID
 				},
 				dateType:'JSON',
-				
+				beforeSend:function(){
+			    	layer.open({type: 2,content: '加载中...'});
+			    },
 				success:function(data){
-					//alert(data.Message);
-					var shopList=JSON.stringify(data.shopList);
-					var jesonObj=JSON.parse(shopList);
-					
-					$.each(jesonObj, function(i) {
-						sp_title=jesonObj[i]["spName"];
-					    sp_price=jesonObj[i]["spScj"];
-					    sp_jifen=jesonObj[i]["spHyj"];
-					    sp_img=jesonObj[i]["spImgUrl2"];
-						
-					});
-					 var z_price=sp_count*Number(sp_price);
-					$("#sp_title").html(sp_title);
-					$("#sp_price").html(sp_price);
-					$("#sp_jifen").html(sp_jifen);
-					$("#sp_count").html(sp_count);
-					$("#sp_img").attr( "src",sp_img);
-					$("#z_price").html(z_price);
+	 				all_jifen=all_jifen+parseInt(data.shopList[0].spHyj)*parseInt(el.spCount);
+                    all_monery = all_monery+parseFloat(data.shopList[0].spScj)*parseInt(el.spCount);
+	 				var pro_htm='<a href="javascript:;" class="aui-list-product-fl-item" data-id="'+data.shopList[0].ID+'">'+
+								'<div class="aui-list-product-fl-img">'+
+									'<img src="'+data.shopList[0].spImgUrl2+'" id="sp_img" alt="">'+
+								'</div>'+
+								'<div class="aui-list-product-fl-text">'+
+									'<h3 class="aui-list-product-fl-title" id="sp_title">'+data.shopList[0].spName+'</h3>'+
+									'<div class="aui-list-product-fl-mes">'+
+										'<div>'+
+				'							<span class="aui-list-product-item-price">'+
+				'								<em>¥</em>'+
+				'								<label id="sp_price" data-spHyj='+data.shopList[0].spHyj+'>'+data.shopList[0].spScj+'</label>'+
+				'							</span>'+
+				'							<span class="aui-list-product-item-del-price" >'+
+				'								'+
+				'							</span>'+
+				'						</div>'+
+				'						<div class="aui-btn-purchase">'+
+				'							<button class="jian" id="jian">-</button><span id="sp_count" class="sp_count">'+el.spCount+'</span><button class="add" id="add">+</button>'+
+				'						</div>'+
+				'					</div>'+
+				'					<div class="aui-list-product-fl-bag" >'+
+				'						<span><img src="./img/icon/bag1.png" alt=""></span>'+
+				'						<span><img src="./img/icon/bag2.png" alt=""></span>'+
+				'					</div>'+
+				'				</div>'+
+				'			</a>';
+					$('.aui-list-product-float-item').append(pro_htm);
+					$("#sp_jifen").html(all_jifen);
+					$("#z_price").html(all_monery);
+					layer.closeAll(2);
 				}
-				});
-	
-	
+			});
+		})
+		
+		
+	}
+	function getSite(username){
+		var UserAddress = '';
+		$.ajax({
+			type:'POST',
+			url:getAPIURL() + 'readMemInfoByCode',
+			async:false,
+			data:{
+				"perjmcode":"",
+				"username":username,
+			},
+			dateType:'JSON',
+			success:function(data){
+				console.log(data.memInfo.UserAddress);
+				UserAddress = data.memInfo.UserAddress;
+			}
+		});
+		return UserAddress;
+	}
 	//加载收货地址
 	$.ajax({
 				type:'POST',
@@ -66,9 +104,7 @@ $(function(){
 					
 				},
 				dateType:'JSON',
-				
 				success:function(data){
-					
 					var memInfo=JSON.stringify(data.memInfo);
 					var jesonObj=JSON.parse(memInfo);
 					var u_id="";
@@ -86,61 +122,92 @@ $(function(){
 					
 				}
 				});
-				
-				
-				
-		
-		$("#jian").click(function(){
+		$(".aui-list-product-float-item").on('click','.jian',function(){
+			var sp_count = parseInt($(this).siblings('.sp_count').html());
 			if(sp_count-1!=0){
 				sp_count-=1;
-				$("#sp_count").html(sp_count);
-				var z_price=sp_count*Number(sp_price);
-			$("#z_price").html(z_price);
+				$(this).siblings('.sp_count').html(sp_count);
+				all_monery_sphyj();
 			}
 			
 		});
-		
-		$("#add").click(function(){
+		$(".aui-list-product-float-item").on('click','.add',function(){
+			var sp_count = parseInt($(this).siblings('.sp_count').html());
 			sp_count+=1;
-			$("#sp_count").html(sp_count);
-			var z_price=sp_count*Number(sp_price);
-			$("#z_price").html(z_price);
+			$(this).siblings('.sp_count').html(sp_count);
+			all_monery_sphyj();
 		});
-		
+     
+		function all_monery_sphyj(){
+		 var all_monery=0;
+		 var all_sphyj=0;
+          $.each($('.aui-list-product-fl-item'),function(){
+          		all_monery=all_monery+parseFloat($(this).find('.sp_count').html())*parseFloat($(this).find('#sp_price').html());
+          		all_sphyj=all_sphyj+parseFloat($(this).find('.sp_count').html())*parseFloat($(this).find('#sp_price').data('sphyj'));
+          });
+          $("#z_price").html(all_monery);
+          $("#sp_jifen").html(all_sphyj);
+		}
 		$("#tjdd").click(function(){
-			var z_price=sp_count*Number(sp_price);
-			
+			setOrder();
+		});
+		function setOrder(){
+			var UserAddress =$('#u_address').html();
+			$.each($('.aui-list-product-fl-item'), function() {
+				var spZJinE = parseFloat($(this).find('#sp_price').html())*parseInt($(this).find('.sp_count').html());
+				var spid =$(this).data('id');
+				var nub = $(this).find('.sp_count').html();
+				var spHyj =$(this).find('#sp_price').data('sphyj');
+				console.log(spZJinE+'--'+spid+'--'+nub+'--'+spHyj+'--'+UserAddress);
+				$.ajax({
+					type:'POST',
+					url:getAPIURL() + 'GoodsOrderAdd',
+					dateType:'JSON',
+					data:{
+						"perjmcode":"",
+						"username":username,
+						"spID":spid,
+						"spCount":nub,
+						"spZJinE":spZJinE,
+						"spZJiFen":spHyj,
+						"postAddress":UserAddress
+					},
+					success:function(data){
+						// 购买成功购物车内删除
+						dele_pro(spid);
+						if(data.ResultData==0){
+							layer.open({
+								content:data.Data,
+								btn: '确定'
+							  });
+						}else if(data.ResultData==1){
+							layer.open({
+								title:"温馨提示",
+								content:data.Data,
+								btn: '确定'
+							  });
+						}
+						
+					}
+				});
+
+			})
+		}
+		function dele_pro(spid){
 			$.ajax({
 				type:'POST',
-				url:getAPIURL() + 'GoodsOrderAdd',
+				url:getAPIURL() + 'cancelGwcShopByID',
 				data:{
 					"perjmcode":"",
 					"username":username,
-					"spID":goodsID,
-					"spCount":sp_count,
-					"spZJinE":z_price,
-					"spZJiFen":sp_jifen
-					
+					"spID":spid
 				},
 				dateType:'JSON',
-				
 				success:function(data){
-					if(data.ResultData==0){
-						layer.open({
-							content:data.Data,
-							btn: '确定'
-						  });
-						  location.href="./Settlement.html";
-					}else{
-						layer.open({
-							content:data.Data,
-							btn: '确定'
-						  });
-					}
+					console.log(data);
 				}
-				});
-	
-		});
+			});
+		}
 });
 
 
