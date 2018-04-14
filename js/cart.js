@@ -217,32 +217,35 @@ $('.sett').click(function(){
 
 function setOrder(){
 	var username=localStorage.getItem("username");
+	var UserAddress = getSite(username);
 	$.each($('li'), function() {
 		if ($(this).find("input[type=checkbox]").attr("checked")=="checked") {
 			var spid= $(this).find("input[type=checkbox]").attr("spid");
 			var spHyj = $(this).find("input[type=checkbox]").attr("spHyj");
-			console.log(spHyj);
 			var nub =  $(this).find('.number').text();
 			var spZJinE = parseInt($(this).find('.red').html().replace("￥",""))*parseInt(nub);
 			$.ajax({
 				type:'POST',
 				url:getAPIURL() + 'GoodsOrderAdd',
+
 				data:{
 					"perjmcode":"",
 					"username":username,
 					"spID":spid,
 					"spCount":nub,
 					"spZJinE":spZJinE,
-					"spZJiFen":spHyj
+					"spZJiFen":spHyj,
+					"postAddress":UserAddress
 				},
 				dateType:'JSON',
 				success:function(data){
 					console.log(data);
 					if(data.ResultData==0){
-						layer.open({
-							content:data.Data,
-							btn: '确定'
-						  });
+						location.replace('write_order.html');
+						// layer.open({
+						// 	content:data.Data,
+						// 	btn: '确定'
+						//   });
 					}else if(data.ResultData==1){
 						layer.open({
 							title:"温馨提示",
@@ -254,6 +257,25 @@ function setOrder(){
 			});
 		}
 	})
+}
+
+function getSite(username){
+	var UserAddress = '';
+	$.ajax({
+		type:'POST',
+		url:getAPIURL() + 'readMemInfoByCode',
+		async:false,
+		data:{
+			"perjmcode":"",
+			"username":username,
+		},
+		dateType:'JSON',
+		success:function(data){
+			console.log(data.memInfo.UserAddress);
+			UserAddress = data.memInfo.UserAddress;
+		}
+	});
+	return UserAddress;
 }
 /*结算*/
 
