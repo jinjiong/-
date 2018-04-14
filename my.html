@@ -9,19 +9,22 @@
     <meta name="referrer" content="always">
     <title>个人中心</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	
-   
-   <link rel="stylesheet" href="./css/common.css"/>
     <link rel="stylesheet" href="./css/base_1cbfdc6a3dba5c7a9314faf417520084.css" >    
 	<link rel="stylesheet" href="./css/showcase_with_components_e72dc25490fa24beee9a2cfea9793d13.css" >
     <link rel="stylesheet" type="text/css" href="./css/layer.css"/>
 	<script src="./js/jquery-2.1.4.js"></script>
 	<script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
 	<link rel="stylesheet" href="./css/weui.min.css">
+  <link rel="stylesheet" href="./css/common.css"/>
     <link rel="stylesheet" href="./css/jquery-weui.css">
     <link rel="stylesheet" href="./css/resets.css">
     <link rel="stylesheet" href="./css/box-flex.css">
     <link rel="stylesheet" href="./css/styles.css">
+    <style type="text/css">
+      .footer{
+        height: auto;
+      }
+    </style>
 	<script>
 	$(function(){
 			var username=localStorage.getItem("username");
@@ -109,7 +112,6 @@
    <div class="laymain">
  <!--top-->
 <div class="wp_top_index" style="height:30px;text-align:center;line-height:30px;font-size:16px;">
-	<a href="" class="wp_fl" style="float:left;font-size:14px;padding-left:5px;">分享</a>
     <span class="s1" style="color:#000;">个人中心</span>
         <a href="./personal.html" style="float:right;font-size:14px;padding-right:5px;">编辑</a>
     
@@ -205,7 +207,7 @@
   
  </div>
 
-   <ul class="footer" style="height:3.5rem;">
+   <ul class="footer">
             <li class="footer-item">
                 <a href="index.html" class="">
                     <i class="icon icon_index active" style="width:1.5rem;height:1.5rem;"></i>
@@ -225,10 +227,10 @@
                     <p class="icon_title" style="margin-top:0.2rem;">订单</p>
                 </a>
             </li>
-            <li class="footer-item">
+            <li class="footer-item active">
                 <a  class="" id="index_my">
                     <i class="icon icon_my"  style="width:1.5rem;height:1.5rem;"></i>
-                    <p class="icon_title" style="color: #f23029;margin-top:0.2rem;">我的</p>
+                    <p class="icon_title" style="margin-top:0.2rem;">我的</p>
                 </a>
             </li>
         </ul>

@@ -846,6 +846,7 @@ li {
 	height: auto;
 	width: 6rem;
 	overflow: hidden;
+	min-height: 6rem;
 }
 
 .aui-list-product-fl-img img {

@@ -48,7 +48,9 @@ $(function(){
 					"pageIndex":"1"
 				},
 				dateType:'JSON',
-				
+				beforeSend:function(){
+			    	layer.open({type: 2,content: '加载中...'});
+			    },
 				success:function(data){
 				
 					var ShopList=JSON.stringify(data.shopList);
@@ -66,6 +68,7 @@ $(function(){
 						listStr+="</span></p></div></li>";
 					}
 					document.getElementById("goods_list").innerHTML =listStr;
+					layer.closeAll(2);
 				}
 				});
 			}else{
@@ -74,6 +77,7 @@ $(function(){
                     btn: '确定'
                   });
 				location.href="./login.html";
+				layer.closeAll(2);
 			}
 			
 	

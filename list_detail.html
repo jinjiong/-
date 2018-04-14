@@ -53,6 +53,9 @@
 				"spID":canshu
 				},
 			dateType:'JSON',
+			beforeSend:function(){
+		    	layer.open({type: 2,content: '加载中...'});
+		    },
 			success:function(data){
 				//成功之后的操作
 				var reg = new RegExp('"',"g");
@@ -92,9 +95,11 @@
 				document.getElementById("goods_price").innerHTML = price;
 				document.getElementById("goods_video").innerHTML = video_str;
 				document.getElementById("goods_detail").innerHTML = detail;
+				layer.closeAll(2);
 			},
 			error:function(){
 				//失败之后的操作
+				layer.closeAll(2);
 			}
 })
 		//幻灯片设置
