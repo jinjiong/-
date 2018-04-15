@@ -101,7 +101,7 @@
                       investStr+=jsonObj[i].spImgUrl; 
                       investStr+="'></div><div class='has-title'><h3 class='title'>";
                       investStr+=jsonObj[i].spName;
-                      investStr+="</h3><p class='price'><em>¥ ";
+                      investStr+="</h3><p class='price'><em>¥";
                       investStr+=jsonObj[i].spScj;
                       investStr+="</em></p><div class='goods_buy'><img src='./img/buy.png'/></div></div></a></li>";
                 }
