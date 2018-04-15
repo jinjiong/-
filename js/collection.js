@@ -51,8 +51,9 @@ $(function(){
 				beforeSend:function(){
 			    	layer.open({type: 2,content: '加载中...'});
 			    },
+			    
 				success:function(data){
-				
+				console.log(data.shopList);
 					var ShopList=JSON.stringify(data.shopList);
 					var jsonObj = JSON.parse(ShopList);//转换为json对象
 					var listStr="";
@@ -184,3 +185,11 @@ $('.delete').click(function(){
 });
 /*删除*/
 })
+
+
+$('#goods_list').on("click"," li .img , li .text",function(){
+	var id =$(this).siblings('.label').find('input').attr('spid');
+	location.replace('/list_detail.html?spID='+id);
+	console.log(id);
+
+});

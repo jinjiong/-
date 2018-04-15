@@ -1862,6 +1862,9 @@
 
        
     }
+     .activate-box .title{
+        margin-bottom: 5px;
+     }
 .activate-box .activate-center{
     background: #fff;
     margin-left: -0.42rem;
@@ -1874,6 +1877,8 @@
     margin-bottom: 0.266667rem;
 }
 .activate-box .activate-center .btn{
+    position: relative;
+    z-index: 9;
    float: right;
    height: 0.666667rem;
    padding-left: 0.266667rem;
@@ -1883,6 +1888,9 @@
    color: #fff;
    font-size: 0.3rem;
    border-radius:5px;
+}
+.activate-box .activate-center .btn.active{
+    background:#5cb85c;
 }
 .activate-box .activate-center .txt{
     position: relative;
@@ -2088,7 +2096,7 @@
 
 .register_title .icon {
     position: absolute;
-    left: 0.3rem;
+    left: 0rem;
     top: 0.26rem;
     width: 0.24rem;
     height: 0.46rem;
@@ -2365,7 +2373,7 @@
 
 .login_title .icon {
     position: absolute;
-    left: 0.3rem;
+    left: 0rem;
     top: 0.26rem;
     width: 0.24rem;
     height: 0.46rem;

@@ -175,11 +175,12 @@ $(function(){
 					success:function(data){
 						// 购买成功购物车内删除
 						dele_pro(spid);
+						location.replace('Settlement.html');
 						if(data.ResultData==0){
-							layer.open({
-								content:data.Data,
-								btn: '确定'
-							  });
+							// layer.open({
+							// 	content:data.Data,
+							// 	btn: '确定'
+							//   });
 						}else if(data.ResultData==1){
 							layer.open({
 								title:"温馨提示",

@@ -12,14 +12,16 @@
     <link rel="stylesheet" href="./css/base_1cbfdc6a3dba5c7a9314faf417520084.css" >    
 	<link rel="stylesheet" href="./css/showcase_with_components_e72dc25490fa24beee9a2cfea9793d13.css" >
     <link rel="stylesheet" type="text/css" href="./css/layer.css"/>
-	<script src="./js/jquery-2.1.4.js"></script>
-	<script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
 	<link rel="stylesheet" href="./css/weui.min.css">
-  <link rel="stylesheet" href="./css/common.css"/>
+    <link rel="stylesheet" href="./css/common.css"/>
     <link rel="stylesheet" href="./css/jquery-weui.css">
     <link rel="stylesheet" href="./css/resets.css">
     <link rel="stylesheet" href="./css/box-flex.css">
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" type="text/css" href="./css/add_my.css">
+    <script src="./js/jquery-2.1.4.js"></script>
+    <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/layer.js"></script>
     <style type="text/css">
       .footer{
         height: auto;
@@ -27,18 +29,24 @@
     </style>
 	<script>
 	$(function(){
-			var username=localStorage.getItem("username");
-			
+		var username=localStorage.getItem("username");
+        if(username==null){
+            layer.open({
+                        content:"请您先登录！",
+                        btn: '确定'
+                      });
+            location.href="./login.html";
+        }
 			$.ajax({
 			  type: "POST",
 			  url: getAPIURL() + "readMemInfoByCode",
 			  dataType: "json",
 			  data:{
 				  "perjmcode":"",
-				  "phone":username
+				  "username":username
 			  },
 			  success: function (data) {
-				
+				console.log(data)
 				var memInfo=JSON.stringify(data.memInfo);
 				var jesonObj=JSON.parse(memInfo);
 				var dt="";
@@ -53,9 +61,10 @@
 					    dj=jesonObj["UserZG"];
 						jf=jesonObj["UserJiFen"];
 					});
-				$("#jf").html(jf);
+				// $("#jf").html(jf);
 				$("#dj").html(dj);
 				$("#yhm").html(yhm);
+                $(".name").html(yhm);
 				$("#dt").html(dt);
 				$("#bx").html(bx);
 			  }
@@ -65,7 +74,6 @@
 		
 		//点击订单菜单
 		$("#index_order").click(function () {
-			
 			if(username!=""){
 				location.href="./order.html?uname="+username;
 			}else{
@@ -98,45 +106,28 @@
 		  }); 
 		
 		});
-		
-		
+
 		
 		
 		
 	</script>
 	</head>
 <body class=" " ontouchstart="">
-        
-    
-   <div class="container " style="min-height: 463px;">
+   <div class="container ">
    <div class="laymain">
  <!--top-->
 <div class="wp_top_index" style="height:30px;text-align:center;line-height:30px;font-size:16px;">
     <span class="s1" style="color:#000;">个人中心</span>
         <a href="./personal.html" style="float:right;font-size:14px;padding-right:5px;">编辑</a>
-    
 </div>
-	
-    
-    
 </div>
-   <ul class="wallet-control flex flex-pack-justify flex-pack-center" style="height:120px;background:url(./img/my_bg.jpg);background-position:top center;">
-           <li class="flex flex-v flex-align-center">
-                
-           </li>
-            <li class="flex flex-v flex-align-center">
-			<br/>
-                <img src="./img/user/head-2.jpg"  style="width:30px,height:30px;border:1px solid #fff;border-radius:15px;" alt="">
-               <br/> <p id="yhm">admin</p>
-                 <br/><em id="jf">800</em>
-           </li>
-            <li class="flex flex-v flex-align-center">
-                
-
-           </li>
-       </ul>
-
-    
+   <div class="wallet-control">
+        <div class="user-info">
+            <img src="img/me_head_img.jpg" alt="">
+            <p id="yhm"></p>
+            <p id="jf"></p>
+        </div>
+     </div>
     <div class="weui-msg wallet-main clearfix">
       
        <!-- 腾迅服务 -->
@@ -199,7 +190,7 @@
                 设置
               </p>
             </a>
-            <a href="" class="weui-grid js_grid">
+            <a href="javascript:;" class="weui-grid js_grid invite">
               <div class="weui-grid__icon gy">
                 <img src="./img/icon/icon_1.png" alt="">
               </div>
@@ -225,13 +216,28 @@
             </a>
           </div>
         <!-- 腾迅服务 -->
-        
-          
     </div>
-
-  
  </div>
-
+ <div class="invite-box" id="content">
+     <div class="invite-center">
+          <div class="invite-bg">
+              <div class="title"><span>邀请卡</span></div>
+              <div class="user-box">
+                  <div class="img"><img src="img/me_head_img.jpg"></div>
+                  <p class="name">admin</p>
+                  <p>邀你一起加入，推广赢奖励</p>
+              </div>
+              <div class="erwei" id="output" >
+                  <!-- <img src="img/erwei.jpg" > -->
+              </div>
+              <p class="o_info">长按识别二维码</p>
+          </div>
+     </div>
+     <p class="info"><img src="img/fingerprint.png">长按图片保存至相册</p>
+ </div>
+ <style type="text/css">
+    
+ </style>
    <ul class="footer">
             <li class="footer-item">
                 <a href="index.html" class="">
@@ -259,6 +265,32 @@
                 </a>
             </li>
         </ul>
-    
+        <script type="text/javascript" src="js/html2canvas.js"></script>
+        <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
+        <script type="text/javascript">
+            jQuery('#output').qrcode({
+                'text':'admin',
+                'width':'90',
+                'height':'90'
+
+            });
+            $('.invite').click(function(){
+                html2canvas(document.getElementById('content')).then(function(canvas) {
+                    convertCanvasToImage(canvas);
+                    }
+                );
+                function convertCanvasToImage(canvas) {
+                    var image = new Image();
+                    image.src = canvas.toDataURL("image/jpg");
+                     var pageii = layer.open({
+                      type: 1
+                      ,content: '<img  src="'+image.src+'"><a href="javascript:;" class="button" onclick="layer.closeAll();">取消</a>'
+                      ,anim: 'up'
+                      ,style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
+                    });
+                }
+               
+            })
+        </script>
 	  
 	  </body></html>

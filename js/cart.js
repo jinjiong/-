@@ -1,4 +1,11 @@
-
+var username=localStorage.getItem("username");
+if(username==null){
+    layer.open({
+                content:"请您先登录！",
+                btn: '确定'
+              });
+    location.href="./login.html";
+}
 /*计算总钱数*/
 function total(){
 	setTimeout(function(){
@@ -8,6 +15,7 @@ function total(){
 	    	var s=0;
 	        var n1=0;
 	    	$.each($(this).prev('ul').find(".number"), function(i) {
+	    		console.log('1111');
 				if($ul_total.eq(i).attr("checked")=="checked"){
 					if ($(this).parent().prev().html().replace("￥","")=='') {
 						n1=n1+parseInt($(this).html());
@@ -81,15 +89,10 @@ $(function(){
 			    	layer.open({type: 2,content: '加载中...'});
 			    },
 				success:function(data){
-					console.log(data);
-					if (data.shopList.length!=0) {
-						hide();
-					}
 					var ShopList=JSON.stringify(data.shopList);
 					var jsonObj = JSON.parse(ShopList);//转换为json对象
 					var listStr="";
 					for(var i=0;i<jsonObj.length;i++){
-
 						listStr+="<li class='clearfix'><div class='label fl'><label><input type='checkbox' checked=='checked' spid="+jsonObj[i].ID;
 						listStr+=" /><img src='./img/c_checkbox_on.png'/></label></div><div class='img fl'><img src='";
 						listStr+=jsonObj[i].spImgUrl;
@@ -104,6 +107,7 @@ $(function(){
 					$(".btn2").on("click",add);
 					$(".btn1").on("click",jian);
 					layer.closeAll(2);
+
 				}
 				});
 			}else{
@@ -113,7 +117,7 @@ $(function(){
                   });
 				location.href="./login.html";
 			}
-	
+	hide();
 	total();
 /*编辑*/
 $("header span").click(function(){
@@ -267,7 +271,6 @@ $('.delete').click(function(){
 					}
 				}
 			});
-			
 			$(this).remove();
 		}
 	});
@@ -283,3 +286,10 @@ $('.delete').click(function(){
 });
 /*删除*/
 })
+
+$('#goods_list').on("click"," li .img , li .text .overflow, li .text .red",function(){
+	var id =$(this).siblings('.label').find('input').attr('spid');
+	location.replace('/list_detail.html?spID='+id);
+	console.log(id);
+
+});

@@ -62,50 +62,107 @@
     });
   }
   
-  //点击提现按钮时
-  $(".withdraw_btn").click(function(){
-    
-    if($("#txje").val() ==""){
-      layer.open({
-        content:"请输入转换金额！",
-        skin: 'msg',
-        time: 2 //2秒后自动关闭
-      });
-      return false;
-    }else if($("#txje").val() >yue){
-		layer.open({
-        content:"您的余额不足！",
-        skin: 'msg',
-        time: 2 //2秒后自动关闭
-      });
-      return false;
-	}else if($("#zrzh").val() ==""){
-		layer.open({
-        content:"请输入转出账号！",
-        skin: 'msg',
-        time: 2 //2秒后自动关闭
-      });
-      return false;
-	}else if($("#jymm").val() ==""){
-		layer.open({
-        content:"请输入交易密码！",
-        skin: 'msg',
-        time: 2 //2秒后自动关闭
-      });
-      return false;
-	}else if($("#jymm").val()!=userpwd){
-		layer.open({
-        content:"交易密码错误！",
-        skin: 'msg',
-        time: 2 //2秒后自动关闭
-      });
-      return false;
-	}else{
-		submit();
-	}
+    //点击提现按钮时
+    $(".withdraw_btn").click(function(){
+        if($("#txje").val() ==""){
+          layer.open({
+            content:"请输入转换金额！",
+            skin: 'msg',
+            time: 2 //2秒后自动关闭
+          });
+          return false;
+        }else if($("#txje").val() >yue){
+    		layer.open({
+            content:"您的余额不足！",
+            skin: 'msg',
+            time: 2 //2秒后自动关闭
+          });
+          return false;
+    	}else if($("#zrzh").val() ==""){
+    		layer.open({
+            content:"请输入转出账号！",
+            skin: 'msg',
+            time: 2 //2秒后自动关闭
+          });
+          return false;
+    	}else if($("#jymm").val() ==""){
+    		layer.open({
+            content:"请输入交易密码！",
+            skin: 'msg',
+            time: 2 //2秒后自动关闭
+          });
+          return false;
+    	}else if($("#jymm").val()!=userpwd){
+    		layer.open({
+            content:"交易密码错误！",
+            skin: 'msg',
+            time: 2 //2秒后自动关闭
+          });
+          return false;
+    	}else{
+    		submit();
+    	}
    
-    
   });
+
+    // 待激活
+    $.ajax({
+          type: "POST",
+          url: getAPIURL()+"readDjhListAll",
+          data: {
+          "perjmcode":"",
+          "username":username,
+          "pageIndex":'1'
+        },
+        dataType: 'json',
+        success: function (data){
+            getAc(data.djhMemList);
+            console.log(data);
+            console.log(data.djhMemList);
+       
+        }
+
+     });
+    function getAc(list){
+        var A_html='';
+        $.each(list,function(index, el) {
+            A_html =A_html+'<div class="activate-center">'+
+                        '<div class="btn">激活</div>'+
+                        '<div class="txt">'+
+                            '<i></i>'+
+                            '<p class="name" data-code="'+el.UserCode+'">'+el.UserName+'</p>'+
+                            '<p class="time">'+el.UserZCTim+'</p>'+
+                        '</div>'+
+                    '</div>';
+        });
+        $('.list-activate').append(A_html);
+
+    }
+    // 激活
+    $('.list-activate').on('click','.btn',function(){
+        if (!$(this).hasClass('active')) {
+            var _this =$(this);
+            var UserCode=$(this).parent('.activate-center').find('.name').data('code');
+            $.ajax({
+                  type: "POST",
+                  url: getAPIURL()+"jihuoMem",
+                  data: {
+                  "perjmcode":"",
+                  "username":username,
+                  "jhusername":UserCode
+                },
+                dataType: 'json',
+                success: function (data){
+                    _this.addClass('active').html('成功');
+                }
+              
+
+            });
+        }
+        
+    });
+
+    
   
   
   

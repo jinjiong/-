@@ -10,8 +10,6 @@
     <title>我的订单</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<script src="./js/jquery-2.1.4.js"></script>
-	
-    
     <link rel="stylesheet" href="./css/base_3358e3f8b478b6d2a993e218780dceb8.css" >    
 	<link rel="stylesheet" href="./css/showcase_admin_with_components_494c9f79d21f5289558c52d5334c535c.css" >   
 	<link rel="stylesheet" href="./css/common.css" />
@@ -22,7 +20,8 @@
 	<script>
 		$(function(){
 		var username=localStorage.getItem("username");
-		if(username==""){
+		if(username==null){
+			console.log('ddddd');
 			layer.open({
                     content:"请您先登录！",
                     btn: '确定'

@@ -1,0 +1,147 @@
+.wallet-control{
+    position: relative;
+    height:120px;
+    background:url(../img/my_bg.jpg);
+    background-position:top center;
+    text-align: center;
+}
+.wallet-control img{
+    width:40px;
+    height:40px;
+    border:1px solid #fff;
+    border-radius:100px;
+}
+.wallet-control .user-info{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.wallet-control .user-info p{
+    font-size: 14px;
+    margin-top: 4px;
+    color:#fff;
+}
+ .container{
+    position: relative;z-index: 9;
+    min-height: 100vh;
+ }
+ .invite-box{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    background:url(../img/bg.jpg);
+    background-size: cover;
+    padding-top: 5%;
+    box-sizing: border-box;
+    padding-left: 10%;
+    padding-right:10%;
+ }
+.invite-center{
+    position: relative;
+    background:#fff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    min-height: 400px;
+}
+.invite-bg{
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    background:#fff8f2;
+    border: 1px solid #efb788;
+    border-radius: 10px;
+
+}
+.invite-box .title{
+    text-align: center;
+    margin-top: 4vh;
+ }
+.invite-box .title span{
+    font-size:18px;
+    color: #df7855;
+    
+}
+.invite-box .user-box{
+    text-align: center;
+    color: #000;
+    font-size: 14px;
+    margin-top: 10vh;
+}
+.invite-box .user-box .img{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    overflow:hidden;
+    text-align: center;
+    margin:0 auto;
+}
+.invite-box .user-box .img img{
+    width: 100%;
+    height: auto;
+    line-height: 50px;
+
+}
+.invite-box .user-box .name{
+    font-size: 13px;
+    color: #aca7a4;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.invite-box .erwei{
+    width: 100px;
+    height: 100px;
+    background:#fff;
+    margin: 0 auto;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-top: 5vh;
+}
+.invite-box .erwei img{
+    width: 100%;
+    height: 100%;
+}
+ .invite-box .o_info{
+    text-align: center;
+    color: #656462;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.invite-box  .info{
+    margin-top: 2vh;
+    text-align: center;
+    font-size: 14px;
+}
+.invite-box  .info img{
+    width: 30px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.layui-m-layermain{
+    display: block;
+}
+.layui-m-layermain img{
+    width: 100%;
+    height: 100%;
+}
+.layui-m-layermain .button{
+    position: fixed;
+    bottom: 10px;
+    z-index: 999;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 5px;
+    background:#0197ff;
+    color: #fff;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+}

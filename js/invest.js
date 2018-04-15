@@ -21,8 +21,13 @@
 		 pxType=getQueryVariable("pxType");
 		 
     //选项卡
+
+
     $("#sp_header_navbar li").click(function() {
       _$pageno = 0;
+      $('#sp_wrap').attr('nub','1');
+      $('.cap-goods-list').empty();
+      $('.no_data-box').hide();
       $(this).addClass("navbar_active").siblings().removeClass("navbar_active");
       _index = $(this).index();
 	  if(_index==0){
@@ -38,45 +43,76 @@
       
     }); 
 
+    // 下来加载
+    var list_loading = false;
+    $(document).on('scroll', function(){
+        if ( ! list_loading ){
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()-100) {
+                $('.load-box').show();
+                comptime(flName,pxType);
+            }
+            
+        }
+    })
+
     //初始加载comptime();
 	comptime(flName,pxType);
     //    调取接口
     function comptime(flName,pxType) {
-		var investStr="<ul class='cap-goods-list'>";
+        console.log(pxType);
+        list_loading = true;
+		var investStr="";
+        var nub = $('#sp_wrap').attr('nub');
       $.ajax({
         type:"POST",
-        url:getAPIURL()+"searchShopByFl",
+        url:getAPIURL()+"searchShopByKeyWord",
         dataType: "json",
         data:{
 			"perjmcode":"",
-			"username":"",
-			"pageIndex":pageIndex,
-			"flName":flName,
-			"pxType":pxType
+            "username":"",
+            "pageIndex":nub,
+            "keyWord":"",
+            "spType":"3",
+            "spFl":flName,
+            "pxType":pxType
 		},
+        beforeSend:function(){
+            if (parseInt($('#sp_wrap').attr('nub'))==1) {
+                layer.open({type: 2,content: '加载中...'});
+            }
+            
+        },
         success: function (data) {
-          var shopList=JSON.stringify(data.shopList);
-		  var jsonObj = JSON.parse(shopList);
-		  
-		  for(var i=0;i<jsonObj.length;i++){
-			  investStr+="<li class='cap-goods-list__wrapper'><a href='./list_detail.html?spID=";
-			  investStr+=jsonObj[i].ID;
-			  investStr+="' class='cap-goods-a'><div class='cap-goods-list__photo'><img  class='cap-goods-list__img'  src='";
-			  investStr+=jsonObj[i].spImgUrl; 
-			  investStr+="'></div><div class='has-title'><h3 class='title'>";
-			  investStr+=jsonObj[i].spName;
-			  investStr+="</h3><p class='price'><em>¥ ";
-			  investStr+=jsonObj[i].spScj;
-			  investStr+="</em></p><div class='goods_buy'><img src='./img/buy.png'/></div></div></a></li>";
-		  }
-		   
-		  investStr+="</ul>";
-		  document.getElementById("sp_wrap").innerHTML = investStr;
+            if (data.shopList.length>0) {
+                if (data.shopList.length==10) {
+                    list_loading = false;
+                }else{
+                    list_loading=true;
+                    $('.load-box').hide();
+                    $('.no_data-box').show();
+                }
+                $('#sp_wrap').attr('nub',parseInt($('#sp_wrap').attr('nub'))+1)
+                var shopList=JSON.stringify(data.shopList);
+                var jsonObj = JSON.parse(shopList);
+                for(var i=0;i<jsonObj.length;i++){
+                      investStr+="<li class='cap-goods-list__wrapper'><a href='./list_detail.html?spID=";
+                      investStr+=jsonObj[i].ID;
+                      investStr+="' class='cap-goods-a'><div class='cap-goods-list__photo'><img  class='cap-goods-list__img'  src='";
+                      investStr+=jsonObj[i].spImgUrl; 
+                      investStr+="'></div><div class='has-title'><h3 class='title'>";
+                      investStr+=jsonObj[i].spName;
+                      investStr+="</h3><p class='price'><em>¥ ";
+                      investStr+=jsonObj[i].spScj;
+                      investStr+="</em></p><div class='goods_buy'><img src='./img/buy.png'/></div></div></a></li>";
+                }
+                $('.cap-goods-list').append(investStr);
+            }else{
+                $('.load-box').hide();
+                $('.no_data-box').show();
+            }
+           layer.closeAll(2);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
-          //var txtsNULL ="<p class='nothing'>暂无记录</p>";
-          //_$indexlist.append(txtsNULL);
-          //alert('出错了！');
         }
       });
     }

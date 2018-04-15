@@ -120,7 +120,17 @@
 		})
 	});
 	function buy(){
-		setOrder();
+		var username=localStorage.getItem("username");
+		if(username==null){
+		    layer.open({
+	            content:"请您先登录！",
+	            btn: '确定'
+	         });
+		    location.href="./login.html";
+		}else{
+			setOrder();
+		}
+		
 	}
 
 	function setOrder(){
@@ -141,6 +151,13 @@
 	//加入购物车
 	function spsc(){
 	var username=localStorage.getItem("username");
+	if(username==null){
+	    layer.open({
+            content:"请您先登录！",
+            btn: '确定'
+         });
+	    location.href="./login.html";
+	}
       var goodsID=getQueryVariable("spID");
       if(username!=""){
 		  
@@ -183,6 +200,13 @@
 	
 	function jrsc(){
 	var username=localStorage.getItem("username");
+	if(username==null){
+	    layer.open({
+            content:"请您先登录！",
+            btn: '确定'
+         });
+	    location.href="./login.html";
+	}
       var goodsID=getQueryVariable("spID");
       if(username!=""){
 		  
