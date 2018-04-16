@@ -21,7 +21,6 @@
 		$(function(){
 		var username=localStorage.getItem("username");
 		if(username==null){
-			console.log('ddddd');
 			layer.open({
                     content:"请您先登录！",
                     btn: '确定'
@@ -39,8 +38,8 @@
 			   }
 			   return(false);
 		}
-		var uname=getQueryVariable("uname");
 		var orderType=3;
+		var uname=localStorage.getItem("username");
 		if(uname==""){
 			layer.open({
                     content:"请您先登录！",
