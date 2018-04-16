@@ -1596,8 +1596,6 @@
 }
 
 .registerguide_content .item .question {
-    padding: 0.4rem;
-    padding-right: 0.56rem;
     border-top: 1px solid #D7D7D7;
     background-color: #fff;
     font-size: 0.3rem;
@@ -1605,7 +1603,12 @@
     position: relative;
     line-height: 0.36rem;
 }
-
+.registerguide_content .item .question a{
+    display:block;
+    width: 100%;
+    padding: 0.4rem;
+    padding-right: 0.56rem;
+}
 .registerguide_content .item .question .num {
     float: left;
     width: 8%;

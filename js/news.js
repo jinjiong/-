@@ -1,5 +1,6 @@
 (function(){
 	var username=localStorage.getItem("username");
+	console.log(username);
 		if(username==""){
 			layer.open({
                     content:"请您先登录！",
@@ -26,11 +27,12 @@
 					"perjmcode":"",
 					"username":username,
 					"pageIndex":"1",
-					"keyWord":keyWord
+					"keyWord":""
 				},
 				dateType:'JSON',
 						
 				success:function(data){
+					console.log(data)
 					var newsList=JSON.stringify(data.newsList);
 					var jsonObj = JSON.parse(newsList);
 					var newsStr="";

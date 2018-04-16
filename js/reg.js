@@ -214,6 +214,8 @@
 	  },
       success: function (data) {
 		  console.log(data);
+          alert(data);
+          location.href="./login.html";
         if (data.ResultData == 1) {
           $("#modal").hide();
           layer.open({
