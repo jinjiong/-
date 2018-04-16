@@ -6,6 +6,82 @@ if(username==null){
               });
     location.href="./login.html";
 }
+/*给单选框或复选框添加样式*/
+$(function(){
+	var username=localStorage.getItem("username");
+			if(username!=""){
+				$.ajax({
+				type:'POST',
+				url:getAPIURL() + 'readShopGwcList',
+				data:{
+					"perjmcode":"",
+					"username":username,
+					"pageIndex":"1"
+				},
+				dateType:'JSON',
+				beforeSend:function(){
+			    	layer.open({type: 2,content: '加载中...'});
+			    },
+				success:function(data){
+					var ShopList=JSON.stringify(data.shopList);
+					var jsonObj = JSON.parse(ShopList);//转换为json对象
+					var listStr="";
+					console.log(jsonObj.lengt);
+					if (jsonObj.length<=0) {
+						$('header span,.content,.bottom').hide();
+						$('.no-pro').show();
+					}else{
+						$('header span,.content').show();
+						$('.bottom').css('opacity','1');
+						for(var i=0;i<jsonObj.length;i++){
+							listStr+="<li class='clearfix'><div class='label fl'><label><input type='checkbox' checked=='checked' spid="+jsonObj[i].ID;
+							listStr+=" /><img src='./img/c_checkbox_on.png'/></label></div><div class='img fl'><img src='";
+							listStr+=jsonObj[i].spImgUrl;
+							listStr+="'/></div><div class='text fl'><p class='overflow'>";
+							listStr+=jsonObj[i].spName;
+							listStr+="</p><p class='clearfix'><span class='fl red'>￥";
+							listStr+=jsonObj[i].spScj;
+							listStr+="</span><span class='fr'><input type='button'value='-'class='btn1'/><span class='number'>1</span><input type='button' value='+' class='btn2'/></span></p></div></li>";
+						}
+						document.getElementById("goods_list").innerHTML =listStr;
+						total();
+						$(".btn2").on("click",add);
+						$(".btn1").on("click",jian);
+						
+					}
+					layer.closeAll(2);
+
+				}
+				});
+			}else{
+				layer.open({
+                    content:"请您先登录！",
+                    btn: '确定'
+                  });
+				location.href="./login.html";
+			}
+	total();
+/*编辑*/
+$("header span").click(function(){
+       if ($(this).html()=="编辑") {
+       	$(this).html("完成");
+       	$(".bottom").eq(1).show();
+       }else{
+       	$(this).html("编辑");
+       	$(".bottom").eq(1).hide();
+       }
+       hide();   
+});
+/*判断有无数据*/
+function hide(){
+	console.log($("#goods_list li").length);
+	if ($("#goods_list li").length==0) {
+		$('header span,.content,.bottom').hide();
+		$('.no-pro').show();
+		return;
+	}
+}
+/*判断有无数据*/
 /*计算总钱数*/
 function total(){
 	setTimeout(function(){
@@ -34,18 +110,7 @@ function total(){
 	},100)
 }
 /*计算总钱数*/
-/*判断有无数据*/
-function hide(){
-	if ($(".content").length==0) {
-		$(".bottom").hide();
-		$(".no").css("display","-webkit-box");
-		return;
-	}else{
-		$(".bottom").eq(0).show();
-		$(".no").css("display","none");
-	}
-}
-/*判断有无数据*/
+
 /*判断是否全选*/
 function sum(){
 	if ($("ul input[checked='checked']").length==$("li").length) {
@@ -72,64 +137,7 @@ function checkbox($this){
 		total();
 		/*计算总钱数*/
 }
-/*给单选框或复选框添加样式*/
-$(function(){
-	var username=localStorage.getItem("username");
-			if(username!=""){
-				$.ajax({
-				type:'POST',
-				url:getAPIURL() + 'readShopGwcList',
-				data:{
-					"perjmcode":"",
-					"username":username,
-					"pageIndex":"1"
-				},
-				dateType:'JSON',
-				beforeSend:function(){
-			    	layer.open({type: 2,content: '加载中...'});
-			    },
-				success:function(data){
-					var ShopList=JSON.stringify(data.shopList);
-					var jsonObj = JSON.parse(ShopList);//转换为json对象
-					var listStr="";
-					for(var i=0;i<jsonObj.length;i++){
-						listStr+="<li class='clearfix'><div class='label fl'><label><input type='checkbox' checked=='checked' spid="+jsonObj[i].ID;
-						listStr+=" /><img src='./img/c_checkbox_on.png'/></label></div><div class='img fl'><img src='";
-						listStr+=jsonObj[i].spImgUrl;
-						listStr+="'/></div><div class='text fl'><p class='overflow'>";
-						listStr+=jsonObj[i].spName;
-						listStr+="</p><p class='clearfix'><span class='fl red'>￥";
-						listStr+=jsonObj[i].spScj;
-						listStr+="</span><span class='fr'><input type='button'value='-'class='btn1'/><span class='number'>1</span><input type='button' value='+' class='btn2'/></span></p></div></li>";
-					}
-					document.getElementById("goods_list").innerHTML =listStr;
-					total();
-					$(".btn2").on("click",add);
-					$(".btn1").on("click",jian);
-					layer.closeAll(2);
 
-				}
-				});
-			}else{
-				layer.open({
-                    content:"请您先登录！",
-                    btn: '确定'
-                  });
-				location.href="./login.html";
-			}
-	hide();
-	total();
-/*编辑*/
-$("header span").click(function(){
-       if ($(this).html()=="编辑") {
-       	$(this).html("完成");
-       	$(".bottom").eq(1).show();
-       }else{
-       	$(this).html("编辑");
-       	$(".bottom").eq(1).hide();
-       }
-       hide();   
-});
 /*编辑*/
 /*底部全选*/
 $('.bottom-label input').change(function(){
@@ -158,7 +166,6 @@ $('.list input').change(function(){
 })
 /*子项全选*/
 $('ul').on('change',"input[type='checkbox']",function(){
-	console.log('addd');
 	checkbox($(this));
 	var $ul_input=$(this).parents('ul').prev('.list').find('input');
 	if($(this).parents('ul').find("input[checked='checked']").length==$(this).parents("ul").children('li').length){	
@@ -237,7 +244,6 @@ function setOrder(){
 	location.replace('write_order.html');
 }
 /*结算*/
-
 
 
 /*删除*/

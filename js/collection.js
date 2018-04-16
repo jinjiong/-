@@ -1,13 +1,10 @@
 
 /*判断有无数据*/
 function hide(){
-	if ($(".content").length==0) {
-		$(".bottom").hide();
-		$(".no").css("display","-webkit-box");
+	if ($("#goods_list li").length==0) {
+		$('.content,.bottom').hide();
+		$('.no-pro').show();
 		return;
-	}else{
-		$(".bottom").eq(0).show();
-		$(".no").css("display","none");
 	}
 }
 /*判断有无数据*/
@@ -57,16 +54,22 @@ $(function(){
 					var ShopList=JSON.stringify(data.shopList);
 					var jsonObj = JSON.parse(ShopList);//转换为json对象
 					var listStr="";
-					for(var i=0;i<jsonObj.length;i++){
-						listStr+="<li class='clearfix'><div class='label fl'><label><input type='checkbox'checked='checked' spid='";
-						listStr+=jsonObj[i].ID;
-						listStr+="'/><img src='./img/c_checkbox_on.png'/></label></div><div class='img fl'><img src='";
-						listStr+=jsonObj[i].spImgUrl;
-						listStr+="'/></div><div class='text fl'><p class='overflow'>";
-						listStr+=jsonObj[i].spName;
-						listStr+="</p><p class='clearfix'><span class='fl red'>￥";
-						listStr+=jsonObj[i].spScj;
-						listStr+="</span></p></div></li>";
+					if (jsonObj.length<=0) {
+						$('.content,.bottom').hide();
+						$('.no-pro').show();
+					}else{
+						$('.content,.bottom').show();
+							for(var i=0;i<jsonObj.length;i++){
+								listStr+="<li class='clearfix'><div class='label fl'><label><input type='checkbox'checked='checked' spid='";
+								listStr+=jsonObj[i].ID;
+								listStr+="'/><img src='./img/c_checkbox_on.png'/></label></div><div class='img fl'><img src='";
+								listStr+=jsonObj[i].spImgUrl;
+								listStr+="'/></div><div class='text fl'><p class='overflow'>";
+								listStr+=jsonObj[i].spName;
+								listStr+="</p><p class='clearfix'><span class='fl red'>￥";
+								listStr+=jsonObj[i].spScj;
+								listStr+="</span></p></div></li>";
+							}
 					}
 					document.getElementById("goods_list").innerHTML =listStr;
 					layer.closeAll(2);
@@ -80,10 +83,6 @@ $(function(){
 				location.href="./login.html";
 				layer.closeAll(2);
 			}
-			
-	
-	hide();
-	
 /*编辑*/
 $("header span").click(function(){
        if ($(this).html()=="编辑") {

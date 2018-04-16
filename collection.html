@@ -6,12 +6,11 @@
 		<title>我的收藏</title>
 		<link rel="stylesheet" type="text/css" href="./css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="./css/cart.css"/>
-		
 		<link rel="stylesheet" type="text/css" href="./css/layer.css"/>
 		<script src="./js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
-	 <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
-	 <script src="./js/layer.js" type="text/javascript" charset="utf-8"></script>
-	<style type="text/css">
+		 <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
+		 <script src="./js/layer.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
 		.black .icon{
 			position: absolute;
 		    left: 0.533333rem;
@@ -21,6 +20,39 @@
 		    background: url(../img/black.png) center center no-repeat;
 		    background-size: auto 100%;
 		    vertical-align: middle;
+		}
+
+		header span,.content,.bottom{
+			display: none;
+		}
+
+		.no-pro{
+			display: none;
+		}
+		.no-pro .info-box{
+			text-align: center;
+			margin-top: 15vh;
+
+		}
+		.no-pro .info-box p{
+			font-size: 14px;
+			color: #686868;
+		}
+		.no-pro .info-box span{
+			font-size: 12px;
+			color: #9b9b9b;
+		}
+		.no-pro .info-box .btn-link{
+			display: block;
+			font-size: 14px;
+			color: #ff6700;
+			border: 1px solid #ff6700;
+			width: 100px;
+			margin: 0 auto;
+			margin-top: 5vh;
+			height: 32px;
+			line-height: 32px;
+			border-radius: 5px;
 		}
 	</style>
 	</head>
@@ -32,10 +64,14 @@
 	    </header>
 	    <!--头部-->
 	    <!--主题-->
-	    <div class="no">
-	    	<p>暂无数据，快去逛逛吧！</p>
-	    </div>
-	    <div class="con">	
+	    <div class="con">
+	    <div class="no-pro">
+	    	<div class="info-box">
+	    		<p>收藏夹没有您的宝贝了T.T</p>
+	    		<span>快给我挑点宝贝</span>
+	    		<a href="index.html" class="btn-link">去逛逛</a>
+	    	</div>
+	    </div>	
 	    <div class="content">
 	    	<div class="list">
 	    		<div class="fl">
@@ -48,7 +84,6 @@
 	    	</div>
 		    <ul ind="0" id="goods_list">
 		    	
-		    	
 		    </ul>
 		    
 	    </div>
@@ -57,7 +92,7 @@
 	   
 	     
 	     <!--删除-->
-	    <div class="bottom fixed" style="display: none;">
+	    <div class="bottom fixed" >
     		<div class="fr">
     			<button class="delete">取消收藏</button>
     		</div>
@@ -69,20 +104,19 @@
 	    		<input type="number" oninput="checkNum(this.value)" id="input"/>
 	    		<input type="button"  value="确定"/>
 	    	</form>
-<script>
-	function checkNum(val) {
-		document.getElementById('input').value = val >= 0 ? val : 0
-	}
-	
-</script>
+
 	    </div>
 	     <!--弹框-->
 	    <!--弹框2-->
 	    <div class="alert fixed"></div>
 	     <!--弹框2-->
-	
 		<script src="./js/web.js"></script>
 		<script src="./js/zepto.js"></script>
 		<script src="./js/collection.js"></script>
+		<script>
+			function checkNum(val) {
+				document.getElementById('input').value = val >= 0 ? val : 0
+			}
+		</script>
 	</body>
 </html>

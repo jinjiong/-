@@ -21,41 +21,79 @@
 			    background-size: auto 100%;
 			    vertical-align: middle;
 			}
+			header span,.content{
+				display: none;
+			}
+			.bottom{
+				opacity: 0;
+			}
+			.no-pro{
+				display: none;
+			}
+			.no-pro .info-box{
+				text-align: center;
+				margin-top: 15vh;
+
+			}
+			.no-pro .info-box p{
+				font-size: 14px;
+				color: #686868;
+			}
+			.no-pro .info-box span{
+				font-size: 12px;
+				color: #9b9b9b;
+			}
+			.no-pro .info-box .btn-link{
+				display: block;
+				font-size: 14px;
+				color: #ff6700;
+				border: 1px solid #ff6700;
+				width: 100px;
+				margin: 0 auto;
+				margin-top: 5vh;
+				height: 32px;
+				line-height: 32px;
+				border-radius: 5px;
+			}
+			
 		 </style>
-		 
 	</head>
 	<body>
 		<!--头部-->
 	    <header>
 	    	<a href="javascript:history.go(-1)" class="black"><i class="icon"></i></a>
-	    	购物车<span class="fr">编辑</span>
+	    	购物车<span class="fr"></span>
 	    </header>
 	    <!--头部-->
 	    <!--主题-->
 	  
 	    <div class="con">	
-	    <div class="content">
-	    	<div class="list">
-	    		<div class="fl">
-	    			<label>
-		    			<input type="checkbox" checked="checked"/>
-		    			<img src="./img/c_checkbox_on.png"/>
-		    		</label>
-	    		</div>
-	    		<p>海岛民生</p>
-	    	</div>
-		    <ul ind="0" id="goods_list">
-		    	
-		    	
-		    </ul>
-		     
-		    <p class="total">一共<number></number>件商品：<span></span></p>
-		     <div class="no">
-		    	
+		    <div class="no-pro">
+		    	<div class="info-box">
+		    		<p>购物车快饿瘪了T.T</p>
+		    		<span>快给我挑点宝贝</span>
+		    		<a href="index.html" class="btn-link">去逛逛</a>
+		    	</div>
 		    </div>
-	    </div>
+		    <div class="content">
+		    	<div class="list">
+		    		<div class="fl">
+		    			<label>
+			    			<input type="checkbox" checked="checked"/>
+			    			<img src="./img/c_checkbox_on.png"/>
+			    		</label>
+		    		</div>
+		    		<p>海岛民生</p>
+		    	</div>
+			    <ul ind="0" id="goods_list">
+			    	
+			    	
+			    </ul>
+			     
+			    <p class="total">一共<number></number>件商品：<span></span></p>
+			     
+		    </div>
 	   </div>
-	    <!--主题-->
 	    <!--结算-->
 	    <div class="bottom fixed">
 	    	<div class="fl bottom-label">
