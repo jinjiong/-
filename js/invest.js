@@ -57,7 +57,7 @@
 
     //初始加载comptime();
 	comptime(flName,pxType);
-    //    调取接口
+    //调取接口
     function comptime(flName,pxType) {
         console.log(pxType);
         list_loading = true;
