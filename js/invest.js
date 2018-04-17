@@ -95,7 +95,7 @@
                 var shopList=JSON.stringify(data.shopList);
                 var jsonObj = JSON.parse(shopList);
                 for(var i=0;i<jsonObj.length;i++){
-                      investStr+="<li class='cap-goods-list__wrapper'><a href='./list_detail.html?spID=";
+                      investStr+="<li class='cap-goods-list__wrapper' data-id='"+jsonObj[i].ID+"'><a href='./list_detail.html?spID=";
                       investStr+=jsonObj[i].ID;
                       investStr+="' class='cap-goods-a'><div class='cap-goods-list__photo'><img  class='cap-goods-list__img'  src='";
                       investStr+=jsonObj[i].spImgUrl; 
@@ -103,7 +103,7 @@
                       investStr+=jsonObj[i].spName;
                       investStr+="</h3><p class='price'><em>¥";
                       investStr+=jsonObj[i].spScj;
-                      investStr+="</em></p><div class='goods_buy'><img src='./img/buy.png'/></div></div></a></li>";
+                      investStr+="</em></p><div class='goods_buy' onclick='spsc(event)'><img src='./img/buy.png'/></div></div></a></li>";
                 }
                 $('.cap-goods-list').append(investStr);
             }else{
@@ -154,4 +154,53 @@
 		  }); 
 
   });
+
 })();
+    //加入购物车
+    function spsc(e){
+    e.preventDefault();
+    var username=localStorage.getItem("username");
+    if(username==null){
+        layer.open({
+            content:"请您先登录！",
+            btn: '确定'
+         });
+        location.href="./login.html";
+    }
+    console.log(e.target);
+      var goodsID=$(e.target).parents('.cap-goods-list__wrapper').data('id');
+      console.log(goodsID);
+      if(username!=""){
+            $.ajax({
+                type:"POST",
+                url:getAPIURL()+"gwcShopByID",
+                dataType: "json",
+                data:{
+                    "perjmcode":"",
+                    "username":username,
+                    "spID":goodsID
+                    
+                },
+                success: function (data) {
+                  if(data.ResultData==0){
+                      layer.open({
+                        content:data.Data,
+                        btn: '确定'
+                      });
+                  }else if(data.ResultData==1){
+                      layer.open({
+                        content:data.Data,
+                        btn: '确定'
+                      });
+                  }
+                }
+              });   
+            }else{
+                 layer.open({
+                    content:"请您先登录！",
+                    btn: '确定'
+                  });
+                location.href="./login.html";
+            }
+            
+    }

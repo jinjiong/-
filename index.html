@@ -36,14 +36,15 @@
 			overflow:hidden;
 
 		}
+		.cap-goods-list__item--small .cap-goods-list__info .title{
+			height: auto;
+		}
 		.cap-goods-list__img{
 			position: static;
 			width: 100%;
 			height: auto;
 		}
 	</style>
-
-
 	
 	<script>
 	$(function(){
@@ -93,14 +94,14 @@
 				//循环获取商品列表并渲染到页面中
 				var jsonObj = JSON.parse(ShopList);//转换为json对象
 				for(var i=0;i<jsonObj.length;i++){
-				   shopStr+="<li class='cap-goods-list__wrapper'>";
+				   shopStr+="<li class='cap-goods-list__wrapper' data-id="+jsonObj[i].ID+">";
 				   shopStr+="<a href='./list_detail.html?spID="+jsonObj[i].ID+"' class='cap-goods-list__item cap-goods-list__item--small card cap-goods-list__item--btn1 cap-goods-list__item--whitespace'>";
 				   shopStr+="<div class='cap-goods-list__photo'>";
 				   shopStr+="<img class='cap-goods-list__img' src='"+jsonObj[i].spImgUrl+"'></div>";
 				   shopStr+="<div class='cap-goods-list__info has-title has-price has-btn'>";
 				   shopStr+="<h3 class='title'>"+jsonObj[i].spName+"</h3>";
 				   shopStr+="<p class='price'><em>¥"+jsonObj[i].spScj+"</em></p></div>";
-				   shopStr+="<div class='cap-goods-list__buy-btn-wrapper cap-goods-list__buy-btn-wrapper--1'><div class='cap-goods-list__buy-btn-1'><i class='van-icon van-icon-shopping-cart'></i></div></div></a></li>";
+				   shopStr+="<div class='cap-goods-list__buy-btn-wrapper cap-goods-list__buy-btn-wrapper--1'><div class='cap-goods-list__buy-btn-1' onclick='spsc(event)'><i class='van-icon van-icon-shopping-cart'></i></div></div></a></li>";
 				};
 				shopStr+="</ul>";
 				document.getElementById("goods_list").innerHTML = shopStr;
@@ -209,9 +210,53 @@
 				location.href=url;
 			}
 		});
-		
 	});
-
+    //加入购物车
+	function spsc(e){
+		e.preventDefault();
+	var username=localStorage.getItem("username");
+	if(username==null){
+	    layer.open({
+            content:"请您先登录！",
+            btn: '确定'
+         });
+	    location.href="./login.html";
+	}
+      var goodsID=$(e.target).parents('.cap-goods-list__wrapper').data('id');
+      if(username!=""){
+			$.ajax({
+				type:"POST",
+				url:getAPIURL()+"gwcShopByID",
+				dataType: "json",
+				data:{
+					"perjmcode":"",
+					"username":username,
+					"spID":goodsID
+					
+				},
+				success: function (data) {
+				  if(data.ResultData==0){
+					  layer.open({
+						content:data.Data,
+						btn: '确定'
+					  });
+				  }else if(data.ResultData==1){
+					  layer.open({
+						content:data.Data,
+						btn: '确定'
+					  });
+				  }
+				}
+			  });	
+			}else{
+				 layer.open({
+                    content:"请您先登录！",
+                    btn: '确定'
+                  });
+				location.href="./login.html";
+			}
+			
+    }
 	</script>
 	<script src="./js/hhSwipe.js" type="text/javascript"></script>
 </head>

@@ -8,6 +8,19 @@
   var recommend_p = $("#recommend_p");
   var nc = $("#nc");
   var cutdownFlag = true;
+    function getQueryVariable(variable){
+        var query = decodeURI(window.location.search.substring(1));
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+        recommend_user=getQueryVariable("recommend_user");
+        if ($.trim(recommend_user) !='') {
+            $('#recommend_p').val(recommend_user).attr("readonly","readonly");
+        }
   /*0612 推荐人*/
   $("#referenceTitle").on("click", function () {
     $(this).hide().next().slideDown();
@@ -216,7 +229,7 @@
             content: '注册成功！'
             ,btn: '点击登录',
             end:function(){
-               location.href="./login.html";
+               location.href="http://47.52.99.82:9026/popularize.html?";
             }
         });
         if (data.ResultData == 1) {
