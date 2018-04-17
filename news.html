@@ -9,22 +9,53 @@
     <link rel="stylesheet" type="text/css" href="./css/index.css"/>
     <script src="./js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
     <script src="./js/wapframwork.js"></script>
-	<script src="./js/news.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/layer.js"></script>
+    <style type="text/css">
+        .load-box{
+            display: none;
+            text-align: center;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            color: #ccc;
+            font-size: 12px;
+        }
+        .load-box img{
+            position: relative;
+            top: 2px;
+            width: 40px;
+            vertical-align: middle;
+        }
+        .no_data-box{
+            display: none;
+            text-align: center;
+            margin-bottom: 10px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            color: #ccc;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
-<div class="registerguide_title" style="display:none;">
+<div class="registerguide_title">
     <a href="javascript:history.go(-1)">
         <i class="icon"></i>
     </a>
     <span>消息中心</span>
 </div>
-<ul class="registerguide_content" id="news_list">
-   
+<ul class="registerguide_content" id="news_list" nub="1">
 </ul>
+<div class="load-box">
+        <img src="img/load_1.gif">加载中...
+    </div>
+    <div class="no_data-box">
+        没有更多了~
+    </div>
 </body>
 
 <!--头部-->
 <script src="./js/RainbowBridge.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/news.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     setTitle(".registerguide_title", {'title':'消息中心',"theme":"1"});
 </script>

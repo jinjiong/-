@@ -1608,6 +1608,7 @@
     width: 100%;
     padding: 0.4rem;
     padding-right: 0.56rem;
+    box-sizing: border-box;
 }
 .registerguide_content .item .question .num {
     float: left;
