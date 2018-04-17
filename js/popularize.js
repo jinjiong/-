@@ -230,7 +230,7 @@
             content: '注册成功！'
             ,btn: '点击登录',
             end:function(){
-               location.href="http://47.52.99.82:9026/popularize.html?";
+               location.href="http://47.52.99.82:9026/login.html";
             }
         });
         if (data.ResultData == 1) {
