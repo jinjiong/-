@@ -47,27 +47,15 @@
 				  "username":username
 			  },
 			  success: function (data) {
-				console.log(data)
 				var memInfo=JSON.stringify(data.memInfo);
 				var jesonObj=JSON.parse(memInfo);
-				var dt="";
-				var yhm="";
-				var bx="";
-				var dj="";
-				var jf="";
 				$.each(jesonObj, function(i) {
-						bx=jesonObj["benxiSS"];
-					    dt=jesonObj["dongtaiSS"];
-					    yhm=jesonObj["UserName"];
-					    dj=jesonObj["UserZG"];
-						jf=jesonObj["UserJiFen"];
+                        UserZG=jesonObj["UserZG"];
+					    dj=jesonObj["UserKhjb"];
+						
 					});
-				// $("#jf").html(jf);
-				$("#dj").html(dj);
-				$("#yhm").html(yhm);
-                $(".name").html(yhm);
-				$("#dt").html(dt);
-				$("#bx").html(bx);
+				$("#UserZG").html(UserZG);
+                $("#dj").html(dj);
 			  }
 			});
 			
@@ -118,12 +106,13 @@
    <div class="wallet-control">
     <div class="wp_top_index">
         <span class="s1" style="color:#000;">个人中心</span>
-        <a href="./personal.html" style="float:right;font-size:14px;padding-right:5px;">编辑</a>
+        <!-- <a href="./personal.html" style="float:right;font-size:14px;padding-right:5px;">编辑</a> -->
     </div>
         <div class="user-info">
             <img src="img/me_head_img.jpg" alt="">
-            <p id="yhm"></p>
-            <p id="jf"></p>
+            <p id="UserZG"></p>
+            <p id="dj"></p>
+            
         </div>
      </div>
     <div class="weui-msg wallet-main clearfix">
