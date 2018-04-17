@@ -265,8 +265,9 @@ $('.delete').click(function(){
 					console.log(data);
 					if(data.ResultData==0){
 						layer.open({
-							content:data.Data,
-							btn: '确定'
+							content: data.Data
+						    ,skin: 'msg'
+						    ,time: 2 //2秒后自动关闭
 						  });
 					}else if(data.ResultData==1){
 						layer.open({
