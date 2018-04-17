@@ -18,7 +18,8 @@
         return(false);
     }
         recommend_user=getQueryVariable("recommend_user");
-        if ($.trim(recommend_user) !='') {
+        console.log(recommend_user);
+        if ($.trim(recommend_user) !=''&&recommend_user) {
             $('#recommend_p').val(recommend_user).attr("readonly","readonly");
         }
   /*0612 推荐人*/
