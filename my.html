@@ -270,28 +270,25 @@
         <script type="text/javascript">
           var username=localStorage.getItem("username");
             jQuery('#output').qrcode({
-                'text':'http://47.52.99.82:9026/reg.html?recommend_user='+username,
+                'text':'http://47.52.99.82:9026/popularize.html?recommend_user='+username,
                 'width':'90',
                 'height':'90'
-
             });
+            var image = new Image();
+            html2canvas(document.getElementById('content')).then(function(canvas) {
+                image.src = canvas.toDataURL("image/jpg");
+            })
             $('.invite').click(function(){
-                html2canvas(document.getElementById('content')).then(function(canvas) {
-                    convertCanvasToImage(canvas);
-                    }
-                );
-                function convertCanvasToImage(canvas) {
-                    var image = new Image();
-                    image.src = canvas.toDataURL("image/jpg");
-                     var pageii = layer.open({
+                convertCanvasToImage();
+            });
+            function convertCanvasToImage() {
+                var pageii = layer.open({
                       type: 1
                       ,content: '<img  src="'+image.src+'"><a href="javascript:;" class="button" onclick="layer.closeAll();">取消</a>'
                       ,anim: 'up'
                       ,style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
-                    });
-                }
-               
-            })
+                });
+            }
         </script>
 	  
 	  </body></html>
