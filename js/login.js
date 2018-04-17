@@ -59,28 +59,9 @@
             ,time: 2 //2秒后自动关闭
             ,end:function(){
               //判断直接从登录页进去，跳到个人中心
-              console.log(history.length);
-              if(history.length == 1){
-                window.location.href = "./index.html";
-                return false;
-              }
-              if(window.location.search!=""){
-                window.location.href = "./index.html";
-              }else {
-                var value = document.referrer;
-                if(value.indexOf("login.html")!=-1){
-                  window.location.href = "./index.html";
-                  return;
-                }
-                if(!value){
-                  window.location.href = "./index.html";
-                  return;
-                }
-                location.href = document.referrer;
-                //解决safari不支持的问题//go(-1)ios不会刷新页面
-                return false;
-              }
+              location.href="./index.html";
             }
+              
           });
         }else{
 			 layer.open({
