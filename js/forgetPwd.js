@@ -1,10 +1,10 @@
 function FindPwd() {
   var self = this, _txtMsgCode, _sendCode;
-
+   var reg1 = /^(\+?86)?(1[34578]\d{9})$/;
+    var reg2 = /^[\x00-\xff]{6,20}$/;
   //发短信
   var timenum = 120;
   var lock = true;
-
   function TimeTicker(timenum) {
     if (parseInt(timenum) == 0) {
       $("#sendCode").val("点击获取");
@@ -25,9 +25,7 @@ function FindPwd() {
 
   /*点击修改密码响应处理函数*/
   function findpwd(mobile,code,newpwd) {
-	 // alert(mobile);
-	  //alert(code);
-	 // alert(newpwd);
+    console.log(code);
     $.ajax({
       type: "POST",
       url: getAPIURL() + "forgetPas",
@@ -39,11 +37,16 @@ function FindPwd() {
 		  "Yzm":code
 	  },
       success: function (data) {
+        console.log(data);
         if (data.ResultData == 0) {
-          timenum = 0;
-          TimeTicker(timenum);
-          window.location.href = './login.html';
-        } else {
+            layer.open({
+                content: '注册成功！'
+                ,btn: '点击登录',
+                end:function(){
+                   window.location.href="./login.html";
+                }
+            });
+        }else {
           layer.open({
             content:data.Data
             , skin: 'msg'
@@ -56,7 +59,6 @@ function FindPwd() {
 
   /*点击发送验证码响应处理函数*/
   function getCode(mobile) {
-	  
     $.ajax({
       type: "POST",
       url: getAPIURL() + "phoneGetYzm",
@@ -66,7 +68,6 @@ function FindPwd() {
 			"ty":2
 			},
       success: function (data) {
-		  
         if (data.ResultData == 0) {
           layer.open({
             content: '发送成功！'
@@ -91,7 +92,6 @@ function FindPwd() {
       }
     });
   }
-
   (function () {
     _txtMsgCode = $("#txtMsgCode");
     /*验证码输入框*/
@@ -107,7 +107,7 @@ function FindPwd() {
     _sendCode.on("click", function () {
       /*判断用户是否输入手机号*/
       var mobile = $.trim(_phone.val());
-      if (mobile == "" || mobile.length == 11) {
+      if (mobile == "" || mobile.length != 11) {
         layer.open({
           content: '请输入正确用户名'
           , skin: 'msg'
@@ -115,25 +115,32 @@ function FindPwd() {
         });
         _phone.val("").focus();
         return false;
-      }
+      }else{
         getCode(mobile);
+      }
+        
       
     });
 
     _next.on("click", function () {
-      var mobile = $.trim(_phone.val()).replace(/[^\d]/g, '');
-      var code = $.trim(_txtMsgCode.val()).replace(/[^\d]/g, '');
-      var newpwd = $.trim(_newPwd.val()).replace(/[^\d]/g, '');
-      if (mobile == "" || mobile.length == 11) {
+      var mobile = $.trim(_phone.val());
+      var code = $.trim(_txtMsgCode.val());
+      var newpwd = $.trim(_newPwd.val());
+      if (mobile == "") {
         layer.open({
-          content: '请输入正确用户名'
+          content: '用户名不能为空'
           , skin: 'msg'
           , time: 2 //2秒后自动关闭
         });
-        _phone.val("").focus();
         return false;
-      }
-      else if (code == "") {
+      }else if (!reg1.test(mobile)) {
+        layer.open({
+          content: "手机号码格式输入有误！",
+          btn: '确定'
+        });
+        return false;
+
+      }else if (code == "") {
         layer.open({
           content: '请输入验证码'
           , skin: 'msg'
@@ -143,13 +150,19 @@ function FindPwd() {
         return false;
       }else if(newpwd==""){
 		  layer.open({
-          content: '请输入新密码'
-          , skin: 'msg'
-          , time: 2 //2秒后自动关闭
-        });
-        _newPwd.val("").focus();
+              content: '请输入新密码'
+              , skin: 'msg'
+              , time: 2 //2秒后自动关闭
+            });
+            _newPwd.val("").focus();
         return false;
-	  }
+	  }else if(!reg2.test(newpwd)){
+            layer.open({
+                content: "请输入6-20个字母或符号组合的密码！",
+                btn: '确定'
+            });
+            return false;
+      }
       else {
         findpwd(mobile,code,newpwd);
       }

@@ -36,7 +36,8 @@
     <script type="text/javascript">
         var URL ='http://47.52.99.82:9901/api/HXData/';
         // 我的团队信息
-        getInfo('','admin');
+        var username=localStorage.getItem("username");
+        getInfo('',username);
         function getInfo( perjmcode,username){
             $.ajax({
                 type:'POST',
@@ -62,9 +63,39 @@
             }
         }
 
-
+        // 获得用户信息
+        getUser();
+        function getUser(){
+            $.ajax({
+                type:'POST',
+                url:URL+'readMemInfoByCode',
+                data:{
+                    "perjmcode":"",
+                    "username":username
+                },
+                dateType:'JSON',
+                success:function(data){
+                    setUserItem(data.memInfo);
+                    console.log(data);
+                },
+                error:function(){
+                    //失败之后的操作
+                    alert("操作失误");
+                }
+            });
+        }
+        function setUserItem(info){
+            var li_html ='<ul>';
+            if (info.UserPhone==null) {
+                li_html = li_html+'<li data-code='+info.UserCode+'><span>'+info.UserName+'</span><br>'+'<span class="mb">000-0000-000</span>'+'</li>'
+            }else{
+                li_html = li_html+'<li data-code='+info.UserCode+'><span>'+info.UserName+'</span><br>'+'<span class="mb">'+info.UserPhone+'</span>'+'</li>'
+            }
+            li_html= li_html+'</ul>';
+                 $('.team-box').append(li_html);
+                 frist =1;
+        }
         // 我的团队
-        getTeam('','admin');
         var frist = 0;
         var _li='';
         $('.team-box').on('click','li',function(event){
@@ -93,6 +124,7 @@
                 },
                 dateType:'JSON',
                 success:function(data){
+                    console.log(data);
                    setItem(data.tmMemList);
                 },
                 error:function(){
@@ -104,8 +136,9 @@
         function setItem(data){
             if (data.length==0) {
                 layer.open({
-                    content:"该成员暂无下级团队！",
-                    btn: '确定'
+                    content: "该成员暂无下级团队！"
+                    ,skin: 'msg'
+                    ,time: 1 //2秒后自动关闭
                   });
             }else{
                 var li_html ='<ul>';
@@ -119,16 +152,12 @@
                     
                 }
                 li_html= li_html+'</ul>';
-                if (frist==0) {
-                     $('.team-box').append(li_html);
-                     frist =1;
-                }else{
-                    $(_li).append(li_html);
-                }
+                $(_li).append(li_html);
                 var li_html= '';
             }
             
         }
+
 
     </script> 
 </body>

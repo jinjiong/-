@@ -30,7 +30,6 @@
 			});
 	  }else{
 		  layer.open({
-			  
 			  content:"检测更新失败！",
 			  btn:'确定'
 			});

@@ -48,11 +48,12 @@
 				
 			  },
 			   success:function(data){
+                  console.log(data);
 				   var nc=data.Data;
 				   localStorage.setItem("nc",nc);
 			   }
 			   
-		  });
+		   });
           layer.open({
             content: '登录成功'
             ,skin: 'msg'

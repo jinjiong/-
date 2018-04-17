@@ -8,6 +8,26 @@
   var recommend_p = $("#recommend_p");
   var nc = $("#nc");
   var cutdownFlag = true;
+
+// 级别
+getRank();
+function getRank (argument) {
+    $.ajax({
+        type:"POST",
+        url:getAPIURL() +"readDjList",
+        dataType:"json",
+        data:{
+        },
+        success: function (data) {
+            var op_html ='';
+            $.each(data.djList,function(){
+                op_html = op_html+'<option>'+this.djName+'</option>'
+            });
+            $('.item-rank select').append(op_html)
+        }
+        
+    });
+}
   /*0612 推荐人*/
   $("#referenceTitle").on("click", function () {
     $(this).hide().next().slideDown();
@@ -18,13 +38,19 @@
         reg(2);
     });
     //注册按钮
+    var reg_f= true;
     $("#register_btn").click(function () {
-        reg(3);
+        if (reg_f) {
+            reg(3);
+            reg_f = false;
+        }
+        
     });
   function reg(step) {
     //第二步
     var phone_arr = phonenum.val().split(" ");
     var password_arr = password.val().split(" ");
+    var UserZG = $('.item-rank select').val();
     var reg1 = /^(\+?86)?(1[34578]\d{9})$/;
     var reg2 = /^[\x00-\xff]{6,20}$/;
     if (step == 2 && activate) {
@@ -91,7 +117,6 @@
 						"phone":phonenum.val(),
 						"ty":"1"
 				  },
-				  
                   success: function (data) {
 					activate = false; 
                     if (data.ResultData == "1") {
@@ -198,45 +223,49 @@
         return false;
       }
     $.ajax({
-      type: "post",
-      url: getAPIURL() + "memReg",
-      dataType:'json',
-      data:{
-		  "perjmcode":"",
-		  "username":phonenum.val(),
-		  "phone":phonenum.val(),
-		  "LoginPas":password.val(),
-		  "TranPas":TranPas.val(),
-		  "nc":nc.val(),
-		  "tjr":recommend_p.val(),
-		  "Yzm":valicode.val()
-	  },
-      success: function (data) {
-        layer.open({
-            content: '注册成功！'
-            ,btn: '点击登录',
-            end:function(){
-               location.href="./login.html";
-            }
-        });
-        if (data.ResultData == 1) {
+        type: "post",
+        url: getAPIURL() + "memReg",
+        dataType:'json',
+        data:{
+		    "perjmcode":"",
+		    "username":phonenum.val(),
+		    "phone":phonenum.val(),
+		    "LoginPas":password.val(),
+		    "TranPas":TranPas.val(),
+		    "nc":nc.val(),
+		    "tjr":recommend_p.val(),
+		    "Yzm":valicode.val(),
+           "UserZG":UserZG
+	   },
+        success: function (data) {
+            if (data.ResultData==0) {
+                layer.open({
+                content: '注册成功！'
+                ,btn: '点击登录',
+                end:function(){
+                   location.href="./login.html";
+                }
+            });
+            }else{
+                console.log(data);
+                $("#modal").hide();
+                  layer.open({
+                    content: data.Data,
+                    btn: '确定'
+                });
+            };
+            reg_f=true;
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
           $("#modal").hide();
-          layer.open({
-            content: data.Data,
-            btn: '确定'
-          });
+          if(XMLHttpRequest.status == 400) {
+            var obj = JSON.parse(XMLHttpRequest.responseText);
+            layer.open({
+              content:obj.Message,
+              btn:'确定'
+            });
+          }
         }
-      },
-    error: function(XMLHttpRequest, textStatus, errorThrown) {
-      $("#modal").hide();
-      if(XMLHttpRequest.status == 400) {
-        var obj = JSON.parse(XMLHttpRequest.responseText);
-        layer.open({
-          content:obj.Message,
-          btn:'确定'
-        });
-      }
-    }
     });
          
      

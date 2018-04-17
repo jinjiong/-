@@ -112,7 +112,7 @@ function Logout() {
   layer.open({
     content: "已退出",
     skin: 'msg',
-    time: 2, //2秒后自动关闭
+    time: 1, //2秒后自动关闭
     end: function () {
       location.href = './login.html';
     }

@@ -2169,7 +2169,28 @@
     position: relative;
 
 }
-
+.register_content .register_part2 .item-rank{
+    padding-left: 1.733333rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    font-size: 0.34rem;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+}
+.register_content .register_part2 .item-rank span{
+    position: absolute;
+    left: 0.066667rem;
+    color:#949494;
+}
+.register_content .register_part2 .item-rank select{
+    height: 0.8rem;
+    line-height: 0.8rem;
+    font-size: 0.3rem;
+    outline: none;
+    border: none;
+    width: 100%;
+    background:transparent;
+}
 .register_content .register_part2 .item .item_des {
     color: #333;
     font-size: 0.34rem;

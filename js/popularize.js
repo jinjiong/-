@@ -26,14 +26,37 @@
   $("#referenceTitle").on("click", function () {
     $(this).hide().next().slideDown();
   });
+  // 级别
+getRank();
+function getRank (argument) {
+    $.ajax({
+        type:"POST",
+        url:getAPIURL() +"readDjList",
+        dataType:"json",
+        data:{
+        },
+        success: function (data) {
+            var op_html ='';
+            $.each(data.djList,function(){
+                op_html = op_html+'<option>'+this.djName+'</option>'
+            });
+            $('.item-rank select').append(op_html)
+        }
+        
+    });
+}
     //点击获取验证码按钮
     var activate= true;
     $("#get_valicode").click(function () {
         reg(2);
     });
     //注册按钮
+    var reg_f =true;
     $("#register_btn").click(function () {
-        reg(3);
+        if (reg_f) {
+            reg(3);
+            reg_f = false;
+        }
     });
   function reg(step) {
     //第二步
@@ -226,20 +249,23 @@
 		  "Yzm":valicode.val()
 	  },
       success: function (data) {
-        layer.open({
-            content: '注册成功！'
-            ,btn: '点击登录',
-            end:function(){
-               location.href="http://47.52.99.82:9026/login.html";
-            }
-        });
-        if (data.ResultData == 1) {
-          $("#modal").hide();
-          layer.open({
-            content: data.Data,
-            btn: '确定'
-          });
-        }
+        if (data.ResultData==0) {
+                layer.open({
+                content: '注册成功！'
+                ,btn: '点击登录',
+                end:function(){
+                   location.href="http://47.52.99.82:9026/login.html";
+                }
+            });
+            }else{
+                console.log(data);
+                $("#modal").hide();
+                  layer.open({
+                    content: data.Data,
+                    btn: '确定'
+                });
+            };
+            reg_f=true;
       },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
       $("#modal").hide();
