@@ -7,8 +7,8 @@
     text-align: center;
 }
 .wallet-control img{
-    width:40px;
-    height:40px;
+    width:45px;
+    height:45px;
     border:1px solid #fff;
     border-radius:100px;
 }
@@ -20,13 +20,14 @@
   }
 .wallet-control .user-info{
     position: absolute;
-    top: 55%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 .wallet-control .user-info p{
     font-size: 14px;
     margin-top: 4px;
+    height: 14px;
     color:#fff;
 }
  .container{

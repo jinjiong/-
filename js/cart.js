@@ -63,11 +63,11 @@ $(function(){
 	total();
 /*编辑*/
 $("header span").click(function(){
-       if ($(this).html()=="编辑") {
+       if ($(this).html()=="删除") {
        	$(this).html("完成");
        	$(".bottom").eq(1).show();
        }else{
-       	$(this).html("编辑");
+       	$(this).html("删除");
        	$(".bottom").eq(1).hide();
        }
        hide();   

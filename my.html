@@ -1,19 +1,20 @@
 <!DOCTYPE html>
+<html class="" lang="zh-cmn-Hans">
 
-<html class="" lang="zh-cmn-Hans"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
-    <meta name="format-detection" content="telephone=no">            
-	<meta http-equiv="cleartype" content="on">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cleartype" content="on">
     <meta name="referrer" content="always">
     <title>个人中心</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="./css/base_1cbfdc6a3dba5c7a9314faf417520084.css" >    
-	<link rel="stylesheet" href="./css/showcase_with_components_e72dc25490fa24beee9a2cfea9793d13.css" >
-    <link rel="stylesheet" type="text/css" href="./css/layer.css"/>
-	<link rel="stylesheet" href="./css/weui.min.css">
-    <link rel="stylesheet" href="./css/common.css"/>
+    <link rel="stylesheet" href="./css/base_1cbfdc6a3dba5c7a9314faf417520084.css">
+    <link rel="stylesheet" href="./css/showcase_with_components_e72dc25490fa24beee9a2cfea9793d13.css">
+    <link rel="stylesheet" type="text/css" href="./css/layer.css" />
+    <link rel="stylesheet" href="./css/weui.min.css">
+    <link rel="stylesheet" href="./css/common.css" />
     <link rel="stylesheet" href="./css/jquery-weui.css">
     <link rel="stylesheet" href="./css/resets.css">
     <link rel="stylesheet" href="./css/box-flex.css">
@@ -23,259 +24,251 @@
     <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="js/layer.js"></script>
     <style type="text/css">
-      .footer{
+    .footer {
         height: auto;
-      }
-    
+    }
     </style>
-	<script>
-	$(function(){
-		var username=localStorage.getItem("username");
-        if(username==null){
+    <script>
+    $(function() {
+        var username = localStorage.getItem("username");
+        if (username == null) {
             layer.open({
-                        content:"请您先登录！",
-                        btn: '确定'
-                      });
-            location.href="./login.html";
+                content: "请您先登录！",
+                btn: '确定'
+            });
+            location.href = "./login.html";
         }
-			$.ajax({
-			  type: "POST",
-			  url: getAPIURL() + "readMemInfoByCode",
-			  dataType: "json",
-			  data:{
-				  "perjmcode":"",
-				  "username":username
-			  },
-			  success: function (data) {
-				var memInfo=JSON.stringify(data.memInfo);
-				var jesonObj=JSON.parse(memInfo);
-				$.each(jesonObj, function(i) {
-                        UserZG=jesonObj["UserZG"];
-					    dj=jesonObj["UserKhjb"];
-						
-					});
-				$("#UserZG").html(UserZG);
-                $("#dj").html(dj);
-			  }
-			});
-			
-			//var username=localStorage.getItem("username");
-		
-		//点击订单菜单
-		$("#index_order").click(function () {
-			if(username!=""){
-				location.href="./order.html?uname="+username;
-			}else{
-				 layer.open({
-                    content:"请您先登录！",
-                    btn: '确定'
-                  });
-				location.href="./login.html";
-			}
-			
-		  });
-		//点击我的菜单
-		$("#index_my").click(function () {
-			if(username!=""){
-				location.href="./my.html?uname="+username;
-			}else{
-				 layer.open({
-                    content:"请您先登录！",
-                    btn: '确定'
-                  });
-				location.href="./login.html";
-			}
-		  });
-		  //点击商城
-		 $("#index_shop").click(function () {
-			var url="./list.html?fenlei=all&pxType=1";
-				url=encodeURI(url); 
-				url=encodeURI(url);
-				location.href=url;
-		  }); 
-		
-		});
+        $.ajax({
+            type: "POST",
+            url: getAPIURL() + "readMemInfoByCode",
+            dataType: "json",
+            data: {
+                "perjmcode": "",
+                "username": username
+            },
+            success: function(data) {
+                console.log(data);
+                var memInfo = JSON.stringify(data.memInfo);
+                var jesonObj = JSON.parse(memInfo);
+                $.each(jesonObj, function(i) {
+                    UserZG = jesonObj["UserZG"];
+                    dj = jesonObj["UserKhjb"];
 
-		
-		
-		
-	</script>
-	</head>
+                });
+                $("#UserZG").html(UserZG);
+                $("#dj").html(dj);
+            }
+        });
+
+        //var username=localStorage.getItem("username");
+
+        //点击订单菜单
+        $("#index_order").click(function() {
+            if (username != "") {
+                location.href = "./order.html?uname=" + username;
+            } else {
+                layer.open({
+                    content: "请您先登录！",
+                    btn: '确定'
+                });
+                location.href = "./login.html";
+            }
+
+        });
+        //点击我的菜单
+        $("#index_my").click(function() {
+            if (username != "") {
+                location.href = "./my.html?uname=" + username;
+            } else {
+                layer.open({
+                    content: "请您先登录！",
+                    btn: '确定'
+                });
+                location.href = "./login.html";
+            }
+        });
+        //点击商城
+        $("#index_shop").click(function() {
+            var url = "./list.html?fenlei=all&pxType=1";
+            url = encodeURI(url);
+            url = encodeURI(url);
+            location.href = url;
+        });
+
+    });
+    </script>
+</head>
 <body class=" " ontouchstart="">
-   <div class="container ">
-   <div class="wallet-control">
-    <div class="wp_top_index">
-        <span class="s1" style="color:#000;">个人中心</span>
-        <!-- <a href="./personal.html" style="float:right;font-size:14px;padding-right:5px;">编辑</a> -->
-    </div>
-        <div class="user-info">
-            <img src="img/me_head_img.jpg" alt="">
-            <p id="UserZG"></p>
-            <p id="dj"></p>
-            
+    <div class="container ">
+        <div class="wallet-control">
+            <div class="wp_top_index">
+                <!-- <a href="./personal.html" style="float:right;font-size:14px;padding-right:5px;">编辑</a> -->
+            </div>
+            <div class="user-info">
+                <a href="./personal.html"><img src="img/me_head_img.jpg" alt=""></a>
+                <p id="UserZG"></p>
+                <p id="dj"></p>
+            </div>
         </div>
-     </div>
-    <div class="weui-msg wallet-main clearfix">
-      
-       <!-- 腾迅服务 -->
-       
-          <div class="weui-grids">
-            <a href="./withdraw.html" class="weui-grid js_grid">
-              <div class="weui-grid__icon xyk">
-                <img src="./img/xjqb.png" alt="">
-              </div>
-              <p class="weui-grid__label">
-                现金钱包
-              </p>
-            </a>
-            
-             <a href="./integral.html" class="weui-grid js_grid">
-              <div class="weui-grid__icon sh">
-                <img src="./img/jf.png" alt="">
-              </div>
-              <p class="weui-grid__label">
-               我的积分
-              </p>
-            </a>
-             <a href="./trading.html" class="weui-grid js_grid">
-              <div class="weui-grid__icon qb">
-                <img src="./img/cxb.png" alt="">
-              </div>
-              <p class="weui-grid__label">
-                重消币
-              </p>
-            </a>
-             
-             <a href="./team.html" class="weui-grid js_grid">
-              <div class="weui-grid__icon gy">
-                <img src="./img/team.png" alt="">
-              </div>
-              <p class="weui-grid__label">
-                我的团队
-              </p>
-            </a>
-             <a href="./collection.html" class="weui-grid js_grid">
-              <div class="weui-grid__icon gy">
-                <img src="./img/wallet_icon_gy.png" alt="">
-              </div>
-              <p class="weui-grid__label">
-                我的收藏
-              </p>
-            </a> <a href="./order.html" class="weui-grid js_grid">
-              <div class="weui-grid__icon gy">
-                <img src="./img/wddd.png" alt="">
-              </div>
-              <p class="weui-grid__label">
-                我的订单
-              </p>
-            </a> 
-            <a href="setup.html" class="weui-grid js_grid">
-              <div class="weui-grid__icon gy">
-                <img src="./img/me_set.png" alt="">
-              </div>
-              <p class="weui-grid__label">
-                设置
-              </p>
-            </a>
-            <a href="javascript:;" class="weui-grid js_grid invite">
-              <div class="weui-grid__icon gy">
-                <img src="./img/icon/icon_1.png" alt="">
-              </div>
-              <p class="weui-grid__label">
-                注册邀请
-              </p>
-            </a>
-            <a href="reg.html" class="weui-grid js_grid">
-              <div class="weui-grid__icon gy">
-                <img src="./img/icon/icon_2.png" alt="">
-              </div>
-              <p class="weui-grid__label">
-                注册
-              </p>
-            </a>
-            <a href="buy_car.html" class="weui-grid js_grid">
-              <div class="weui-grid__icon gy">
-                <img src="./img/icon/icon_3.png" alt="">
-              </div>
-              <p class="weui-grid__label">
-                购物车
-              </p>
-            </a>
-          </div>
-        <!-- 腾迅服务 -->
+        <div class="weui-msg wallet-main clearfix">
+            <!-- 腾迅服务 -->
+            <div class="weui-grids">
+                <a href="./withdraw.html" class="weui-grid js_grid">
+                    <div class="weui-grid__icon xyk">
+                        <img src="./img/xjqb.png" alt="">
+                    </div>
+                    <p class="weui-grid__label">
+                        现金钱包
+                    </p>
+                </a>
+                <a href="./integral.html" class="weui-grid js_grid">
+                    <div class="weui-grid__icon sh">
+                        <img src="./img/jf.png" alt="">
+                    </div>
+                    <p class="weui-grid__label">
+                        我的积分
+                    </p>
+                </a>
+                <a href="./trading.html" class="weui-grid js_grid">
+                    <div class="weui-grid__icon qb">
+                        <img src="./img/cxb.png" alt="">
+                    </div>
+                    <p class="weui-grid__label">
+                        重消币
+                    </p>
+                </a>
+                <a href="./team.html" class="weui-grid js_grid">
+                    <div class="weui-grid__icon gy">
+                        <img src="./img/team.png" alt="">
+                    </div>
+                    <p class="weui-grid__label">
+                        我的团队
+                    </p>
+                </a>
+                <a href="./collection.html" class="weui-grid js_grid">
+                    <div class="weui-grid__icon gy">
+                        <img src="./img/wallet_icon_gy.png" alt="">
+                    </div>
+                    <p class="weui-grid__label">
+                        我的收藏
+                    </p>
+                </a>
+                <a href="./order.html" class="weui-grid js_grid">
+                    <div class="weui-grid__icon gy">
+                        <img src="./img/wddd.png" alt="">
+                    </div>
+                    <p class="weui-grid__label">
+                        我的订单
+                    </p>
+                </a>
+                <a href="setup.html" class="weui-grid js_grid">
+                    <div class="weui-grid__icon gy">
+                        <img src="./img/me_set.png" alt="">
+                    </div>
+                    <p class="weui-grid__label">
+                        设置
+                    </p>
+                </a>
+                <a href="javascript:;" class="weui-grid js_grid invite">
+                    <div class="weui-grid__icon gy">
+                        <img src="./img/icon/icon_1.png" alt="">
+                    </div>
+                    <p class="weui-grid__label">
+                        注册邀请
+                    </p>
+                </a>
+                <a href="reg.html" class="weui-grid js_grid">
+                    <div class="weui-grid__icon gy">
+                        <img src="./img/icon/icon_2.png" alt="">
+                    </div>
+                    <p class="weui-grid__label">
+                        注册
+                    </p>
+                </a>
+                <a href="buy_car.html" class="weui-grid js_grid">
+                    <div class="weui-grid__icon gy">
+                        <img src="./img/icon/icon_3.png" alt="">
+                    </div>
+                    <p class="weui-grid__label">
+                        购物车
+                    </p>
+                </a>
+            </div>
+            <!-- 腾迅服务 -->
+        </div>
     </div>
- </div>
- <div class="invite-box" id="content">
-     <div class="invite-center">
-          <div class="invite-bg">
-              <div class="title"><span>邀请卡</span></div>
-              <div class="user-box">
-                  <div class="img"><img src="img/me_head_img.jpg"></div>
-                  <p class="name">admin</p>
-                  <p>邀你一起加入，推广赢奖励</p>
-              </div>
-              <div class="erwei" id="output" >
-                  <!-- <img src="img/erwei.jpg" > -->
-              </div>
-              <p class="o_info">长按识别二维码</p>
-          </div>
-     </div>
-     <p class="info"><img src="img/fingerprint.png">长按图片保存至相册</p>
- </div>
- <style type="text/css">
-    
- </style>
-   <ul class="footer">
-            <li class="footer-item">
-                <a href="index.html" class="">
+    <div class="invite-box" id="content">
+        <div class="invite-center">
+            <div class="invite-bg">
+                <div class="title"><span>邀请卡</span></div>
+                <div class="user-box">
+                    <div class="img"><img src="img/me_head_img.jpg"></div>
+                    <p class="name">admin</p>
+                    <p>邀你一起加入，推广赢奖励</p>
+                </div>
+                <div class="erwei" id="output">
+                    <!-- <img src="img/erwei.jpg" > -->
+                </div>
+                <p class="o_info">长按识别二维码</p>
+            </div>
+        </div>
+        <p class="info"><img src="img/fingerprint.png">长按图片保存至相册</p>
+    </div>
+    <style type="text/css">
+
+    </style>
+    <ul class="footer">
+        <li class="footer-item">
+            <a href="index.html" class="">
                     <i class="icon icon_index active" style="width:1.5rem;height:1.5rem;"></i>
                     <p class="icon_title" style="margin-top:0.2rem;">首页</p>
                 </a>
-            </li>
-            
-            <li class="footer-item">
-                <a href="./list.html?fenlei=all&pxType=1" class="" id="index_shop">
+        </li>
+        <li class="footer-item">
+            <a href="./list.html?fenlei=all&pxType=1" class="" id="index_shop">
                     <i class="icon icon_activity"  style="width:1.5rem;height:1.5rem;"></i>
                     <p class="icon_title" style="margin-top:0.2rem;">商城</p>
                 </a>
-            </li>
-			<li class="footer-item">
-                <a  class="" id="index_order">
+        </li>
+        <li class="footer-item">
+            <a class="" id="index_order">
                     <i class="icon icon_invest"  style="width:1.5rem;height:1.5rem;"></i>
                     <p class="icon_title" style="margin-top:0.2rem;">订单</p>
                 </a>
-            </li>
-            <li class="footer-item active">
-                <a  class="" id="index_my" href="javascript:;">
+        </li>
+        <li class="footer-item active">
+            <a class="" id="index_my" href="javascript:;">
                     <i class="icon icon_my"  style="width:1.5rem;height:1.5rem;"></i>
                     <p class="icon_title" style="margin-top:0.2rem;">我的</p>
                 </a>
-            </li>
-        </ul>
-        <script type="text/javascript" src="js/html2canvas.js"></script>
-        <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
-        <script type="text/javascript">
-          var username=localStorage.getItem("username");
-            jQuery('#output').qrcode({
-                'text':'http://47.52.99.82:9026/popularize.html?recommend_user='+username,
-                'width':'90',
-                'height':'90'
-            });
-            var image = new Image();
-            html2canvas(document.getElementById('content')).then(function(canvas) {
-                image.src = canvas.toDataURL("image/jpg");
-            })
-            $('.invite').click(function(){
-                convertCanvasToImage();
-            });
-            function convertCanvasToImage() {
-                var pageii = layer.open({
-                      type: 1
-                      ,content: '<img  src="'+image.src+'"><a href="javascript:;" class="button" onclick="layer.closeAll();">取消</a>'
-                      ,anim: 'up'
-                      ,style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
-                });
-            }
-        </script>
-	  
-	  </body></html>
+        </li>
+    </ul>
+    <script type="text/javascript" src="js/html2canvas.js"></script>
+    <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
+    <script type="text/javascript">
+    var username = localStorage.getItem("username");
+    jQuery('#output').qrcode({
+        'text': 'http://47.52.99.82:9026/popularize.html?recommend_user=' + username,
+        'width': '90',
+        'height': '90'
+    });
+    var image = new Image();
+    html2canvas(document.getElementById('content')).then(function(canvas) {
+        image.src = canvas.toDataURL("image/jpg");
+    })
+    $('.invite').click(function() {
+        convertCanvasToImage();
+    });
+
+    function convertCanvasToImage() {
+        var pageii = layer.open({
+            type: 1,
+            content: '<img  src="' + image.src + '"><a href="javascript:;" class="button" onclick="layer.closeAll();">取消</a>',
+            anim: 'up',
+            style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
+        });
+    }
+    </script>
+</body>
+
+</html>

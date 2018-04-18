@@ -1704,11 +1704,11 @@
 .withdraw_content .txed {
     position: relative;
     border-bottom: 1px solid #D7D7D7;
+    background: #fff;
 }
 
 .withdraw_content .txed input {
     border:none;
-	border-bottom:1px solid #d7d7d7;
     outline: none;
     background-color: #fff;
     width: 100%;
@@ -2170,6 +2170,7 @@
 
 }
 .register_content .register_part2 .item-rank{
+    position: relative;
     padding-left: 1.733333rem;
     height: 0.8rem;
     line-height: 0.8rem;
@@ -2183,6 +2184,7 @@
     color:#949494;
 }
 .register_content .register_part2 .item-rank select{
+    position: relative;
     height: 0.8rem;
     line-height: 0.8rem;
     font-size: 0.3rem;
@@ -2190,6 +2192,19 @@
     border: none;
     width: 100%;
     background:transparent;
+    appearance:none;
+-moz-appearance:none;
+-webkit-appearance:none;
+}
+.register_content .register_part2 .item-rank:after{
+    position: absolute;
+    content: '';
+    right:0.42rem;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    background:url(../img/down_arr.png);
+    background-size: 100% 100%;
 }
 .register_content .register_part2 .item .item_des {
     color: #333;
@@ -2206,8 +2221,13 @@
     font-size: 0.22rem;
     text-align: center;
     padding: 0.16rem 0.2rem;
-    background: #0197ff;
     border-radius: 0.5rem;
+    color: #0197ff;
+    border-left: 1px solid #dbe4eb;
+    font-size: 0.3rem;
+    border-radius: 0;
+    padding-top: 0.1rem;padding-bottom: 0.1rem;
+    padding-right: 0;
 }
 
 /*.register_content .register_part2 .item .get_code:before {
@@ -2271,7 +2291,6 @@
 
 .register_content .register_part2 .xieyiname a {
     color: #0197ff;
-    text-decoration: underline;
 }
 
 .register_content .register_part2 .register_btn {
