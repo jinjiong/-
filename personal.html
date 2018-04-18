@@ -1,202 +1,238 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>修改个人资料</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
     <meta name="format-detection" content="telephone=no, email=no" />
+    <link rel="stylesheet" type="text/css" href="css/ydui.css">
     <link rel="stylesheet" href="./css/layer.css" type="text/css">
-    <link rel="stylesheet" href="./css/common.css" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="./css/personalCenter.css"/>
+    <link rel="stylesheet" href="./css/common.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="./css/personalCenter.css" />
+    <style type="text/css">
+        .find_loginPwd_wrap input,.find_loginPwd_wrap select{
+            font-size: 0.3rem;
+        }
+    </style>
     <script src="./js/jquery-2.1.4.js"></script>
     <script src="./js/jquery.base64.js"></script>
     <script src="./js/layer.js"></script>
     <script src="./js/wapframwork.js"></script>
-	<script>
-		$(function(){
-			var username=localStorage.getItem("username");
-			$.ajax({
-				type:"POST",
-				url: getAPIURL() + "readBankList",
-				dataType: "json",
-				success:function(data){
-					var bankList=JSON.stringify(data.bankList);
-					var bankListObj=JSON.parse(bankList);
-					var bankStr="";
-					for(var i=0;i<bankListObj.length;i++){
-						bankStr+="<option style='width:100%;'>"+bankListObj[i].BankName+"</option>";
-					}
-					document.getElementById("bank_list").innerHTML =bankStr;
-				}
-			
-			
-			});
-			$.ajax({
-			  type: "POST",
-			  url: getAPIURL() + "readBeseInfoByCode",
-			  dataType: "json",
-			  data:{
-				  "perjmcode":"",
-				  "phone":username
-			  },
-			  success: function (data) {
-				
-				var membaseInfo=JSON.stringify(data.membaseInfo);
-				var jsonObj=JSON.parse(membaseInfo);
-				for(var i=0;i<jsonObj.length;i++){
-					
-					$("#phone").val(jsonObj[i].UserCode);
-					$("#uname").val(jsonObj[i].UserName).attr("readonly","readonly");
-					$("#UserZG").val(jsonObj[i].UserZG).attr("readonly","readonly");
-					$("#UserTJR").val(jsonObj[i].UserTJR).attr("readonly","readonly");
-					$("#address").val(jsonObj[i].UserAddress);
-					$("#weixin").val(jsonObj[i].UserWX);
-					$("#zfb").val(jsonObj[i].UserZFB);
-					$("#bankHm").val(jsonObj[i].UserYhHm);
-					$("#bankZh").val(jsonObj[i].UserYhZh);
-					$("#bankKhh").val(jsonObj[i].UserYhKhh);
-					var UserYhName=jsonObj[i].UserYhName;
-					$("#bank_list option").each(function() {
-						if($(this).val()==UserYhName){
-							$(this).attr("selected","selected");
-						}else {
-							$(this).removeAttr("selected")
-						}
-					});
-					
-					
-				}
-				
-			  }
-			});
-		
-		});
-		
-		
-		function check(){
-			var username=$("#phone").val();
-			var address=$("#address").val();
-			var weixin=$("#weixin").val();
-			var zfb=$("#zfb").val();
-			var bankHm=$("#bankHm").val();
-			var bankZh=$("#bankZh").val();
-			var bankKhh=$("#bankKhh").val();
-			var bankName=$("#bank_list").val();
-			//alert(bankName);
-			$.ajax({
-				type:"POST",
-				url: getAPIURL() + "updateMemInfo",
-				dataType: "json",
-				data:{
-					 "perjmcode":"",
-					 "username":username,
-					 "address":address,
-					 "weixin":weixin,
-					 "zfb":zfb,
-					 "bankName":bankName,
-					 "bankHm":bankHm,
-					 "bankZh":bankZh,
-					 "bankKhh":bankKhh
-				},
-				success:function(data){
-					layer.open({
-                    content:data.Data,
-                    btn: '确定'
-                  });
-				}
-			
-			
-			});
-		}
-		
-		
-		
-		
-	</script>
+    <script>
+    $(function() {
+        var username = localStorage.getItem("username");
+        $.ajax({
+            type: "POST",
+            url: getAPIURL() + "readBankList",
+            dataType: "json",
+            success: function(data) {
+                var bankList = JSON.stringify(data.bankList);
+                var bankListObj = JSON.parse(bankList);
+                var bankStr = "";
+                for (var i = 0; i < bankListObj.length; i++) {
+                    bankStr += "<option style='width:100%;'>" + bankListObj[i].BankName + "</option>";
+                }
+                document.getElementById("bank_list").innerHTML = bankStr;
+            }
+
+
+        });
+        $.ajax({
+            type: "POST",
+            url: getAPIURL() + "readBeseInfoByCode",
+            dataType: "json",
+            data: {
+                "perjmcode": "",
+                "phone": username
+            },
+            success: function(data) {
+                var membaseInfo = JSON.stringify(data.membaseInfo);
+                var jsonObj = JSON.parse(membaseInfo);
+                for (var i = 0; i < jsonObj.length; i++) {
+
+                    $("#phone").val(jsonObj[i].UserCode);
+                    $("#uname").val(jsonObj[i].UserName).attr("readonly", "readonly");
+                    $("#UserZG").val(jsonObj[i].UserZG).attr("readonly", "readonly");
+                    $("#UserTJR").val(jsonObj[i].UserTJR).attr("readonly", "readonly");
+                    $("#address").val(jsonObj[i].UserAddress);
+                    $("#weixin").val(jsonObj[i].UserWX);
+                    $("#zfb").val(jsonObj[i].UserZFB);
+                    $("#bankHm").val(jsonObj[i].UserYhHm);
+                    $("#bankZh").val(jsonObj[i].UserYhZh);
+                    $("#bankKhh").val(jsonObj[i].UserYhKhh);
+                    var UserYhName = jsonObj[i].UserYhName;
+                    $("#bank_list option").each(function() {
+                        if ($(this).val() == UserYhName) {
+                            $(this).attr("selected", "selected");
+                        } else {
+                            $(this).removeAttr("selected")
+                        }
+                    });
+                    setAddress(jsonObj[i].UserAddress);
+
+                }
+
+            }
+        });
+
+    });
+
+
+    function check() {
+        var username = $("#phone").val();
+        var address = $("#address").val();
+        var weixin = $("#weixin").val();
+        var zfb = $("#zfb").val();
+        var bankHm = $("#bankHm").val();
+        var bankZh = $("#bankZh").val();
+        var bankKhh = $("#bankKhh").val();
+        var bankName = $("#bank_list").val();
+        $.ajax({
+            type: "POST",
+            url: getAPIURL() + "updateMemInfo",
+            dataType: "json",
+            data: {
+                "perjmcode": "",
+                "username": username,
+                "address": address,
+                "weixin": weixin,
+                "zfb": zfb,
+                "bankName": bankName,
+                "bankHm": bankHm,
+                "bankZh": bankZh,
+                "bankKhh": bankKhh
+            },
+            success: function(data) {
+                layer.open({
+                    content: data.Data,
+                    skin: 'msg',
+                    time: 2 //2秒后自动关闭
+                });
+            }
+        });
+    }
+     function setAddress(address){
+        console.log(address);
+        // address = '北京 朝阳区';
+        arr_address =address.split(' ');
+        var provance='';
+        var city='';
+        var area='';
+        $.each(arr_address,function(index,em){
+            if (index==0) {
+                provance= em;
+            }else if(index ==1){
+                city=em;
+            }else{
+                area =em;
+            }
+        })
+        var $target = $('#address');
+        $target.citySelect({
+            provance: provance,
+            city: city,
+            area: area
+        });
+
+        $target.on('click', function (event) {
+            event.stopPropagation();
+            $target.citySelect('open');
+        });
+
+        $target.on('done.ydui.cityselect', function (ret) {
+            $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+        });
+     }
+    </script>
 </head>
+
 <body>
-<div class="find_loginPwd_title header">
-    <a href="javascript:location.href='my.html'">
+    <div class="find_loginPwd_title header">
+        <a href="javascript:location.href='my.html'">
         <i class="icon"></i>
     </a>
-    <span>个人资料</span>
-</div>
-<section class="find_loginPwd_wrap">
-    <ul class="list">
-        <li class="list_item">
-            <label>
-                <span class="item_text">用  户  名</span><input type="text" name="phone"  id="phone" value="" >
-            </label>
-        </li>
-        <li class="list_item">
-            <label>
-                <span class="item_text">会员昵称</span><input type="text" name="uname" placeholder="请输入用户名" id="uname"  >
-            </label>
-        </li>
-		<li class="list_item">
-            <label>
-                <span class="item_text">会员等级</span><input type="text" name="UserZG" placeholder="请输入用户名" id="UserZG"  >
-            </label>
-        </li>
-		<li class="list_item">
-            <label>
-                <span class="item_text">推  荐  人</span><input type="text" name="UserTJR" placeholder="请输入用户名" id="UserTJR"  >
-            </label>
-        </li>
-		<li class="list_item">
-            <label>
-                <span class="item_text">收货地址</span><input type="text" name="address" placeholder="请输入收货地址" id="address"  >
-            </label>
-        </li>
-		<li class="list_item">
-            <label>
-                <span class="item_text">微　　信</span><input type="text" name="weixin" placeholder="请输入微信号" id="weixin"  >
-            </label>
-        </li>
-		<li class="list_item">
-            <label>
-                <span class="item_text">支  付  宝</span><input type="text" name="zfb" placeholder="请输入支付宝账号" id="zfb" >
-            </label>
-        </li>
-		<li class="list_item">
-            <label>
-                <span class="item_text">银行名称</span>
-				<select id="bank_list" name="bankName" style="width:5rem;height:0.5rem;border:0px;">
-				
-				</select> 
-            </label>
-        </li>
-		<li class="list_item">
-            <label>
-                <span class="item_text">开  户  名</span><input type="text" name="bankHm" placeholder="请输入开户名" id="bankHm"  >
-            </label>
-        </li>
-		<li class="list_item">
-            <label>
-                <span class="item_text">开户账号</span><input type="text" name="bankZh" placeholder="请输入开户账号" id="bankZh"  >
-            </label>
-        </li>
-		<li class="list_item">
-            <label>
-                <span class="item_text">开  户  行</span><input type="text" name="bankKhh" placeholder="请输入开户行名称" id="bankKhh"  >
-            </label>
-        </li>
-		
-    </ul>
-    <a  class="next_step" id="nextstep" onclick="check();">保存</a>
-   
-        
-    
-</section>
-
-
+        <span>个人资料</span>
+    </div>
+    <section class="find_loginPwd_wrap">
+        <ul class="list">
+            <li class="list_item">
+                <label>
+                    <span class="item_text">用  户  名</span>
+                    <input type="text" name="phone" id="phone" value="">
+                </label>
+            </li>
+            <li class="list_item">
+                <label>
+                    <span class="item_text">会员昵称</span>
+                    <input type="text" name="uname" placeholder="请输入用户名" id="uname">
+                </label>
+            </li>
+            <li class="list_item">
+                <label>
+                    <span class="item_text">会员等级</span>
+                    <input type="text" name="UserZG" placeholder="请输入用户名" id="UserZG">
+                </label>
+            </li>
+            <li class="list_item">
+                <label>
+                    <span class="item_text">推  荐  人</span>
+                    <input type="text" name="UserTJR" placeholder="请输入用户名" id="UserTJR">
+                </label>
+            </li>
+            <li class="list_item">
+                <label>
+                    <span class="item_text">收货地址</span>
+                    <input type="text" name="address" id="address" readonly  value="新疆 乌鲁木齐市 天山区" placeholder="请选择收货地址" >
+                </label>
+            </li>
+            <li class="list_item">
+                <label>
+                    <span class="item_text">微　　信</span>
+                    <input type="text" name="weixin" placeholder="请输入微信号" id="weixin">
+                </label>
+            </li>
+            <li class="list_item">
+                <label>
+                    <span class="item_text">支  付  宝</span>
+                    <input type="text" name="zfb" placeholder="请输入支付宝账号" id="zfb">
+                </label>
+            </li>
+            <li class="list_item">
+                <label>
+                    <span class="item_text">银行名称</span>
+                    <select id="bank_list" name="bankName" style="width:5rem;height:0.5rem;border:0px;">
+                    </select>
+                </label>
+            </li>
+            <li class="list_item">
+                <label>
+                    <span class="item_text">开  户  名</span>
+                    <input type="text" name="bankHm" placeholder="请输入开户名" id="bankHm">
+                </label>
+            </li>
+            <li class="list_item">
+                <label>
+                    <span class="item_text">开户账号</span>
+                    <input type="text" name="bankZh" placeholder="请输入开户账号" id="bankZh">
+                </label>
+            </li>
+            <li class="list_item">
+                <label>
+                    <span class="item_text">开  户  行</span>
+                    <input type="text" name="bankKhh" placeholder="请输入开户行名称" id="bankKhh">
+                </label>
+            </li>
+        </ul>
+        <a class="next_step" id="nextstep" onclick="check();">保存</a>
+    </section>
 </body>
-
-
 <!--头部-->
 <script src="./js/RainbowBridge.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/ydui.citys.js"></script>
+<script src="js/ydui.js"></script>
 <script type="text/javascript">
-    setTitle(".find_loginPwd_title", {'title':'找回密码'});
+setTitle(".find_loginPwd_title", { 'title': '找回密码' });
 </script>
+
 </html>

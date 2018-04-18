@@ -94,7 +94,7 @@ $(function(){
 		});
 		return UserAddress;
 	}
-	//加载收货地址
+	//加载数据
 	$.ajax({
 				type:'POST',
 				url:getAPIURL() + 'readMemInfoByCode',
