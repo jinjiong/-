@@ -1,69 +1,153 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
-	<meta name="apple-mobile-web-app-capable" content="yes"/>
-	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-	<meta name="format-detection" content="telephone=no, email=no"/>
-	<meta charset="UTF-8">
-	<title>新建地址</title>
-	<link rel="stylesheet" href="./css/core.css">
-	<link rel="stylesheet" href="./css/icon.css">
-	<link rel="stylesheet" href="./css/home.css">
-	
-	<style>
-		.m-cell {
-			background-color: #FFF;
-			position: relative;
-			z-index: 1;
-			margin-bottom: .35rem;
-			height: 3rem;
-			line-height: 3rem;
-		}
-	</style>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <meta charset="UTF-8">
+    <title>新建地址</title>
+    <link rel="stylesheet" type="text/css" href="css/ydui.css">
+    <link rel="stylesheet" href="./css/core.css">
+    <link rel="stylesheet" href="./css/icon.css">
+    <link rel="stylesheet" href="./css/home.css">
+    <style>
+    .m-cell {
+        background-color: #FFF;
+        position: relative;
+        z-index: 1;
+        margin-bottom: .35rem;
+        height: 3rem;
+        line-height: 3rem;
+    }
+    </style>
 </head>
-<body style="background:#eee">
 
-	<header class="aui-header-default aui-header-fixed aui-header-bg">
-		<a href="javascript:history.back(-1)" class="aui-header-item">
+<body style="background:#eee">
+    <header class="aui-header-default aui-header-fixed aui-header-bg">
+        <a href="javascript:history.back(-1)" class="aui-header-item">
 			<i class="aui-icon aui-icon-back-white"></i>
 		</a>
-		<div class="aui-header-center aui-header-center-clear">
-			<div class="aui-header-center-logo">
-				<div class="aui-car-white-Typeface">新建地址</div>
-			</div>
-		</div>
-		<a href="#" class="aui-header-item-icon"   style="min-width:0">
-			<!--<i class="aui-icon aui-icon-search"></i>-->
-		</a>
-	</header>
+        <div class="aui-header-center aui-header-center-clear">
+            <div class="aui-header-center-logo">
+                <div class="aui-car-white-Typeface">新建地址</div>
+            </div>
+        </div>
+        <a href="#" class="aui-header-item-icon" style="min-width:0">
+            <!--<i class="aui-icon aui-icon-search"></i>-->
+        </a>
+    </header>
+    <section class="aui-myOrder-content">
+        <div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的地址信息</div>
+        <form id="siteForm">
+            <div class="aui-Address-box">
+                <p>
+                    <input class="aui-Address-box-input" name="name" type="text" placeholder="收货人姓名">
+                </p>
+                <p>
+                    <input class="aui-Address-box-input" name="phone" type="text" placeholder="手机号码">
+                </p>
+                <p>
+                    <input class="aui-Address-box-input" name="site" type="text" readonly id="J_Address" placeholder="所在地区">
+                </p>
+                <p>
+                    <textarea class="aui-Address-box-text" name="detail" placeholder="街道， 小区门牌等详细地址" rows="3"></textarea>
+                </p>
+            </div>
+        </form>
+        <div class="aui-out">
+            <a href="#" class="red-color sub-btn" style="color:#fff">使用</a>
+        </div>
+    </section>
+    <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/layer.js"></script>
+    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+    <script src="js/ydui.citys.js"></script>
+    <script src="js/ydui.js"></script>
+    <script type="text/javascript">
+     /**
+     * 默认调用
+     */
+    !function () {
+        var $target = $('#J_Address');
 
+        $target.citySelect();
 
-	<section class="aui-myOrder-content">
-		<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的地址信息</div>
-		<div class="aui-Address-box">
-			<p>
-				<input class="aui-Address-box-input" type="text" placeholder="收货人姓名">
-			</p>
-			<p>
-				<input class="aui-Address-box-input" type="text" placeholder="手机号码">
-			</p>
-			<p>
-				<input class="aui-Address-box-input" type="text" readonly id="J_Address"  placeholder="所在地区">
-			</p>
-			<p>
-				<textarea class="aui-Address-box-text" placeholder="街道， 小区门牌等详细地址" rows="3"></textarea>
-			</p>
+        $target.on('click', function (event) {
+            event.stopPropagation();
+            $target.citySelect('open');
+        });
 
-		</div>
-		<div class="aui-out">
-			<a href="#" class="red-color" style="color:#fff">保存并使用</a>
-		</div>
-	</section>
+        $target.on('done.ydui.cityselect', function (ret) {
+            $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+        });
+    }();
 
-
-	
-
+    jQuery.validator.addMethod("isMobile", function(value, element) {
+        var length = value.length;
+        var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+        return this.optional(element) || (length == 11 && mobile.test(value));
+    }, "请正确填写您的手机号码");
+    $('#siteForm').validate({
+        onkeyup: null,
+        rules: {
+            name: {
+                required: true,
+            },
+            phone: {
+                required: true,
+                // isMobile: true
+            },
+            site: {
+                required: true,
+            },
+            detail: {
+                required: true,
+            }
+        },
+        messages: {
+            name: {
+                required: '收件人不能为空',
+            },
+            phone: {
+                required: '手机号不能为空',
+                // isMobile: '请正确填写您的手机号码'
+            },
+            site: {
+                required: '地区不能为空',
+            },
+            detail: {
+                required: '详细信息不能为空',
+            },
+        },
+        showErrors: function(errorMap, errorList) {
+            var msg = "";
+            $.each(errorList, function(i, v) {
+                layer.open({
+                    content: v.message,
+                    skin: 'msg',
+                    time: 2 //2秒后自动关闭
+                });
+                return false;
+            });
+        },
+        onfocusout: false
+    })
+    $('.sub-btn').click(function(e) {
+        if ($("#siteForm").valid()) {
+        	var site = {};
+        	site.name = $('input[name="name"]').val();
+        	site.phone = $('input[name="phone"]').val();
+        	site.site = $('input[name="site"]').val();
+        	site.detail = $('textarea').val();
+        	localStorage.setItem('site', JSON.stringify(address));
+            location.href = "javascript:history.back(-1)";
+            
+        }
+        e.preventDefault();
+    });
+    </script>
 </body>
+
 </html>

@@ -203,7 +203,7 @@
                 <div class="title"><span>邀请卡</span></div>
                 <div class="user-box">
                     <div class="img"><img src="img/me_head_img.jpg"></div>
-                    <p class="name">admin</p>
+                    <p class="name"></p>
                     <p>邀你一起加入，推广赢奖励</p>
                 </div>
                 <div class="erwei" id="output">
@@ -247,6 +247,7 @@
     <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
     <script type="text/javascript">
     var username = localStorage.getItem("username");
+    $('#content .name').html(username);
     jQuery('#output').qrcode({
         'text': 'http://47.52.99.82:9026/popularize.html?recommend_user=' + username,
         'width': '90',

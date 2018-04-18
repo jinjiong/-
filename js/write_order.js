@@ -117,7 +117,13 @@ $(function(){
 					    u_phone=jesonObj["UserPhone"];
 					    u_address=jesonObj["UserAddress"];
 					});
+					if (localStorage.getItem('site')) {
+						// $("#u_address")
+					}else{
+						// $("#u_address").html(u_address)
+					}
 					$("#u_address").html(u_address);
+					$("#u_address").attr('address',u_address);
 					$("#name_phone").html(u_name+"   "+u_phone);
 					
 				}
@@ -209,6 +215,12 @@ $(function(){
 				}
 			});
 		}
+	// 点击默认
+	$('#aui-default').click(function(e){
+		$('#u_address').html($('#u_address').attr('address'));
+		e.preventDefault(); 
+	});
+	
 });
 
 
