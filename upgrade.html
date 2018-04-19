@@ -9,28 +9,37 @@
     <link rel="stylesheet" type="text/css" href="./css/swiper-3.4.2.min.css" />
     <link rel="stylesheet" type="text/css" href="./css/index.css"/>
     <link rel="stylesheet" type="text/css" href="./css/layer.css"/>
-    <title>提现</title>
+    <title>用户升级</title>
     <script src="./js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
     <script src="./js/jquery.base64.js" type="text/javascript" charset="utf-8"></script>
     <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
     <script src="./js/layer.js" type="text/javascript" charset="utf-8"></script>
     <style type="text/css">
-        .withdraw_content .txed{
-            position: relative;
+       
+        .withdraw_content .txed input{
+            color: #333;
+            font-size: 0.3rem;
         }
-        .withdraw_content .txed select{
-            border: none;
-            outline: none;
-            background-color: #fff;
-            width: 100%;
+        select{
             height: 1rem;
             line-height: 1rem;
-            font-size: 0.28rem;
-            color: #a7a7a7;
+            width: 100%;
             text-indent: 2.2rem;
+            font-size: 0.3rem;
+            color: #333;
+            border:0;
+            background:#fff;
             -webkit-appearance: none;
         }
-        .withdraw_content .txed-select:before{
+        .banner-box{
+            width: 100%;
+            margin-bottom: 10px;
+            
+        }
+        .banner-box img{
+            width: 100%;
+        }
+        .txed-arr:before{
             content: "";
             display: inline-block;
             vertical-align: middle;
@@ -51,45 +60,41 @@
     <a href="javascript:location.href='my.html'">
         <i class="icon"></i>
     </a>
-    <span>现金钱包</span>
+    <span>用户升级</span>
     <!--<a href="withdraw_record.html" class="record_link">提现记录</a>-->
 </div>
 <!--页面主体部分-->
 <div class="withdraw_content">
-	<div style="width:100%;"><img src="./img/rmb@2x.png" style="width:60%;height:auto;margin:20px 20%;"></div>
-    <p class="sum_avai">账户余额：<span class="sp_color balance_avai" id="zhye"></span>元</p>
+	<div class="banner-box"><img src="./img/card_bg.jpg"></div>
    
     <p class="txed">
-        <span class="txed_title">提现金额</span>
-        <input type="text" id="txje" placeholder="输入提现金额" onkeyup="value = value.replace(/[^\d{2}\.]/g, '').replace(/(\.\d{2}).*/g, '$1')" />
-       
+        <span class="txed_title">手机号码</span>
+        <input type="text"  placeholder="请输入用户名"  />
     </p>
     <p class="txed">
-        <span class="txed_title">交易密码</span>
-        <input type="password" id="jymm" placeholder="输入交易密码"  />
-       
+        <span class="txed_title">用户昵称</span>
+        <input type="text"  placeholder="请输入昵称"  />
     </p>
-	<p class="txed txed-select">
-        <span class="txed_title" >到账平台</span>
+    <p class="txed txed-arr">
+        <span class="txed_title">升级级别</span>
+        <select>
+            <option>普通会员</option>
+        </select>
+    </p>
+	<p class="txed txed-arr">
+        <span class="txed_title" >支付方式</span>
         <select name="dzpt" id="dzpt">
 			<option value="1">支付宝</option>
 			<option value="2">微信</option>
 			<option value="3">银行卡</option>
 		</select>
-       
     </p>
-    
-   
-   
-    <!--<p class="prompt">*初始交易密码为登录密码</p>-->
-    <button class="withdraw_btn">提现</button>
-    <p class="prompt_day">本次提现预计到账时间为1~3个工作日</p>
+    <button class="withdraw_btn">立即升级</button>
 </div>
 
 
 </body>
 
-<script src="./js/withdraw.js" type="text/javascript" charset="utf-8"></script>
 <!--头部-->
 <script src="./js/RainbowBridge.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">

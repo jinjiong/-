@@ -961,17 +961,22 @@
 }
 
 .setting_content .menu_item {
+    
     margin-left: 0.2rem;
 }
 
-.setting_content .icon_zhankai {
-    float: right;
-    width: 0.24rem;
-    height: 0.46rem;
-    background: url(../img/zhankai_icon.png);
-    background-size: 0.24rem 0.46rem;
-    margin-right: 0.32rem;
-    margin-top: 0.3rem;
+.setting_menu .setting_menu_item:before {
+    position: absolute;
+    content: '';
+    width: 8px;
+    height: 15px;
+    background-image: url(../img/public_arrow.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translate(0, -50%);
 }
 
 .setting_menu {
@@ -988,6 +993,7 @@
 }
 
 .setting_menu .setting_menu_item {
+    position: relative;
     height: 1rem;
     line-height: 1rem;
     border-bottom: 1px solid #D7D7D7;
@@ -2169,33 +2175,6 @@
     position: relative;
 
 }
-.register_content .register_part2 .item-rank{
-    position: relative;
-    padding-left: 1.733333rem;
-    height: 0.8rem;
-    line-height: 0.8rem;
-    font-size: 0.34rem;
-    border-bottom: 1px solid #ddd;
-    box-sizing: border-box;
-}
-.register_content .register_part2 .item-rank span{
-    position: absolute;
-    left: 0.066667rem;
-    color:#949494;
-}
-.register_content .register_part2 .item-rank select{
-    position: relative;
-    height: 0.8rem;
-    line-height: 0.8rem;
-    font-size: 0.3rem;
-    outline: none;
-    border: none;
-    width: 100%;
-    background:transparent;
-    appearance:none;
--moz-appearance:none;
--webkit-appearance:none;
-}
 .register_content .register_part2 .item-rank:after{
     position: absolute;
     content: '';
@@ -2253,7 +2232,7 @@
 
 }*/
 .register_content .register_part2 .item input:focus {
-    color: #beb5b5;
+    /*color: #beb5b5;*/
 }
 
 .register_content .register_part2 .item input:focus::-webkit-input-placeholder {
@@ -2267,6 +2246,7 @@
 .register_content .register_part2 .item .recommend_input {
     text-indent: 3.1rem;
     border: none;
+
 }
 
 .register_content .register_part2 .xieyi {
@@ -2305,6 +2285,7 @@
     margin: 0 auto;
     font-size: 0.34rem;
     color: #fff;
+    margin-top: 0.4rem;
     background: #0197ff;
 }
 
@@ -2363,6 +2344,7 @@
 
 .register_content .register_part2 .referenceWrap input {
     margin-bottom: 0.44rem;
+    color: #333;
 }
 
 .register_content .register_part2 input {
@@ -2370,7 +2352,7 @@
     width: 6.66rem;
     margin: 0 auto;
     border: none;
-    font-size: 0.34rem;
+    font-size: 0.3rem;
     outline: none;
     height: 0.8rem;
     line-height: 0.8rem;
@@ -2378,6 +2360,7 @@
     border-bottom: 1px solid #ddd;
     padding-top: 0.15rem;
     display: block;
+     color: #333;
 }
 
 /*------------登录页面--------------*/
