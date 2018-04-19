@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="format-detection" content="telephone=no, email=no" />
     <meta charset="UTF-8">
-    <title>新建地址</title>
+    <title>修改地址</title>
     <link rel="stylesheet" type="text/css" href="css/ydui.css">
     <link rel="stylesheet" href="./css/core.css">
     <link rel="stylesheet" href="./css/icon.css">
@@ -21,7 +21,7 @@
         height: 3rem;
         line-height: 3rem;
     }
-    .aui-prompt{
+     .aui-prompt{
         font-size: 14px;
         height: 40px;
         line-height: 40px;
@@ -41,7 +41,6 @@
     }
     </style>
 </head>
-
 <body style="background:#eee">
     <header class="aui-header-default aui-header-fixed aui-header-bg">
         <a href="javascript:history.back(-1)" class="aui-header-item">
@@ -49,7 +48,7 @@
 		</a>
         <div class="aui-header-center aui-header-center-clear">
             <div class="aui-header-center-logo">
-                <div class="aui-car-white-Typeface">新建地址</div>
+                <div class="aui-car-white-Typeface">修改地址</div>
             </div>
         </div>
         <a href="#" class="aui-header-item-icon" style="min-width:0">
@@ -57,7 +56,7 @@
         </a>
     </header>
     <section class="aui-myOrder-content">
-        <div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的地址信息</div>
+        <div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您要修改的地址信息</div>
         <form id="siteForm">
             <div class="aui-Address-box">
                 <p>
@@ -69,7 +68,7 @@
             </div>
         </form>
         <div class="aui-out">
-            <a href="#" class="red-color sub-btn" style="color:#fff">使用</a>
+            <a href="#" class="red-color sub-btn" style="color:#fff">修改</a>
         </div>
     </section>
     <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
@@ -135,8 +134,9 @@
     })
     $('.sub-btn').click(function(e) {
         if ($("#siteForm").valid()) {
-        	var  site= $('input[name="site"]').val()+' '+$('textarea').val();
-        	localStorage.setItem('site', JSON.stringify(site));
+        	var edit_site= $('input[name="site"]').val()+' '+$('textarea').val();
+            console.log()
+        	localStorage.setItem('edit_site', JSON.stringify(edit_site));
             location.href = "javascript:history.back(-1)";
             
         }

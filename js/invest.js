@@ -118,31 +118,34 @@
         var username = localStorage.getItem("username");
 
         //点击订单菜单
-        $("#index_order").click(function() {
-
-            if (username != "") {
-                location.href = "./order.html?uname=" + username;
-            } else {
+        $("#index_order").click(function () {
+            if(username!="" && username != null){
+                location.href="./order.html?uname="+username;
+            }else{
                 layer.open({
-                    content: "请您先登录！",
-                    btn: '确定'
+                    content: "请登录！",
+                    btn: '确定',
+                    end: function() {
+                        location.href = "./login.html";
+                    }
                 });
-                location.href = "./login.html";
             }
-
-        });
+            
+          });
         //点击我的菜单
-        $("#index_my").click(function() {
-            if (username != "") {
-                location.href = "./my.html?uname=" + username;
-            } else {
+        $("#index_my").click(function () {
+            if(username!="" && username != null){
+                location.href="./my.html?uname="+username;
+            }else{
                 layer.open({
-                    content: "请您先登录！",
-                    btn: '确定'
+                    content: "请登录！",
+                    btn: '确定',
+                    end: function() {
+                        location.href = "./login.html";
+                    }
                 });
-                location.href = "./login.html";
             }
-        });
+          });
         //点击商城
         $("#index_shop").click(function() {
             var url = "./list.html?fenlei=all&pxType=1";
@@ -158,17 +161,8 @@
 function spsc(e) {
     e.preventDefault();
     var username = localStorage.getItem("username");
-    if (username == null) {
-        layer.open({
-            content: "请您先登录！",
-            btn: '确定'
-        });
-        location.href = "./login.html";
-    }
-    console.log(e.target);
-    var goodsID = $(e.target).parents('.cap-goods-list__wrapper').data('id');
-    console.log(goodsID);
-    if (username != "") {
+    if (username != "" && username != null) {
+        var goodsID = $(e.target).parents('.cap-goods-list__wrapper').data('id');
         $.ajax({
             type: "POST",
             url: getAPIURL() + "gwcShopByID",
@@ -194,12 +188,14 @@ function spsc(e) {
                 }
             }
         });
-    } else {
+    }else{
         layer.open({
-            content: "请您先登录！",
-            btn: '确定'
+            content: "请登录！",
+            btn: '确定',
+            end: function() {
+                location.href = "./login.html";
+            }
         });
-        location.href = "./login.html";
     }
 
 }

@@ -37,7 +37,6 @@
                 "jyPas": $("#jymm").val()
             },
             dataType: 'json',
-
             success: function(data) {
                 if (data.rtn == "0") {
                     layer.open({

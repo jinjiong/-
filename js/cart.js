@@ -1,9 +1,9 @@
 var username=localStorage.getItem("username");
-if(username==null){
+if(username==null && username ==""){
     layer.open({
-                content:"请您先登录！",
-                btn: '确定'
-              });
+        content:"请您先登录！",
+        btn: '确定'
+    });
     location.href="./login.html";
 }
 /*给单选框或复选框添加样式*/

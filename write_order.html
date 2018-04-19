@@ -50,6 +50,13 @@
 			position:absolute;
 			right:0;
 		}
+		#u_address{
+			display: inline-block;
+			width: 100%;
+			overflow: hidden; 
+            text-overflow:ellipsis;
+            white-space: nowrap;
+		}
 	</style>
 </head>
 <body>
@@ -73,7 +80,7 @@
 					<ul>
 						<li>
 							<strong id="name_phone"></strong>
-							<span class="aui-tag aui-tag-default" id="aui-default">默认</span>
+							<span class="aui-tag aui-tag-default" id="aui-default">获得默认</span>
 						</li>
 						<li>
 							<i class="aui-icon aui-icon-address"></i>
@@ -122,6 +129,5 @@
 			<a  class="settlement" id="tjdd">提交订单</a>
 		</div>
 	</section>
-
 </body>
 </html>

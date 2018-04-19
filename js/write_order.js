@@ -118,11 +118,12 @@ $(function(){
 					    u_address=jesonObj["UserAddress"];
 					});
 					if (localStorage.getItem('site')) {
-						// $("#u_address")
+						$("#u_address").html($.parseJSON(localStorage.getItem('site')));
+						localStorage.removeItem('site');
+
 					}else{
-						// $("#u_address").html(u_address)
+						$("#u_address").html(u_address);
 					}
-					$("#u_address").html(u_address);
 					$("#u_address").attr('address',u_address);
 					$("#name_phone").html(u_name+"   "+u_phone);
 					

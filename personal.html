@@ -6,144 +6,42 @@
     <title>修改个人资料</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
     <meta name="format-detection" content="telephone=no, email=no" />
-    <link rel="stylesheet" type="text/css" href="css/ydui.css">
     <link rel="stylesheet" href="./css/layer.css" type="text/css">
     <link rel="stylesheet" href="./css/common.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="./css/personalCenter.css" />
     <style type="text/css">
         .find_loginPwd_wrap input,.find_loginPwd_wrap select{
             font-size: 0.3rem;
+            width: 4rem;
+            overflow: hidden; 
+            text-overflow:ellipsis;
+             white-space: nowrap;
+        }
+        .find_loginPwd_wrap .list_item a{
+            position: relative;
+            display: block;
+            width: 100%;
+        }
+        .find_loginPwd_wrap .list_item a:after{
+            content: "";
+            display: inline-block;
+            vertical-align: middle;
+            width: 8px;
+            height: 15px;
+            background-image: url(img/public_arrow.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            margin-top: -7px;
         }
     </style>
     <script src="./js/jquery-2.1.4.js"></script>
     <script src="./js/jquery.base64.js"></script>
     <script src="./js/layer.js"></script>
     <script src="./js/wapframwork.js"></script>
-    <script>
-    $(function() {
-        var username = localStorage.getItem("username");
-        $.ajax({
-            type: "POST",
-            url: getAPIURL() + "readBankList",
-            dataType: "json",
-            success: function(data) {
-                var bankList = JSON.stringify(data.bankList);
-                var bankListObj = JSON.parse(bankList);
-                var bankStr = "";
-                for (var i = 0; i < bankListObj.length; i++) {
-                    bankStr += "<option style='width:100%;'>" + bankListObj[i].BankName + "</option>";
-                }
-                document.getElementById("bank_list").innerHTML = bankStr;
-            }
 
-
-        });
-        $.ajax({
-            type: "POST",
-            url: getAPIURL() + "readBeseInfoByCode",
-            dataType: "json",
-            data: {
-                "perjmcode": "",
-                "phone": username
-            },
-            success: function(data) {
-                var membaseInfo = JSON.stringify(data.membaseInfo);
-                var jsonObj = JSON.parse(membaseInfo);
-                for (var i = 0; i < jsonObj.length; i++) {
-
-                    $("#phone").val(jsonObj[i].UserCode);
-                    $("#uname").val(jsonObj[i].UserName).attr("readonly", "readonly");
-                    $("#UserZG").val(jsonObj[i].UserZG).attr("readonly", "readonly");
-                    $("#UserTJR").val(jsonObj[i].UserTJR).attr("readonly", "readonly");
-                    $("#address").val(jsonObj[i].UserAddress);
-                    $("#weixin").val(jsonObj[i].UserWX);
-                    $("#zfb").val(jsonObj[i].UserZFB);
-                    $("#bankHm").val(jsonObj[i].UserYhHm);
-                    $("#bankZh").val(jsonObj[i].UserYhZh);
-                    $("#bankKhh").val(jsonObj[i].UserYhKhh);
-                    var UserYhName = jsonObj[i].UserYhName;
-                    $("#bank_list option").each(function() {
-                        if ($(this).val() == UserYhName) {
-                            $(this).attr("selected", "selected");
-                        } else {
-                            $(this).removeAttr("selected")
-                        }
-                    });
-                    setAddress(jsonObj[i].UserAddress);
-
-                }
-
-            }
-        });
-
-    });
-
-
-    function check() {
-        var username = $("#phone").val();
-        var address = $("#address").val();
-        var weixin = $("#weixin").val();
-        var zfb = $("#zfb").val();
-        var bankHm = $("#bankHm").val();
-        var bankZh = $("#bankZh").val();
-        var bankKhh = $("#bankKhh").val();
-        var bankName = $("#bank_list").val();
-        $.ajax({
-            type: "POST",
-            url: getAPIURL() + "updateMemInfo",
-            dataType: "json",
-            data: {
-                "perjmcode": "",
-                "username": username,
-                "address": address,
-                "weixin": weixin,
-                "zfb": zfb,
-                "bankName": bankName,
-                "bankHm": bankHm,
-                "bankZh": bankZh,
-                "bankKhh": bankKhh
-            },
-            success: function(data) {
-                layer.open({
-                    content: data.Data,
-                    skin: 'msg',
-                    time: 2 //2秒后自动关闭
-                });
-            }
-        });
-    }
-     function setAddress(address){
-        // address = '北京 朝阳区';
-        arr_address =address.split(' ');
-        var provance='';
-        var city='';
-        var area='';
-        $.each(arr_address,function(index,em){
-            if (index==0) {
-                provance= em;
-            }else if(index ==1){
-                city=em;
-            }else{
-                area =em;
-            }
-        })
-        var $target = $('#address');
-        $target.citySelect({
-            provance: provance,
-            city: city,
-            area: area
-        });
-
-        $target.on('click', function (event) {
-            event.stopPropagation();
-            $target.citySelect('open');
-        });
-
-        $target.on('done.ydui.cityselect', function (ret) {
-            $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
-        });
-     }
-    </script>
 </head>
 
 <body>
@@ -180,10 +78,12 @@
                 </label>
             </li>
             <li class="list_item">
-                <label>
-                    <span class="item_text">收货地址</span>
-                    <input type="text" name="address" id="address" readonly  value="新疆 乌鲁木齐市 天山区" placeholder="请选择收货地址" >
-                </label>
+                <a href="edit-address.html">
+                    <label>
+                        <span class="item_text">收货地址</span>
+                        <input type="text" name="address" id="address" readonly   placeholder="请选择收货地址" >
+                    </label>
+                </a>
             </li>
             <li class="list_item">
                 <label>
@@ -228,9 +128,107 @@
 </body>
 <!--头部-->
 <script src="./js/RainbowBridge.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/ydui.citys.js"></script>
-<script src="js/ydui.js"></script>
 <script type="text/javascript">
+    $(function() {
+        var username = localStorage.getItem("username");
+        $.ajax({
+            type: "POST",
+            url: getAPIURL() + "readBankList",
+            dataType: "json",
+            success: function(data) {
+                var bankList = JSON.stringify(data.bankList);
+                var bankListObj = JSON.parse(bankList);
+                var bankStr = "";
+                for (var i = 0; i < bankListObj.length; i++) {
+                    bankStr += "<option style='width:100%;'>" + bankListObj[i].BankName + "</option>";
+                }
+                document.getElementById("bank_list").innerHTML = bankStr;
+            }
+
+
+        });
+        $.ajax({
+            type: "POST",
+            url: getAPIURL() + "readBeseInfoByCode",
+            dataType: "json",
+            data: {
+                "perjmcode": "",
+                "phone": username
+            },
+            success: function(data) {
+                var membaseInfo = JSON.stringify(data.membaseInfo);
+                var jsonObj = JSON.parse(membaseInfo);
+                for (var i = 0; i < jsonObj.length; i++) {
+
+                    $("#phone").val(jsonObj[i].UserCode);
+                    $("#uname").val(jsonObj[i].UserName).attr("readonly", "readonly");
+                    $("#UserZG").val(jsonObj[i].UserZG).attr("readonly", "readonly");
+                    $("#UserTJR").val(jsonObj[i].UserTJR).attr("readonly", "readonly");
+                    if (localStorage.getItem('edit_site')) {
+                        $("#address").val($.parseJSON(localStorage.getItem('edit_site')));
+                        localStorage.removeItem('edit_site');
+
+                    }else{
+                        $("#address").val(jsonObj[i].UserAddress);
+                    }
+                    $("#weixin").val(jsonObj[i].UserWX);
+                    $("#zfb").val(jsonObj[i].UserZFB);
+                    $("#bankHm").val(jsonObj[i].UserYhHm);
+                    $("#bankZh").val(jsonObj[i].UserYhZh);
+                    $("#bankKhh").val(jsonObj[i].UserYhKhh);
+                    var UserYhName = jsonObj[i].UserYhName;
+                    $("#bank_list option").each(function() {
+                        if ($(this).val() == UserYhName) {
+                            $(this).attr("selected", "selected");
+                        } else {
+                            $(this).removeAttr("selected")
+                        }
+                    });
+
+                }
+
+            }
+        });
+
+    });
+
+
+    function check() {
+        var username = $("#phone").val();
+        var address = $("#address").val();
+        var weixin = $("#weixin").val();
+        var zfb = $("#zfb").val();
+        var bankHm = $("#bankHm").val();
+        var bankZh = $("#bankZh").val();
+        var bankKhh = $("#bankKhh").val();
+        var bankName = $("#bank_list").val();
+        $.ajax({
+            type: "POST",
+            url: getAPIURL() + "updateMemInfo",
+            dataType: "json",
+            data: {
+                "perjmcode": "",
+                "username": username,
+                "address": address,
+                "weixin": weixin,
+                "zfb": zfb,
+                "bankName": bankName,
+                "bankHm": bankHm,
+                "bankZh": bankZh,
+                "bankKhh": bankKhh
+            },
+            success: function(data) {
+                layer.open({
+                    content: data.Data,
+                    skin: 'msg',
+                    time: 2 //2秒后自动关闭
+                });
+            }
+        });
+    }
+
+
+
 setTitle(".find_loginPwd_title", { 'title': '找回密码' });
 </script>
 

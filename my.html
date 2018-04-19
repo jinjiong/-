@@ -27,77 +27,85 @@
     .footer {
         height: auto;
     }
+    .layui-m-layercont{
+        color: #333;
+    }
     </style>
     <script>
     $(function() {
         var username = localStorage.getItem("username");
-        if (username == null) {
+        console.log(username);
+        if (username == null || username=='') {
             layer.open({
-                content: "请您先登录！",
-                btn: '确定'
+                content:"请登录",
+                btn: '确定',
+                end: function() {
+                    location.href = "./login.html";
+                }
             });
-            location.href = "./login.html";
+        }else{
+            $.ajax({
+                type: "POST",
+                url: getAPIURL() + "readMemInfoByCode",
+                dataType: "json",
+                data: {
+                    "perjmcode": "",
+                    "username": username
+                },
+                success: function(data) {
+                    console.log(data);
+                    var memInfo = JSON.stringify(data.memInfo);
+                    var jesonObj = JSON.parse(memInfo);
+                    $.each(jesonObj, function(i) {
+                        UserZG = jesonObj["UserZG"];
+                        dj = jesonObj["UserKhjb"];
+
+                    });
+                    $("#UserZG").html(UserZG);
+                    $("#dj").html(dj);
+                }
+            });
+
+            //var username=localStorage.getItem("username");
+
+            //点击订单菜单
+            $("#index_order").click(function() {
+                if (username != "") {
+                    location.href = "./order.html?uname=" + username;
+                } else {
+                    layer.open({
+                        content: "请您先登录！",
+                        btn: '确定'
+                    });
+                    location.href = "./login.html";
+                }
+
+            });
+            //点击我的菜单
+            $("#index_my").click(function() {
+                if (username != "") {
+                    location.href = "./my.html?uname=" + username;
+                } else {
+                    layer.open({
+                        content: "请您先登录！",
+                        btn: '确定'
+                    });
+                    location.href = "./login.html";
+                }
+            });
+            //点击商城
+            $("#index_shop").click(function() {
+                var url = "./list.html?fenlei=all&pxType=1";
+                url = encodeURI(url);
+                url = encodeURI(url);
+                location.href = url;
+            });
         }
-        $.ajax({
-            type: "POST",
-            url: getAPIURL() + "readMemInfoByCode",
-            dataType: "json",
-            data: {
-                "perjmcode": "",
-                "username": username
-            },
-            success: function(data) {
-                console.log(data);
-                var memInfo = JSON.stringify(data.memInfo);
-                var jesonObj = JSON.parse(memInfo);
-                $.each(jesonObj, function(i) {
-                    UserZG = jesonObj["UserZG"];
-                    dj = jesonObj["UserKhjb"];
-
-                });
-                $("#UserZG").html(UserZG);
-                $("#dj").html(dj);
-            }
-        });
-
-        //var username=localStorage.getItem("username");
-
-        //点击订单菜单
-        $("#index_order").click(function() {
-            if (username != "") {
-                location.href = "./order.html?uname=" + username;
-            } else {
-                layer.open({
-                    content: "请您先登录！",
-                    btn: '确定'
-                });
-                location.href = "./login.html";
-            }
-
-        });
-        //点击我的菜单
-        $("#index_my").click(function() {
-            if (username != "") {
-                location.href = "./my.html?uname=" + username;
-            } else {
-                layer.open({
-                    content: "请您先登录！",
-                    btn: '确定'
-                });
-                location.href = "./login.html";
-            }
-        });
-        //点击商城
-        $("#index_shop").click(function() {
-            var url = "./list.html?fenlei=all&pxType=1";
-            url = encodeURI(url);
-            url = encodeURI(url);
-            location.href = url;
-        });
 
     });
     </script>
 </head>
+
 <body class=" " ontouchstart="">
     <div class="container ">
         <div class="wallet-control">
