@@ -41,6 +41,7 @@ function setNews(){
 		beforeSend:function(){
             if (parseInt($('#news_list').attr('nub'))==1) {
                 layer.open({type: 2,content: '加载中...'});
+                
             }
         },
 		success:function(data){

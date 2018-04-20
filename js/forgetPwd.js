@@ -26,7 +26,7 @@ function FindPwd() {
 
     /*点击修改密码响应处理函数*/
     function findpwd(mobile, code, newpwd) {
-        console.log(code);
+        console.log(mobile+'---'+code+'---'+newpwd);
         $.ajax({
             type: "POST",
             url: getAPIURL() + "forgetPas",

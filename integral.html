@@ -14,10 +14,21 @@
     <script src="./js/jquery.base64.js" type="text/javascript" charset="utf-8"></script>
     <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
     <script src="./js/layer.js" type="text/javascript" charset="utf-8"></script>
+    <style type="text/css">
+        .activate-box{
+            display: none;
+        }
+        .withdraw_content .img-box{
+            width: 100%;
+        }
+        .withdraw_content .img-box img{
+            width:60%;height:auto;margin:20px 20%;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="withdraw_title" style="display:none;">
+    <div class="withdraw_title">
         <a href="javascript:location.href='my.html'">
         <i class="icon"></i>
     </a>
@@ -26,7 +37,7 @@
     </div>
     <!--页面主体部分-->
     <div class="withdraw_content">
-        <div style="width:100%;"><img src="./img/rmb@2x.png" style="width:60%;height:auto;margin:20px 20%;"></div>
+        <div class="img-box"><img src="./img/rmb@2x.png" ></div>
         <p class="sum_avai">积分余额：<span class="sp_color balance_avai" id="zhye"></span></p>
         <p class="txed">
             <span class="txed_title">转出积分</span>
@@ -51,11 +62,10 @@
         <p class="prompt_day">本次转账预计到账时间为1~3个工作日</p>
     </div>
 </body>
-<script src="./js/trading.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/integ.js" type="text/javascript" charset="utf-8"></script>
 <!--头部-->
 <script src="./js/RainbowBridge.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 setTitle(".withdraw_title", { 'title': '我的积分', "theme": "1" });
 </script>
-
 </html>

@@ -13,16 +13,14 @@
                 "phone": username
             },
             success: function(data) {
-                console.log(data);
                 var memzjInfo = JSON.stringify(data.memzjInfo);
                 var jsonObj = JSON.parse(memzjInfo);
                 var zhye = "";
                 for (var i = 0; i < jsonObj.length; i++) {
-                    zhye += jsonObj[i].cxb;
+                    zhye += jsonObj[i].dzb;
                 }
                 dzb = Number(zhye.replace(',',''));
                 document.getElementById("zhye").innerHTML = zhye;
-
             }
         });
     } 
