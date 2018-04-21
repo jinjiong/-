@@ -32,7 +32,7 @@ function FindPwd() {
       dataType: "json",
       data:{
 		  "perjmcode":"",
-		  "phone":mobile,
+		  "username":mobile,
 		  "newPas":newpwd,
 		  "Yzm":code
 	  },

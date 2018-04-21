@@ -33,7 +33,7 @@ function FindPwd() {
             dataType: "json",
             data: {
                 "perjmcode": "",
-                "phone": mobile,
+                "username": mobile,
                 "newPas": newpwd,
                 "Yzm": code
             },
@@ -70,6 +70,7 @@ function FindPwd() {
                 "ty": 2
             },
             success: function(data) {
+                console.log(data);
                 if (data.ResultData == 0) {
                     layer.open({
                         content: '发送成功！',
@@ -107,13 +108,13 @@ function FindPwd() {
         _sendCode.on("click", function() {
             /*判断用户是否输入手机号*/
             var mobile = $.trim(_phone.val());
+            console.log(mobile);
             if (mobile == "" || mobile.length != 11) {
                 layer.open({
                     content: '请输入正确用户名',
                     skin: 'msg',
                     time: 2 //2秒后自动关闭
                 });
-                _phone.val("").focus();
                 return false;
             } else {
                 getCode(mobile);
@@ -126,6 +127,7 @@ function FindPwd() {
             var mobile = $.trim(_phone.val());
             var code = $.trim(_txtMsgCode.val());
             var newpwd = $.trim(_newPwd.val());
+
             if (mobile == "") {
                 layer.open({
                     content: '用户名不能为空',

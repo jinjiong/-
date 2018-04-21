@@ -52,6 +52,7 @@
     }
     // 发送短信接口
     function valicode(){
+        console.log($('input[name="phone"]').val());
         $.ajax({
             type: "POST",
             url: getAPIURL() + "phoneGetYzm",
@@ -94,6 +95,7 @@
 
     // 发送注册信息
     function reg(){
+        console.log($('input[name="valicode"]').val());
         $.ajax({
             type: "post",
             url: getAPIURL() + "memReg",
@@ -109,6 +111,7 @@
                 "tjr": $('input[name="recommend_name"]').val()
             },
             success: function(data) {
+                console.log(data);
                 reg_state=true;
                 if (data.ResultData == 0) {
                     layer.open({
