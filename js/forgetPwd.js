@@ -41,7 +41,7 @@ function FindPwd() {
                 console.log(data);
                 if (data.ResultData == 0) {
                     layer.open({
-                        content: '注册成功！',
+                        content: '密码修改成功！',
                         btn: '点击登录',
                         end: function() {
                             window.location.href = "./login.html";
