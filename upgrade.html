@@ -14,6 +14,7 @@
     <script src="./js/jquery.base64.js" type="text/javascript" charset="utf-8"></script>
     <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
     <script src="./js/layer.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/jquery.base64.js"></script>
     <style type="text/css">
        
         .withdraw_content .txed input{
@@ -36,6 +37,9 @@
             margin-bottom: 10px;
             
         }
+        input{
+            color: #737373!important;
+        }
         .banner-box img{
             width: 100%;
         }
@@ -53,6 +57,18 @@
             right: 20px;
            transform: translate(0, -50%);
         }
+        .checkbox-box{
+            padding-left: 0.42rem;
+            margin-top:0.266667rem;
+        }
+         .checkbox-box input{
+            position: relative;
+            vertical-align: middle;
+         }
+        .withdraw_content .withdraw_btn{
+            margin-top: 0.2rem;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
@@ -69,29 +85,32 @@
    
     <p class="txed">
         <span class="txed_title">手机号码</span>
-        <input type="text"  placeholder="请输入用户名"  />
+        <input type="text" class="ph"  placeholder="请输入用户名" readonly="readonly" />
     </p>
     <p class="txed">
         <span class="txed_title">用户昵称</span>
-        <input type="text"  placeholder="请输入昵称"  />
+        <input type="text"  class="nc" placeholder="请输入昵称"  readonly="readonly"/>
+    </p>
+     <p class="txed">
+        <span class="txed_title">当前级别</span>
+        <input type="text"  class="present" placeholder="请输入昵称"  readonly="readonly"/>
     </p>
     <p class="txed txed-arr">
         <span class="txed_title">升级级别</span>
-        <select>
-            <option>普通会员</option>
+        <select class="grade">
         </select>
     </p>
-	<p class="txed txed-arr">
-        <span class="txed_title" >支付方式</span>
-        <select name="dzpt" id="dzpt">
-			<option value="1">支付宝</option>
-			<option value="2">微信</option>
-			<option value="3">银行卡</option>
-		</select>
+	<p class="txed">
+        <span class="txed_title" >支付金额</span>
+        <input type="text"  value="" / readonly="readonly" class="monery">
+    </p>
+    <p class="checkbox-box">
+        <input type="checkbox" class="checkbox" checked="checked">
+        <span class="txed_title" >是否有月光宝盒的账号</span>
+        
     </p>
     <button class="withdraw_btn">立即升级</button>
 </div>
-
 
 </body>
 
@@ -99,5 +118,77 @@
 <script src="./js/RainbowBridge.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     setTitle(".withdraw_title", {'title':'提现',"theme":"1"});
+    var username=localStorage.getItem("username");
+    console.log(username);
+    if(username==null || username ==""){
+        layer.open({
+            content:"请您先登录！",
+            btn: '确定'
+        });
+        location.href="./login.html";
+    }
+  
+    readMemInfoByCode();
+    function readMemInfoByCode(){
+        $.ajax({
+            type: "POST",
+            url: getAPIURL() + "readMemInfoByCode",
+            dataType: "json",
+            data: {
+                perjmcode:'',
+                username:username
+            },
+            success: function(data) {
+              console.log(data.memInfo);
+            $('.ph').val(data.memInfo.UserPhone);
+            $('.nc').val(data.memInfo.UserName);
+            $('.present').val(data.memInfo.UserZG);
+            }
+        })
+    }
+
+    getGrade();
+    function getGrade(){
+        $.ajax({
+            type: "POST",
+            url: getAPIURL() + "readDjList",
+            dataType: "json",
+            data: {
+            },
+            success: function(data) {
+                setGrade(data.djList);
+              
+            }
+        })
+    }
+    function setGrade(djList){
+        var option ='';
+        $.each(djList,function(index,el){
+            if (index==0) {
+                $('.monery').val(this.djJE);
+            }
+            option+=' <option data-m="'+this.djJE+'">'+this.djName+'</option>'
+        });
+        $('.grade').append(option);
+        $('.grade').change(function(){
+            $('.grade option').each(function(){
+                if ($(this).text()==$('.grade').val()) {
+                    $('.monery').val($(this).data('m'));
+                }
+            })
+        });
+    }
+
+
+    $('.withdraw_btn').click(function() {
+        if ($('.checkbox').is(':checked')) {
+            var phone = $('.ph').val();
+            location.href='http://zhangshangfu.test.lsxfpt.com/mobile/passport/login/is_other_web/1/account/'+phone+'/goto_shop_id/5682.html';
+        }else{
+            var url =$.base64.encode('http://47.52.99.82:9026/')
+            location.href='http://zhangshangfu.test.lsxfpt.com/mobile/passport/register/code/606130/backurl_base_64/'+url+'.html';
+        }
+        
+    });
 </script>
 </html>

@@ -108,7 +108,6 @@ function FindPwd() {
         _sendCode.on("click", function() {
             /*判断用户是否输入手机号*/
             var mobile = $.trim(_phone.val());
-            console.log(mobile);
             if (mobile == "" || mobile.length != 11) {
                 layer.open({
                     content: '请输入正确用户名',
