@@ -45,9 +45,40 @@
             color: #fff;
             font-size: 14px;
         }
+        .succ-box{
+            display: none;
+        }
+        .re-box{
+            display: none;
+        }
     </style>
 </head>
+
+
+<body>
+    <div class="contanier">
+        <div class="succ-box">
+            <div class="img-box"><img src="img/pay.png"></div>
+            <div class="info">
+                <p>恭喜您！</p>
+                <p>已升级为我们的砖石会员！</p>
+            </div>
+            <div class="btn">返回首页</div>
+        </div>
+        <div class="re-box">
+            <div class="img-box"><img src="img/no-lottery.png"></div>
+            <div class="info">
+                <p>升级失败！</p>
+                <p>服务器开小差了，请稍后再试</p>
+            </div>
+            <div class="btn">返回首页</div>
+        </div>
+    </div>
+</body>
+<script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/layer.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+    var username=localStorage.getItem("username");
     function getQueryVariable(variable) {
             var query = decodeURI(window.location.search.substring(1));
             var vars = query.split("&");
@@ -57,22 +88,65 @@
             }
             return (false);
         }
+
         var ConsumptionAmonut = getQueryVariable('ConsumptionAmonut');
-        var record_id = getQueryVariable('record_id');
+        var trade_no = getQueryVariable('trade_no');
         var account = getQueryVariable('account');
         var pay_res = getQueryVariable('pay_res');
-        console.log(ConsumptionAmonut+'-----'+record_id+'-----'+account+'-----'+pay_res);
-</script>
-<body>
-    <div class="contanier">
-        <div class="img-box"><img src="img/pay.png"></div>
-        <div class="info">
-            <p>恭喜您！</p>
-            <p>已升级为我们的砖石会员！</p>
-        </div>
-        <div class="btn">返回首页</div>
-    </div>
-</body>
+        console.log(ConsumptionAmonut+'-----'+trade_no+'-----'+account+'-----'+pay_res);
+        if (pay_res=='已支付'){
+            getValue();
+            $('.succ-box').show();
+        }else{
+             $('.re-box').show();
+        }
 
+        function getValue(){
+            $.ajax({
+                type:'POST',
+                url:'http://zhangshangfu.test.lsxfpt.com/mobile/shop/other_web_query_lipayorder',
+                data:{
+                    "money":ConsumptionAmonut,
+                    "trade_no":trade_no,
+                    "account":account,
+                    "pageIndex":"1",
+                    "shop_account":'13685427305'
+                },
+                dateType:'JSON',
+                success:function(data){
+                    if (data.status==0) {
+                        setValue();
+                    }else{
+                         $('.succ-box').hide();
+                          $('.re-box').show();
+
+                    }
+
+                }
+            });
+        }
+
+        function setValue(){
+            var old_grade=localStorage.getItem("old_grade");
+            var grade=localStorage.getItem("grade");
+            $.ajax({
+                type:'POST',
+                url:getAPIURL() + 'ChangeJBmoneyLog',
+                data:{
+                    "perjmcode":"",
+                    "username":username,
+                    "userOldZg":old_grade,
+                    "UserZGNew":grade,
+                    "zfJe":ConsumptionAmonut,
+                    "orderid":trade_no,
+                    "sjSta":'0'
+                },
+                dateType:'JSON',
+                success:function(data){
+
+                }
+            });
+        }
+</script>
 <!--头部-->
 </html>

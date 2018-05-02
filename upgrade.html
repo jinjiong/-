@@ -143,6 +143,7 @@
             $('.ph').val(data.memInfo.UserPhone);
             $('.nc').val(data.memInfo.UserName);
             $('.present').val(data.memInfo.UserZG);
+            localStorage.setItem("old_grade",data.memInfo.UserZG);
             }
         })
     }
@@ -166,6 +167,7 @@
         $.each(djList,function(index,el){
             if (index==0) {
                 $('.monery').val(this.djJE);
+                localStorage.setItem("grade",this.djName);
             }
             option+=' <option data-m="'+this.djJE+'">'+this.djName+'</option>'
         });
@@ -173,6 +175,7 @@
         $('.grade').change(function(){
             $('.grade option').each(function(){
                 if ($(this).text()==$('.grade').val()) {
+                    localStorage.setItem("grade",$(this).text());
                     $('.monery').val($(this).data('m'));
                 }
             })
