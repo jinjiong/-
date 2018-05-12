@@ -6,6 +6,8 @@ $(function(){
 	var sp_title="";
 	var sp_price="";
 	var sp_jifen="";
+	var UserPhone="";
+	var u_phone_f ="";
 	function getQueryVariable(variable){
 		   var query = decodeURI(window.location.search.substring(1));
 		   var vars = query.split("&");
@@ -20,7 +22,6 @@ $(function(){
 	setPro();
 	function setPro(){
 		local_cart = $.parseJSON(localStorage.getItem('local_cart'));
-		console.log(local_cart);
 		var all_jifen=0;
 		var all_monery=0;
 		$.each(local_cart,function(index,el){
@@ -38,11 +39,12 @@ $(function(){
 			    	layer.open({type: 2,content: '加载中...'});
 			    },
 				success:function(data){
+					console.log(data);
 	 				all_jifen=all_jifen+parseInt(data.shopList[0].spHyj)*parseInt(el.spCount);
                     all_monery = all_monery+parseFloat(data.shopList[0].spScj)*parseInt(el.spCount);
 	 				var pro_htm='<a href="javascript:;" class="aui-list-product-fl-item" data-id="'+data.shopList[0].ID+'">'+
 								'<div class="aui-list-product-fl-img">'+
-									'<img src="'+data.shopList[0].spImgUrl2+'" id="sp_img" alt="">'+
+									'<img src="'+data.shopList[0].spImgUrl+'" id="sp_img" alt="">'+
 								'</div>'+
 								'<div class="aui-list-product-fl-text">'+
 									'<h3 class="aui-list-product-fl-title" id="sp_title">'+data.shopList[0].spName+'</h3>'+
@@ -88,7 +90,7 @@ $(function(){
 			},
 			dateType:'JSON',
 			success:function(data){
-				console.log(data.memInfo.UserAddress);
+				console.log(data);
 				UserAddress = data.memInfo.UserAddress;
 			}
 		});
@@ -126,6 +128,7 @@ $(function(){
 					}
 					$("#u_address").attr('address',u_address);
 					$("#name_phone").html(u_name+"   "+u_phone);
+					u_phone_f =u_phone;
 					
 				}
 				});
@@ -165,39 +168,50 @@ $(function(){
 				var spid =$(this).data('id');
 				var nub = $(this).find('.sp_count').html();
 				var spHyj =$(this).find('#sp_price').data('sphyj');
+				var buyType =$('.aui-settle-choice input:checked').data('nub');
 				console.log(spZJinE+'--'+spid+'--'+nub+'--'+spHyj+'--'+UserAddress);
-				$.ajax({
-					type:'POST',
-					url:getAPIURL() + 'GoodsOrderAdd',
-					dateType:'JSON',
-					data:{
-						"perjmcode":"",
-						"username":username,
-						"spID":spid,
-						"spCount":nub,
-						"spZJinE":spZJinE,
-						"spZJiFen":spHyj,
-						"postAddress":UserAddress
-					},
-					success:function(data){
-						// 购买成功购物车内删除
-						dele_pro(spid);
-						location.replace('Settlement.html');
-						if(data.ResultData==0){
-							// layer.open({
-							// 	content:data.Data,
-							// 	btn: '确定'
-							//   });
-						}else if(data.ResultData==1){
-							layer.open({
-								title:"温馨提示",
-								content:data.Data,
-								btn: '确定'
-							  });
+				if (buyType==2) {
+					$.ajax({
+						type:'POST',
+						url:getAPIURL() + 'GoodsOrderAdd',
+						dateType:'JSON',
+						data:{
+							"perjmcode":"",
+							"username":username,
+							"spID":spid,
+							"spCount":nub,
+							"spZJinE":spZJinE,
+							"spZJiFen":spHyj,
+							"buyType":buyType,
+							"postAddress":UserAddress
+						},
+						success:function(data){
+							if(data.ResultData==0){
+								// 购买成功购物车内删除
+								// dele_pro(spid);
+								var phone = u_phone_f;
+					            var monery = $('#z_price').html();
+					            var url_black =$.base64.encode('http://47.52.99.82:9026/member_de.html');
+					            location.href='http://zhangshangfu.test.lsxfpt.com/mobile/passport/login/is_other_web/1/account/'+phone+'/goto_shop_id/5682/other_web_price/'+monery+'/other_web_redirect_url_base64/'+url_black+'.html';
+							}else if(data.ResultData==1){
+								console.log(data);
+								layer.open({
+									title:"温馨提示",
+									content:data.Data,
+									btn: '确定'
+								 });
+							}
+							
 						}
-						
-					}
-				});
+					});
+				}else{
+					layer.open({
+						title:"温馨提示",
+						content:'现金支付升级中....',
+						btn: '确定'
+					 });
+				}
+				
 
 			})
 		}
@@ -212,7 +226,7 @@ $(function(){
 				},
 				dateType:'JSON',
 				success:function(data){
-					console.log(data);
+					// console.log(data);
 				}
 			});
 		}

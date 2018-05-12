@@ -10,7 +10,6 @@
 	<link rel="stylesheet" href="./css/core.css">
 	<link rel="stylesheet" href="./css/icon.css">
 	<link rel="stylesheet" href="./css/home.css">
-	
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 </head>
 <body>
@@ -31,10 +30,7 @@
 
 	<section class="aui-settle-content">
 		<div class="aui-settle-title">
-			<p>需要支付:    <span>375.00元</span></p>
-		</div>
-		<div class="aui-settle-pay">
-			<img src="./img/icon/pay.png" alt="">
+			<p>需要支付:    <span><em class="all_monery"></em>元</span></p>
 		</div>
 		<div class="aui-dri"></div>
 		<div class="aui-settle-choice">
@@ -49,7 +45,7 @@
 			</a>
 			<a href="#" class="aui-address-cell  aui-fl-arrow-clear">
 				<div class="aui-address-cell-hd">
-					<img src="../img/hb.png" alt="">
+					<img src="../img/ygbh.png" alt="">
 				</div>
 				<div class="aui-address-cell-bd">
 					月光宝盒
@@ -59,8 +55,13 @@
 		</div>
 	</section>
 	<div class="aui-settle-payment">
-		<a href="#">银行卡支付 375.00 元</a>
+		<a href="#">银行卡支付 <em class="all_monery"></em> 元</a>
 	</div>
-
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+	var all_monery = localStorage.getItem('all_monery');
+	console.log(all_monery);
+	$('.all_monery').html(all_monery);
+</script>
 </body>
 </html>

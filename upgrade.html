@@ -16,7 +16,6 @@
     <script src="./js/layer.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="js/jquery.base64.js"></script>
     <style type="text/css">
-       
         .withdraw_content .txed input{
             color: #333;
             font-size: 0.3rem;
@@ -186,7 +185,10 @@
     $('.withdraw_btn').click(function() {
         if ($('.checkbox').is(':checked')) {
             var phone = $('.ph').val();
-            location.href='http://zhangshangfu.test.lsxfpt.com/mobile/passport/login/is_other_web/1/account/'+phone+'/goto_shop_id/5682.html';
+            var monery = $('.monery').val();
+            var url_black =$.base64.encode('http://47.52.99.82:9026/member_succ.html');
+            location.href='http://zhangshangfu.test.lsxfpt.com/mobile/passport/login/is_other_web/1/account/'+phone+'/goto_shop_id/5682/other_web_price/'+monery+'/other_web_redirect_url_base64/'+url_black+'.html';
+
         }else{
             var url =$.base64.encode('http://47.52.99.82:9026/')
             location.href='http://zhangshangfu.test.lsxfpt.com/mobile/passport/register/code/606130/backurl_base_64/'+url+'.html';
