@@ -162,15 +162,24 @@ $(function(){
 			setOrder();
 		});
 		function setOrder(){
+			var pro_list=[];
+			
 			var UserAddress =$('#u_address').html();
+			var buyType =$('.aui-settle-choice input:checked').data('nub');
 			$.each($('.aui-list-product-fl-item'), function() {
+				var pro={};
 				var spZJinE = parseFloat($(this).find('#sp_price').html())*parseInt($(this).find('.sp_count').html());
 				var spid =$(this).data('id');
 				var nub = $(this).find('.sp_count').html();
 				var spHyj =$(this).find('#sp_price').data('sphyj');
-				var buyType =$('.aui-settle-choice input:checked').data('nub');
+				pro.spZJinE=spZJinE;
+				pro.spid=spid;
+				pro.nub =nub;
+				pro.spHyj=spHyj;
+				pro.UserAddress=UserAddress;
+				pro_list.push(pro);
 				console.log(spZJinE+'--'+spid+'--'+nub+'--'+spHyj+'--'+UserAddress);
-				if (buyType==2) {
+				if (buyType==1) {
 					$.ajax({
 						type:'POST',
 						url:getAPIURL() + 'GoodsOrderAdd',
@@ -188,11 +197,9 @@ $(function(){
 						success:function(data){
 							if(data.ResultData==0){
 								// 购买成功购物车内删除
-								// dele_pro(spid);
-								var phone = u_phone_f;
-					            var monery = $('#z_price').html();
-					            var url_black =$.base64.encode('http://47.52.99.82:9026/member_de.html');
-					            location.href='http://zhangshangfu.test.lsxfpt.com/mobile/passport/login/is_other_web/1/account/'+phone+'/goto_shop_id/5682/other_web_price/'+monery+'/other_web_redirect_url_base64/'+url_black+'.html';
+								dele_pro(spid);
+								
+					            
 							}else if(data.ResultData==1){
 								console.log(data);
 								layer.open({
@@ -204,16 +211,15 @@ $(function(){
 							
 						}
 					});
-				}else{
-					layer.open({
-						title:"温馨提示",
-						content:'现金支付升级中....',
-						btn: '确定'
-					 });
 				}
-				
-
-			})
+			});
+			if (buyType==2) {
+				localStorage.setItem("pro_list",JSON.stringify(pro_list));
+				var phone = u_phone_f;
+				var monery = $('#z_price').html();
+	            var url_black =$.base64.encode('http://47.52.99.82:9026/member_de.html');
+	            location.href='http://zhangshangfu.test.lsxfpt.com/mobile/passport/login/is_other_web/1/account/'+phone+'/goto_shop_id/5682/other_web_price/'+monery+'/other_web_redirect_url_base64/'+url_black+'.html';
+			}
 		}
 		function dele_pro(spid){
 			$.ajax({
